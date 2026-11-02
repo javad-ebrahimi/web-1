@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سازنده QR Code</title>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.style.background = "#1a1d29";
+        }
+    </script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/qrcode.css">
+    <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 خانه</a>
+        <a href="tasks.html" class="nav-link">📋 کارها</a>
+        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
+        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
+        <a href="calendar.html" class="nav-link">📅 تقویم</a>
+        <a href="qrcode.html" class="nav-link active">📱 QR Code</a>
+        <a href="notes.html" class="nav-link">📝 یادداشت</a>
+        <a href="settings.html" class="nav-link">⚙️ تنظیمات</a>
+    </nav>
+
+    <div class="app">
+        <h1>📱 سازنده QR Code</h1>
+
+        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+
+        <div class="qr-input-card">
+            <label for="qrText">متن یا لینک خود را وارد کنید:</label>
+            <textarea id="qrText" placeholder="مثلاً: https://google.com"></textarea>
+            <button id="generateQrBtn" class="generate-btn">ساخت QR Code</button>
+        </div>
+
+        <div class="qr-result-card" id="qrResultCard" style="display: none;">
+            <div id="qrcode" class="qr-image-container"></div>
+            <button id="downloadQrBtn" class="download-btn">📥 دانلود تصویر</button>
+        </div>
+    </div>
+
+    <!-- کتابخانه ساخت QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script src="js/common.js"></script>
+    <script src="js/qrcode.js"></script>
+</body>
+</html>

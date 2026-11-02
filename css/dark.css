@@ -329,3 +329,27 @@ body.dark .chart-card {
 body.dark .chart-header {
     color: #7c9aff;
 }
+
+/* ===== QR Code در تم تاریک ===== */
+body.dark .qr-input-card {
+    background: #353a4d;
+}
+
+body.dark .qr-input-card label {
+    color: #b8bdd0;
+}
+
+body.dark #qrText {
+    background: #424861;
+    border-color: #4e556f;
+    color: #e5e7eb;
+}
+
+body.dark .qr-result-card {
+    background: #353a4d;
+    border-color: #424861;
+}
+
+body.dark .qr-image-container {
+    background: white; /* پس‌زمینه QR باید سفید باشه که اسکن بشه */
+}

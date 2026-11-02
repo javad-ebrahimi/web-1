@@ -1,0 +1,103 @@
+/* ===== کارت ورودی ===== */
+.qr-input-card {
+    background: #f8f9fc;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.qr-input-card label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#qrText {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    line-height: 1.7;
+    background: white;
+    margin-bottom: 15px;
+    direction: ltr; /* برای لینک‌ها بهتره */
+}
+
+#qrText:focus {
+    outline: none;
+    border-color: #4a6cf7;
+}
+
+.generate-btn {
+    width: 100%;
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.generate-btn:hover {
+    background: #3a56c4;
+}
+
+/* ===== کارت نتیجه ===== */
+.qr-result-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 2px solid #e5e9f2;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.qr-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+}
+
+.download-btn {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.download-btn:hover {
+    background: #0d9668;
+}
+
+/* اصلاح رنگ‌های کتابخانه QR برای تم تاریک */
+.qr-result-card img, 
+.qr-result-card canvas {
+    max-width: 100%;
+    height: auto;
+}
