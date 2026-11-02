@@ -16,6 +16,9 @@ const nextDayBtn = document.getElementById("nextDayBtn");
 const monthTotal = document.getElementById("monthTotal");
 const monthCount = document.getElementById("monthCount");
 
+// ===== نمودار =====
+let expensesChart = null;
+
 // ===== نمایش تاریخ =====
 function updateDateLabel() {
     const today = getTodayString();
@@ -89,6 +92,7 @@ function showExpenses() {
         expenseList.innerHTML = '<li class="expense-empty">هزینه‌ای ثبت نشده</li>';
         expenseTotal.textContent = "۰ تومان";
         updateMonthStats();
+        renderChart();
         return;
     }
 
@@ -110,6 +114,7 @@ function showExpenses() {
 
     expenseTotal.textContent = formatNumber(total) + " تومان";
     updateMonthStats();
+    renderChart();
 }
 
 // ===== آمار ماه =====
@@ -127,6 +132,143 @@ function updateMonthStats() {
 
     monthTotal.textContent = formatNumber(total) + " تومان";
     monthCount.textContent = formatNumber(monthExpenses.length);
+}
+
+// ===== رندر نمودار =====
+function renderChart() {
+    const canvas = document.getElementById("expensesChart");
+    if (!canvas) return;
+
+    const refDate = new Date(activeDate + "T00:00:00");
+    const year = refDate.getFullYear();
+    const month = refDate.getMonth();
+
+    // کارهای این ماه
+    const monthExpenses = expenses.filter(function(e) {
+        const d = new Date(e.date + "T00:00:00");
+        return d.getFullYear() === year && d.getMonth() === month;
+    });
+
+    // گروه‌بندی بر اساس توضیحات
+    const categories = {};
+
+    monthExpenses.forEach(function(exp) {
+        const desc = exp.desc.trim();
+        if (!categories[desc]) {
+            categories[desc] = 0;
+        }
+        categories[desc] += exp.amount;
+    });
+
+    // پیدا کردن ۵ دسته‌ی برتر
+    let sorted = Object.keys(categories)
+        .map(key => ({ name: key, amount: categories[key] }))
+        .sort((a, b) => b.amount - a.amount);
+
+    // اگه داده‌ای نبود
+    if (sorted.length === 0) {
+        if (expensesChart) {
+            expensesChart.destroy();
+            expensesChart = null;
+        }
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#aaa";
+        ctx.font = "14px Tahoma";
+        ctx.textAlign = "center";
+        ctx.fillText("این ماه هزینه‌ای ثبت نشده", canvas.width / 2, canvas.height / 2);
+        return;
+    }
+
+    // اگه بیشتر از ۵ دسته بود، بقیه رو در "سایر" جمع کن
+    if (sorted.length > 5) {
+        const others = sorted.slice(5);
+        const otherSum = others.reduce((sum, o) => sum + o.amount, 0);
+        sorted = sorted.slice(0, 5);
+        sorted.push({ name: "سایر", amount: otherSum });
+    }
+
+    const labels = sorted.map(s => s.name);
+    const data = sorted.map(s => s.amount);
+
+    const colors = [
+        "#4a6cf7",  // آبی
+        "#10b981",  // سبز
+        "#f59e0b",  // زرد
+        "#ef4444",  // قرمز
+        "#8b5cf6",  // بنفش
+        "#ec4899"   // صورتی
+    ];
+
+    // اگه نمودار قبلی بود، پاک کن
+    if (expensesChart) expensesChart.destroy();
+
+    // بررسی تم تاریک
+    const isDark = document.body.classList.contains("dark");
+    const textColor = isDark ? "#e5e7eb" : "#333";
+    const gridColor = isDark ? "#424861" : "#e5e9f2";
+
+    // ساخت نمودار
+    const ctx = canvas.getContext("2d");
+    expensesChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "هزینه (تومان)",
+                data: data,
+                backgroundColor: colors.slice(0, labels.length),
+                borderRadius: 8,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.y.toLocaleString("fa-IR") + " تومان";
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: textColor,
+                        font: {
+                            family: "Tahoma",
+                            size: 11
+                        },
+                        callback: function(value) {
+                            return value.toLocaleString("fa-IR");
+                        }
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: textColor,
+                        font: {
+                            family: "Tahoma",
+                            size: 11
+                        }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
 }
 
 // ===== تغییر روز =====
@@ -159,7 +301,13 @@ expenseDesc.addEventListener("keypress", function(e) {
     if (e.key === "Enter") addExpense();
 });
 
+// ===== تغییر تم =====
+window.addEventListener("themeChanged", function() {
+    renderChart();
+});
+
 // ===== شروع =====
 initCommon();
 updateDateLabel();
 showExpenses();
+renderChart();

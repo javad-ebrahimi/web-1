@@ -24,6 +24,7 @@
         <a href="password.html" class="nav-link">🔐 رمز</a>
         <a href="memory.html" class="nav-link">🧠 حافظه</a>
         <a href="notes.html" class="nav-link">📝 یادداشت</a>
+        <a href="settings.html" class="nav-link">⚙️ تنظیمات</a>
     </nav>
 
     <div class="app">
@@ -31,14 +32,12 @@
 
         <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
 
-        <!-- نوار انتخاب روز -->
         <div class="date-nav">
             <button id="prevDayBtn" title="روز قبل">▶</button>
             <div class="date-label" id="dateLabel">امروز</div>
             <button id="nextDayBtn" title="روز بعد">◀</button>
         </div>
 
-        <!-- کارت هزینه‌ها -->
         <div class="expense-card">
             <div class="expense-header">💰 هزینه‌های این روز</div>
 
@@ -56,7 +55,6 @@
             </div>
         </div>
 
-        <!-- آمار ماه -->
         <div class="stats-card">
             <div class="stats-header">📊 آمار ماه</div>
             <div class="stats-row">
@@ -69,8 +67,19 @@
             </div>
         </div>
 
+        <!-- نمودار هزینه‌ها -->
+        <div class="chart-card">
+            <div class="chart-header">📊 نمودار هزینه‌های ماه</div>
+            <div class="chart-wrapper">
+                <canvas id="expensesChart"></canvas>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script src="js/common.js"></script>
     <script src="js/expenses.js"></script>
 </body>

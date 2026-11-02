@@ -320,3 +320,12 @@ body.dark .clear-all-btn {
     background: #4a2c2c;
     color: #ff6b6b;
 }
+
+/* ===== نمودار در تم تاریک ===== */
+body.dark .chart-card {
+    background: #353a4d;
+}
+
+body.dark .chart-header {
+    color: #7c9aff;
+}
