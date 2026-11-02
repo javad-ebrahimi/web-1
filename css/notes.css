@@ -1,0 +1,135 @@
+/* ===== دکمه افزودن ===== */
+.add-note-btn {
+    width: 100%;
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 18px;
+    transition: all 0.2s;
+}
+
+.add-note-btn:hover {
+    background: #3a56c4;
+    transform: translateY(-1px);
+}
+
+/* ===== لیست یادداشت‌ها ===== */
+.notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.note-card {
+    background: #f8f9fc;
+    border-radius: 12px;
+    padding: 15px 18px;
+    border-right: 4px solid #4a6cf7;
+    transition: all 0.2s;
+    position: relative;
+    cursor: pointer;
+}
+
+.note-card:hover {
+    background: #f0f3fa;
+    transform: translateX(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.note-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.note-title {
+    font-weight: bold;
+    font-size: 15px;
+    color: #333;
+    word-wrap: break-word;
+    flex: 1;
+}
+
+.note-delete {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.note-delete:hover {
+    background: #ffe5e0;
+}
+
+.note-content {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 8px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.note-date {
+    font-size: 11px;
+    color: #aaa;
+}
+
+/* ===== حالت خالی ===== */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fc;
+    border-radius: 12px;
+}
+
+.empty-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    color: #888;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.empty-hint {
+    font-size: 12px !important;
+    color: #aaa !important;
+}
+
+/* ===== مودال ===== */
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    background: white;
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.7;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4a6cf7;
+}

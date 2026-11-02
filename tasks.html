@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامه‌ریزی کارها</title>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.style.background = "#1a1d29";
+        }
+    </script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/tasks.css">
+    <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 خانه</a>
+        <a href="tasks.html" class="nav-link active">📋 کارها</a>
+        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
+        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
+        <a href="calendar.html" class="nav-link">📅 تقویم</a>
+        <a href="password.html" class="nav-link">🔐 رمز</a>
+        <a href="memory.html" class="nav-link">🧠 حافظه</a>
+        <a href="notes.html" class="nav-link">📝 یادداشت</a>
+    </nav>
+
+    <div class="app">
+        <h1>📋 برنامه‌ریزی کارها</h1>
+
+        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+
+        <!-- نوار انتخاب روز -->
+        <div class="date-nav">
+            <button id="prevDayBtn" title="روز قبل">▶</button>
+            <div class="date-label" id="dateLabel">امروز</div>
+            <button id="nextDayBtn" title="روز بعد">◀</button>
+        </div>
+
+        <!-- کارت آمار (کشو) -->
+        <div class="stats-card">
+            <button class="stats-header" id="statsToggle" type="button">
+                <span>📊 آمار و استریک</span>
+                <span class="stats-arrow" id="statsArrow">▼</span>
+            </button>
+
+            <div class="stats-body" id="statsBody">
+                <div class="stats-row">
+                    <span>امروز:</span>
+                    <span id="todayStats">۰ از ۰ انجام شده</span>
+                </div>
+                <div class="stats-progress-bar">
+                    <div class="stats-progress-fill" id="todayProgress"></div>
+                </div>
+                <div class="stats-row stats-streak">
+                    <span>🔥 استریک:</span>
+                    <span id="streakStats">۰ روز</span>
+                </div>
+                <div class="stats-row stats-total">
+                    <span>📈 کل:</span>
+                    <span id="totalStats">۰ کار</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- فرم افزودن کار -->
+        <div class="input-box">
+            <input type="text" id="taskInput" placeholder="یک کار جدید بنویس...">
+            <input type="time" id="timeInput" title="ساعت">
+            <button id="addBtn">افزودن</button>
+            <button id="recurringBtn" class="recurring-btn">🔁 کار تکراری</button>
+        </div>
+
+        <!-- لیست کارها -->
+        <ul id="taskList"></ul>
+
+        <!-- شمارنده -->
+        <p class="counter" id="counter">۰ کار</p>
+
+        <!-- دکمه گزارش -->
+        <button id="reportBtn" class="report-btn">📊 گزارش ماهانه</button>
+    </div>
+
+    <!-- مودال گزارش ماهانه -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 گزارش ماهانه</h2>
+                <button id="closeReportBtn" class="modal-close">✕</button>
+            </div>
+            <div class="modal-body" id="reportBody"></div>
+        </div>
+    </div>
+
+    <!-- مودال کار تکراری -->
+    <div class="modal" id="recurringModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔁 تعریف کار تکراری</h2>
+                <button id="closeRecurringBtn" class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>عنوان کار *</label>
+                    <input type="text" id="recTitle" placeholder="مثلاً: ورزش">
+                </div>
+
+                <div class="form-group">
+                    <label>ساعت (اختیاری)</label>
+                    <input type="time" id="recTime">
+                </div>
+
+                <div class="form-group">
+                    <label>نوع تکرار:</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="recType" value="range" checked> محدوده تاریخ</label>
+                        <label><input type="radio" name="recType" value="weekdays"> روزهای هفته</label>
+                        <label><input type="radio" name="recType" value="specific"> چند روز خاص</label>
+                    </div>
+                </div>
+
+                <div id="recRangeSection" class="rec-section">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>از تاریخ</label>
+                            <input type="date" id="recStartDate">
+                        </div>
+                        <div class="form-group">
+                            <label>تا تاریخ</label>
+                            <input type="date" id="recEndDate">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="recWeekdaysSection" class="rec-section" style="display:none;">
+                    <div class="form-group">
+                        <label>روزهای هفته:</label>
+                        <div class="weekdays-grid">
+                            <label><input type="checkbox" class="weekday" value="6"> شنبه</label>
+                            <label><input type="checkbox" class="weekday" value="0"> یکشنبه</label>
+                            <label><input type="checkbox" class="weekday" value="1"> دوشنبه</label>
+                            <label><input type="checkbox" class="weekday" value="2"> سه‌شنبه</label>
+                            <label><input type="checkbox" class="weekday" value="3"> چهارشنبه</label>
+                            <label><input type="checkbox" class="weekday" value="4"> پنجشنبه</label>
+                            <label><input type="checkbox" class="weekday" value="5"> جمعه</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>از تاریخ</label>
+                            <input type="date" id="recWeekStart">
+                        </div>
+                        <div class="form-group">
+                            <label>تا تاریخ</label>
+                            <input type="date" id="recWeekEnd">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="recSpecificSection" class="rec-section" style="display:none;">
+                    <div class="form-group">
+                        <label>روزهای خاص:</label>
+                        <div class="specific-add-row">
+                            <input type="date" id="recSpecificDate">
+                            <button type="button" id="addSpecificDateBtn" class="small-btn">افزودن</button>
+                        </div>
+                        <ul id="specificDatesList" class="specific-list"></ul>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="recCancelBtn" class="bulk-cancel-btn">انصراف</button>
+                    <button type="button" id="recSubmitBtn" class="bulk-submit-btn">ساخت کارها</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/tasks.js"></script>
+</body>
+</html>

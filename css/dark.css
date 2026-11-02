@@ -1,0 +1,124 @@
+/* ========================================== */
+/* ===== حالت تاریک ===== */
+/* ========================================== */
+
+body.dark {
+    background: #1a1d29;
+}
+
+body.dark .app {
+    background: #252938;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark h1 {
+    color: #7c9aff;
+}
+
+body.dark .theme-btn {
+    background: #353a4d;
+}
+
+body.dark .theme-btn:hover {
+    background: #424861;
+}
+
+/* ناوبری */
+body.dark .navbar {
+    background: #252938;
+}
+
+body.dark .nav-link {
+    color: #b8bdd0;
+}
+
+body.dark .nav-link:hover {
+    background: #353a4d;
+}
+
+body.dark .nav-link.active {
+    background: #4a6cf7;
+    color: white;
+}
+
+/* ابزارها */
+body.dark .home-section-title {
+    color: #e5e7eb;
+}
+
+body.dark .menu-card {
+    background: #353a4d;
+    color: #e5e7eb;
+}
+
+body.dark .menu-card:hover {
+    background: #424861;
+    border-color: #4a6cf7;
+}
+
+body.dark .menu-title {
+    color: #7c9aff;
+}
+
+/* داشبورد */
+body.dark .dashboard-card {
+    background: #353a4d;
+}
+
+body.dark .dashboard-header {
+    color: #e5e7eb;
+}
+
+body.dark .dashboard-content {
+    color: #b8bdd0;
+}
+
+body.dark .dashboard-task-list li {
+    border-bottom-color: #424861;
+}
+
+body.dark .dashboard-link {
+    color: #7c9aff;
+}
+
+/* مودال‌ها */
+body.dark .modal-content {
+    background: #252938;
+}
+
+body.dark .modal-header {
+    border-bottom-color: #353a4d;
+}
+
+body.dark .modal-header h2 {
+    color: #7c9aff;
+}
+
+body.dark .modal-close {
+    color: #8b91a8;
+}
+
+body.dark .modal-close:hover {
+    background: #353a4d;
+    color: #e5e7eb;
+}
+
+/* فرم‌ها */
+body.dark .form-group label {
+    color: #b8bdd0;
+}
+
+body.dark .form-group input {
+    background: #353a4d;
+    border-color: #424861;
+    color: #e5e7eb;
+}
+
+body.dark .bulk-cancel-btn {
+    background: #353a4d;
+    color: #b8bdd0;
+}
+
+body.dark .bulk-cancel-btn:hover {
+    background: #424861;
+}

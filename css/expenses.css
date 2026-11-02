@@ -1,0 +1,195 @@
+/* ===== نوار انتخاب روز ===== */
+.date-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f3fa;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+}
+
+.date-nav button {
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.date-nav button:hover {
+    background: #3a56c4;
+}
+
+.date-label {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+    flex: 1;
+    padding: 0 8px;
+}
+
+/* ===== کارت آمار ===== */
+.stats-card {
+    background: #f0f3fa;
+    border-radius: 12px;
+    padding: 15px 18px;
+    margin-bottom: 18px;
+}
+
+.stats-header {
+    font-weight: bold;
+    color: #4a6cf7;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.stats-row span:last-child {
+    font-weight: bold;
+    color: #333;
+}
+
+/* ===== کارت هزینه‌ها ===== */
+.expense-card {
+    background: #f0f8f0;
+    border-radius: 12px;
+    padding: 15px 18px;
+    margin-bottom: 18px;
+}
+
+.expense-header {
+    font-weight: bold;
+    color: #10b981;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.expense-input-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+#expenseDesc {
+    flex: 1 1 100%;
+    padding: 10px;
+    border: 2px solid #cfe8cf;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    background: white;
+}
+
+#expenseAmount {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #cfe8cf;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    background: white;
+    text-align: right;
+    direction: ltr;
+}
+
+#expenseDesc:focus,
+#expenseAmount:focus {
+    outline: none;
+    border-color: #10b981;
+}
+
+#addExpenseBtn {
+    flex: 1;
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#addExpenseBtn:hover {
+    background: #0d9668;
+}
+
+.expense-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.expense-item .expense-desc {
+    flex: 1;
+    color: #333;
+}
+
+.expense-item .expense-amount {
+    font-weight: bold;
+    color: #10b981;
+    margin: 0 8px;
+}
+
+.expense-item .expense-del {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+}
+
+.expense-empty {
+    text-align: center;
+    color: #aaa;
+    font-size: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    list-style: none;
+}
+
+.expense-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #cfe8cf;
+    padding-top: 10px;
+    font-size: 13px;
+    color: #555;
+}
+
+.expense-total span:last-child {
+    font-weight: bold;
+    color: #10b981;
+    font-size: 15px;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>یادداشت‌ها</title>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.style.background = "#1a1d29";
+        }
+    </script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/notes.css">
+    <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 خانه</a>
+        <a href="tasks.html" class="nav-link">📋 کارها</a>
+        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
+        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
+        <a href="calendar.html" class="nav-link">📅 تقویم</a>
+        <a href="password.html" class="nav-link">🔐 رمز</a>
+        <a href="memory.html" class="nav-link">🧠 حافظه</a>
+        <a href="notes.html" class="nav-link active">📝 یادداشت</a>
+    </nav>
+
+    <div class="app">
+        <h1>📝 یادداشت‌های من</h1>
+
+        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+
+        <!-- دکمه افزودن -->
+        <button id="addNoteBtn" class="add-note-btn">+ یادداشت جدید</button>
+
+        <!-- لیست یادداشت‌ها -->
+        <div id="notesList" class="notes-list"></div>
+
+        <!-- حالت خالی -->
+        <div id="emptyState" class="empty-state" style="display:none;">
+            <div class="empty-icon">📝</div>
+            <p>هنوز یادداشتی نداری.</p>
+            <p class="empty-hint">روی «یادداشت جدید» بزن تا شروع کنی.</p>
+        </div>
+    </div>
+
+    <!-- مودال ویرایش/افزودن -->
+    <div class="modal" id="noteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">یادداشت جدید</h2>
+                <button id="closeModalBtn" class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>عنوان</label>
+                    <input type="text" id="noteTitle" placeholder="مثلاً: ایده برای پروژه">
+                </div>
+                <div class="form-group">
+                    <label>متن یادداشت</label>
+                    <textarea id="noteContent" placeholder="هرچی می‌خوای بنویس..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="cancelNoteBtn" class="bulk-cancel-btn">انصراف</button>
+                    <button type="button" id="saveNoteBtn" class="bulk-submit-btn">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/notes.js"></script>
+</body>
+</html>

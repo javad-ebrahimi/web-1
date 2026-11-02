@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ماشین‌حساب</title>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.style.background = "#1a1d29";
+        }
+    </script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/calculator.css">
+    <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 خانه</a>
+        <a href="tasks.html" class="nav-link">📋 کارها</a>
+        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
+        <a href="calculator.html" class="nav-link active">🧮 ماشین‌حساب</a>
+        <a href="calendar.html" class="nav-link">📅 تقویم</a>
+        <a href="password.html" class="nav-link">🔐 رمز</a>
+        <a href="memory.html" class="nav-link">🧠 حافظه</a>
+        <a href="notes.html" class="nav-link">📝 یادداشت</a>
+    </nav>
+
+    <div class="app">
+        <h1>🧮 ماشین‌حساب</h1>
+
+        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+
+        <!-- نمایشگر -->
+        <div class="calc-display">
+            <div class="calc-history" id="calcHistory"></div>
+            <div class="calc-result" id="calcDisplay">0</div>
+        </div>
+
+        <!-- دکمه‌ها -->
+        <div class="calc-keys">
+            <button class="calc-btn calc-clear" data-action="clear">C</button>
+            <button class="calc-btn calc-action" data-action="sign">±</button>
+            <button class="calc-btn calc-action" data-action="percent">%</button>
+            <button class="calc-btn calc-operator" data-op="÷">÷</button>
+
+            <button class="calc-btn calc-num" data-num="7">7</button>
+            <button class="calc-btn calc-num" data-num="8">8</button>
+            <button class="calc-btn calc-num" data-num="9">9</button>
+            <button class="calc-btn calc-operator" data-op="×">×</button>
+
+            <button class="calc-btn calc-num" data-num="4">4</button>
+            <button class="calc-btn calc-num" data-num="5">5</button>
+            <button class="calc-btn calc-num" data-num="6">6</button>
+            <button class="calc-btn calc-operator" data-op="−">−</button>
+
+            <button class="calc-btn calc-num" data-num="1">1</button>
+            <button class="calc-btn calc-num" data-num="2">2</button>
+            <button class="calc-btn calc-num" data-num="3">3</button>
+            <button class="calc-btn calc-operator" data-op="+">+</button>
+
+            <button class="calc-btn calc-num calc-wide" data-num="0">0</button>
+            <button class="calc-btn calc-num" data-num=".">.</button>
+            <button class="calc-btn calc-equals" data-action="equals">=</button>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/calculator.js"></script>
+</body>
+</html>

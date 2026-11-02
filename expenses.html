@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت هزینه‌ها</title>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.style.background = "#1a1d29";
+        }
+    </script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/expenses.css">
+    <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 خانه</a>
+        <a href="tasks.html" class="nav-link">📋 کارها</a>
+        <a href="expenses.html" class="nav-link active">💰 هزینه‌ها</a>
+        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
+        <a href="calendar.html" class="nav-link">📅 تقویم</a>
+        <a href="password.html" class="nav-link">🔐 رمز</a>
+        <a href="memory.html" class="nav-link">🧠 حافظه</a>
+        <a href="notes.html" class="nav-link">📝 یادداشت</a>
+    </nav>
+
+    <div class="app">
+        <h1>💰 مدیریت هزینه‌ها</h1>
+
+        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+
+        <!-- نوار انتخاب روز -->
+        <div class="date-nav">
+            <button id="prevDayBtn" title="روز قبل">▶</button>
+            <div class="date-label" id="dateLabel">امروز</div>
+            <button id="nextDayBtn" title="روز بعد">◀</button>
+        </div>
+
+        <!-- کارت هزینه‌ها -->
+        <div class="expense-card">
+            <div class="expense-header">💰 هزینه‌های این روز</div>
+
+            <div class="expense-input-row">
+                <input type="text" id="expenseDesc" placeholder="توضیح (مثلاً: ناهار)">
+                <input type="text" id="expenseAmount" placeholder="مبلغ (تومان)" inputmode="numeric">
+                <button id="addExpenseBtn">افزودن</button>
+            </div>
+
+            <ul id="expenseList" class="expense-list"></ul>
+
+            <div class="expense-total">
+                <span>جمع این روز:</span>
+                <span id="expenseTotal">۰ تومان</span>
+            </div>
+        </div>
+
+        <!-- آمار ماه -->
+        <div class="stats-card">
+            <div class="stats-header">📊 آمار ماه</div>
+            <div class="stats-row">
+                <span>جمع ماه:</span>
+                <span id="monthTotal">۰ تومان</span>
+            </div>
+            <div class="stats-row">
+                <span>تعداد هزینه‌ها:</span>
+                <span id="monthCount">۰</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/expenses.js"></script>
+</body>
+</html>

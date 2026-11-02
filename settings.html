@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تنظیمات و پشتیبان‌گیری</title>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.style.background = "#1a1d29";
+        }
+    </script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-link">🏠 خانه</a>
+        <a href="tasks.html" class="nav-link">📋 کارها</a>
+        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
+        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
+        <a href="calendar.html" class="nav-link">📅 تقویم</a>
+        <a href="password.html" class="nav-link">🔐 رمز</a>
+        <a href="memory.html" class="nav-link">🧠 حافظه</a>
+        <a href="notes.html" class="nav-link">📝 یادداشت</a>
+        <a href="settings.html" class="nav-link active">⚙️ تنظیمات</a>
+    </nav>
+
+    <div class="app">
+        <h1>⚙️ تنظیمات</h1>
+
+        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+
+        <div class="settings-card">
+            <div class="settings-header">
+                <h2>📤 دانلود پشتیبان</h2>
+                <p>تمام داده‌های خود (کارها، هزینه‌ها، یادداشت‌ها) را در یک فایل ذخیره کنید.</p>
+            </div>
+            <button id="exportBtn" class="settings-btn export-btn">دانلود فایل پشتیبان (JSON)</button>
+        </div>
+
+        <div class="settings-card warning-card">
+            <div class="settings-header">
+                <h2>📥 بازیابی از پشتیبان</h2>
+                <p>فایل پشتیبان قبلی را آپلود کنید. <strong style="color:#e74c3c;">هشدار: داده‌های فعلی پاک می‌شوند!</strong></p>
+            </div>
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+            <button id="importBtn" class="settings-btn import-btn">انتخاب فایل پشتیبان</button>
+        </div>
+
+        <div class="settings-card danger-card">
+            <div class="settings-header">
+                <h2>🗑️ پاک کردن همه داده‌ها</h2>
+                <p>تمام کارها، هزینه‌ها و یادداشت‌ها برای همیشه پاک می‌شوند.</p>
+            </div>
+            <button id="clearAllBtn" class="settings-btn clear-all-btn">پاک کردن کل اطلاعات</button>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

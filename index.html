@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامه‌ریزی من</title>
+    <script>
+        if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.style.background = "#1a1d29";
+        }
+    </script>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+
+    <!-- نوار ناوبری -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-link active">🏠 خانه</a>
+        <a href="tasks.html" class="nav-link">📋 کارها</a>
+        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
+        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
+        <a href="calendar.html" class="nav-link">📅 تقویم</a>
+        <a href="password.html" class="nav-link">🔐 رمز</a>
+        <a href="memory.html" class="nav-link">🧠 حافظه</a>
+        <a href="notes.html" class="nav-link">📝 یادداشت</a>
+    </nav>
+
+    <!-- داشبورد -->
+    <div class="app">
+        <h1 id="greeting">سلام 👋</h1>
+
+        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+
+        <!-- خلاصه کارها -->
+        <div class="dashboard-card">
+            <div class="dashboard-header">
+                <span>📋 کارهای امروز</span>
+                <a href="tasks.html" class="dashboard-link">مشاهده همه ←</a>
+            </div>
+            <div id="tasksSummary" class="dashboard-content">
+                در حال بارگذاری...
+            </div>
+        </div>
+
+        <!-- خلاصه هزینه‌ها -->
+        <div class="dashboard-card">
+            <div class="dashboard-header">
+                <span>💰 هزینه‌های امروز</span>
+                <a href="expenses.html" class="dashboard-link">مشاهده همه ←</a>
+            </div>
+            <div id="expensesSummary" class="dashboard-content">
+                در حال بارگذاری...
+            </div>
+        </div>
+
+        <!-- یادداشت‌های اخیر -->
+        <div class="dashboard-card">
+            <div class="dashboard-header">
+                <span>📝 یادداشت‌های اخیر</span>
+                <a href="notes.html" class="dashboard-link">مشاهده همه ←</a>
+            </div>
+            <div id="notesSummary" class="dashboard-content">
+                در حال بارگذاری...
+            </div>
+        </div>
+
+        <!-- ابزارها -->
+        <h2 class="home-section-title">ابزارها</h2>
+        <div class="home-menu">
+            <a href="tasks.html" class="menu-card">
+                <div class="menu-icon">📋</div>
+                <div class="menu-title">کارها</div>
+            </a>
+            <a href="expenses.html" class="menu-card">
+                <div class="menu-icon">💰</div>
+                <div class="menu-title">هزینه‌ها</div>
+            </a>
+            <a href="calendar.html" class="menu-card">
+                <div class="menu-icon">📅</div>
+                <div class="menu-title">تقویم</div>
+            </a>
+            <a href="notes.html" class="menu-card">
+                <div class="menu-icon">📝</div>
+                <div class="menu-title">یادداشت</div>
+            </a>
+            <a href="calculator.html" class="menu-card">
+                <div class="menu-icon">🧮</div>
+                <div class="menu-title">ماشین‌حساب</div>
+            </a>
+            <a href="password.html" class="menu-card">
+                <div class="menu-icon">🔐</div>
+                <div class="menu-title">رمز</div>
+            </a>
+            <a href="memory.html" class="menu-card">
+                <div class="menu-icon">🧠</div>
+                <div class="menu-title">بازی حافظه</div>
+            </a>
+        </div>
+
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
