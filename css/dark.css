@@ -12,8 +12,8 @@ body.dark .app {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-body.dark h1,
-body.dark h2,
+body.dark h1, 
+body.dark h2, 
 body.dark h3 {
     color: #7c9aff;
 }
@@ -46,105 +46,32 @@ body.dark .nav-link.active {
     color: white;
 }
 
-/* ===== داشبورد (صفحه خانه) ===== */
-body.dark .dashboard-card {
-    background: #353a4d;
-    border-right-color: #4a6cf7;
+/* ===== فرم‌ها و ورودی‌ها (همه صفحات) ===== */
+body.dark input, 
+body.dark textarea, 
+body.dark select {
+    background: #353a4d !important;
+    border-color: #424861 !important;
+    color: #e5e7eb !important;
 }
 
-body.dark .dashboard-header {
-    color: #e5e7eb;
+body.dark input::placeholder, 
+body.dark textarea::placeholder {
+    color: #8b91a8 !important;
 }
 
-body.dark .dashboard-content {
-    color: #b8bdd0;
+body.dark input:focus, 
+body.dark textarea:focus {
+    border-color: #4a6cf7 !important;
 }
 
-body.dark .dashboard-empty {
-    color: #8b91a8;
-}
-
-body.dark .dashboard-task-list li {
-    border-bottom-color: #424861;
-}
-
-body.dark .dashboard-link {
-    color: #7c9aff;
-}
-
-/* ===== منوی ابزارها ===== */
-body.dark .home-section-title {
-    color: #e5e7eb;
-}
-
-body.dark .menu-card {
-    background: #353a4d;
-    color: #e5e7eb;
-}
-
-body.dark .menu-card:hover {
-    background: #424861;
-    border-color: #4a6cf7;
-}
-
-body.dark .menu-title {
-    color: #7c9aff;
-}
-
-/* ===== مودال‌ها (برای همه صفحات) ===== */
-body.dark .modal-content {
-    background: #252938;
-}
-
-body.dark .modal-header {
-    border-bottom-color: #353a4d;
-}
-
-body.dark .modal-header h2 {
-    color: #7c9aff;
-}
-
-body.dark .modal-close {
-    color: #8b91a8;
-}
-
-body.dark .modal-close:hover {
-    background: #353a4d;
-    color: #e5e7eb;
-}
-
-body.dark .modal-body label {
-    color: #b8bdd0;
-}
-
-body.dark .modal-body input,
-body.dark .modal-body textarea,
-body.dark .modal-body select {
-    background: #353a4d;
-    border-color: #424861;
-    color: #e5e7eb;
-}
-
-body.dark .bulk-cancel-btn {
-    background: #353a4d;
-    color: #b8bdd0;
-}
-
-body.dark .bulk-cancel-btn:hover {
-    background: #424861;
-}
-
-/* ===== صفحه کارها ===== */
+/* ===== نوار تاریخ و کارت آمار (صفحه کارها) ===== */
 body.dark .date-nav {
     background: #353a4d;
 }
 
 body.dark .date-nav button {
     background: #4a6cf7;
-}
-
-body.dark .date-nav button:hover {
-    background: #5e7bff;
 }
 
 body.dark .date-label {
@@ -157,6 +84,7 @@ body.dark .stats-card {
 
 body.dark .stats-header {
     color: #7c9aff;
+    background: transparent;
 }
 
 body.dark .stats-row {
@@ -171,38 +99,12 @@ body.dark .stats-progress-bar {
     background: #424861;
 }
 
-body.dark .stats-streak,
+body.dark .stats-streak, 
 body.dark .stats-total {
     border-top-color: #424861;
 }
 
-body.dark #taskInput,
-body.dark #timeInput {
-    background: #353a4d;
-    border-color: #424861;
-    color: #e5e7eb;
-}
-
-body.dark #taskInput::placeholder,
-body.dark #timeInput::placeholder {
-    color: #8b91a8;
-}
-
-body.dark #taskInput:focus,
-body.dark #timeInput:focus {
-    border-color: #4a6cf7;
-}
-
-body.dark .recurring-btn {
-    background: #2e2a45;
-    color: #a78bfa;
-    border-color: #a78bfa;
-}
-
-body.dark .recurring-btn:hover {
-    background: #3a3454;
-}
-
+/* ===== لیست کارها ===== */
 body.dark .task-item {
     background: #353a4d;
 }
@@ -237,80 +139,75 @@ body.dark .report-btn {
     border-color: #5a5030;
 }
 
-body.dark .report-btn:hover {
-    background: #4a4428;
+body.dark .recurring-btn {
+    background: #2e2a45;
+    color: #a78bfa;
+    border-color: #a78bfa;
 }
 
-/* ===== مودال کار تکراری و گزارش ===== */
-body.dark .radio-group label {
+/* ===== داشبورد (صفحه خانه) ===== */
+body.dark .dashboard-card {
     background: #353a4d;
+    border-right-color: #4a6cf7;
+}
+
+body.dark .dashboard-header {
     color: #e5e7eb;
 }
 
-body.dark .radio-group label:hover {
-    background: #424861;
+body.dark .dashboard-content {
+    color: #b8bdd0;
 }
 
-body.dark .rec-section {
-    background: #353a4d;
-}
-
-body.dark .weekdays-grid label {
-    background: #424861;
-    color: #e5e7eb;
-}
-
-body.dark .weekdays-grid label:hover {
-    background: #4e556f;
-}
-
-body.dark .specific-list li {
-    background: #424861;
-    color: #e5e7eb;
-}
-
-body.dark .specific-list li button {
-    color: #ff6b6b;
-}
-
-body.dark .stat-box {
-    background: #353a4d;
-}
-
-body.dark .stat-box .label {
+body.dark .dashboard-empty {
     color: #8b91a8;
 }
 
-body.dark .progress-bar {
-    background: #424861;
+body.dark .dashboard-task-list li {
+    border-bottom-color: #424861;
 }
 
-body.dark .progress-text {
-    color: #b8bdd0;
-}
-
-body.dark .month-section h3 {
+body.dark .home-section-title {
     color: #e5e7eb;
 }
 
-body.dark .day-row {
+body.dark .menu-card {
     background: #353a4d;
-    color: #b8bdd0;
+    color: #e5e7eb;
 }
 
-body.dark .day-row .day-date {
-    color: #b8bdd0;
+body.dark .menu-card:hover {
+    background: #424861;
+    border-color: #4a6cf7;
 }
 
-body.dark .day-row .day-count {
+body.dark .menu-title {
     color: #7c9aff;
 }
 
-body.dark .empty-report {
+/* ===== مودال‌ها ===== */
+body.dark .modal-content {
+    background: #252938;
+}
+
+body.dark .modal-header {
+    border-bottom-color: #353a4d;
+}
+
+body.dark .modal-header h2 {
+    color: #7c9aff;
+}
+
+body.dark .modal-close {
     color: #8b91a8;
 }
 
-/* ===== صفحه هزینه‌ها ===== */
+body.dark .modal-close:hover {
+    background: #353a4d;
+    color: #e5e7eb;
+}
+
+/* ===== هزینه‌ها ===== */
 body.dark .expense-card {
     background: #2a3a2e;
 }
@@ -319,33 +216,9 @@ body.dark .expense-header {
     color: #4ade80;
 }
 
-body.dark #expenseDesc,
-body.dark #expenseAmount {
-    background: #353a4d;
-    border-color: #424861;
-    color: #e5e7eb;
-}
-
-body.dark #expenseDesc::placeholder,
-body.dark #expenseAmount::placeholder {
-    color: #8b91a8;
-}
-
-body.dark #expenseDesc:focus,
-body.dark #expenseAmount:focus {
-    border-color: #4ade80;
-}
-
 body.dark .expense-item {
     background: #353a4d;
-}
-
-body.dark .expense-item .expense-desc {
     color: #e5e7eb;
-}
-
-body.dark .expense-item .expense-amount {
-    color: #4ade80;
 }
 
 body.dark .expense-empty {
@@ -358,17 +231,9 @@ body.dark .expense-total {
     color: #b8bdd0;
 }
 
-body.dark .expense-total span:last-child {
-    color: #4ade80;
-}
-
 /* ===== ماشین‌حساب ===== */
 body.dark .calc-display {
     background: #353a4d;
-}
-
-body.dark .calc-history {
-    color: #8b91a8;
 }
 
 body.dark .calc-result {
@@ -385,9 +250,14 @@ body.dark .calc-num {
     border-color: #4e556f;
 }
 
-body.dark .calc-num:hover {
-    background: #4e556f;
-    border-color: #4a6cf7;
+body.dark .calc-operator {
+    background: #4a6cf7;
+    color: white;
+}
+
+body.dark .calc-equals {
+    background: #10b981;
+    color: white;
 }
 
 body.dark .calc-clear {
@@ -395,54 +265,13 @@ body.dark .calc-clear {
     color: #ff6b6b;
 }
 
-body.dark .calc-clear:hover {
-    background: #5a3636;
-}
-
-body.dark .calc-action {
-    background: #2e3450;
-    color: #7c9aff;
-}
-
-body.dark .calc-action:hover {
-    background: #3a4468;
-}
-
-body.dark .calc-operator {
-    background: #4a6cf7;
-}
-
-body.dark .calc-operator:hover {
-    background: #5e7bff;
-}
-
-body.dark .calc-equals {
-    background: #10b981;
-}
-
-body.dark .calc-equals:hover {
-    background: #4ade80;
-}
-
 /* ===== تقویم ===== */
 body.dark .calendar-nav {
     background: #353a4d;
 }
 
-body.dark .calendar-nav button {
-    background: #4a6cf7;
-}
-
-body.dark .calendar-nav button:hover {
-    background: #5e7bff;
-}
-
 body.dark .calendar-month-label {
     color: #e5e7eb;
-}
-
-body.dark .calendar-weekday {
-    color: #8b91a8;
 }
 
 body.dark .calendar-day {
@@ -450,27 +279,9 @@ body.dark .calendar-day {
     color: #e5e7eb;
 }
 
-body.dark .calendar-day:hover {
-    background: #424861;
-    border-color: #4a6cf7;
-}
-
 body.dark .calendar-day.today {
     background: #4a6cf7;
     color: white;
-    border-color: #3a56c4;
-}
-
-body.dark .calendar-day.selected {
-    border-color: #10b981;
-    background: #2a3a2e;
-    color: #4ade80;
-}
-
-body.dark .calendar-day.today.selected {
-    background: #4a6cf7;
-    color: white;
-    border-color: #10b981;
 }
 
 body.dark .day-info {
@@ -482,169 +293,14 @@ body.dark .day-info-title {
     border-bottom-color: #424861;
 }
 
-body.dark .day-info-empty {
-    color: #8b91a8;
-}
-
-body.dark .day-info-section h4 {
-    color: #b8bdd0;
-}
-
 body.dark .day-info-list li {
     background: #424861;
     color: #e5e7eb;
 }
 
-body.dark .day-info-list li.done {
-    color: #6b7280;
-}
-
 body.dark .day-info-total {
     background: #2a3a2e;
     color: #b8bdd0;
-}
-
-body.dark .day-info-total span:last-child {
-    color: #4ade80;
-}
-
-/* ===== تولید رمز ===== */
-body.dark .password-display {
-    background: #353a4d;
-}
-
-body.dark #passwordOutput {
-    color: #e5e7eb;
-}
-
-body.dark .copy-btn {
-    background: #4a6cf7;
-}
-
-body.dark .copy-btn:hover {
-    background: #5e7bff;
-}
-
-body.dark .copy-btn.copied {
-    background: #10b981;
-}
-
-body.dark .strength-bar {
-    background: #424861;
-}
-
-body.dark .strength-label {
-    color: #8b91a8;
-}
-
-body.dark .password-options {
-    background: #353a4d;
-}
-
-body.dark .option-header {
-    color: #b8bdd0;
-}
-
-body.dark #lengthInput {
-    background: #424861;
-}
-
-body.dark .option-checkbox {
-    background: #424861;
-    border-color: #4e556f;
-    color: #e5e7eb;
-}
-
-body.dark .option-checkbox:hover {
-    border-color: #4a6cf7;
-}
-
-body.dark .option-checkbox input[type="checkbox"]:checked + span {
-    color: #7c9aff;
-}
-
-body.dark .generate-btn {
-    background: #4a6cf7;
-}
-
-body.dark .generate-btn:hover {
-    background: #5e7bff;
-}
-
-/* ===== بازی حافظه ===== */
-body.dark .memory-stat {
-    background: #353a4d;
-}
-
-body.dark .memory-stat-label {
-    color: #8b91a8;
-}
-
-body.dark .memory-stat-value {
-    color: #7c9aff;
-}
-
-body.dark .memory-card-front {
-    background: #353a4d;
-    border-color: #424861;
-}
-
-body.dark .memory-card.matched .memory-card-front {
-    background: #2a3a2e;
-    border-color: #10b981;
-}
-
-body.dark .new-game-btn {
-    background: #4a6cf7;
-}
-
-body.dark .new-game-btn:hover {
-    background: #5e7bff;
-}
-
-/* ===== یادداشت‌ها ===== */
-body.dark .add-note-btn {
-    background: #4a6cf7;
-}
-
-body.dark .add-note-btn:hover {
-    background: #5e7bff;
-}
-
-body.dark .note-card {
-    background: #353a4d;
-}
-
-body.dark .note-card:hover {
-    background: #424861;
-}
-
-body.dark .note-title {
-    color: #e5e7eb;
-}
-
-body.dark .note-content {
-    color: #b8bdd0;
-}
-
-body.dark .note-date {
-    color: #8b91a8;
-}
-
-body.dark .note-delete {
-    color: #ff6b6b;
-}
-
-body.dark .note-delete:hover {
-    background: #4a2c2c;
-}
-
-body.dark .empty-state {
-    background: #353a4d;
-}
-
-body.dark .empty-state p {
-    color: #8b91a8;
 }
 
 /* ===== تنظیمات ===== */
@@ -663,8 +319,4 @@ body.dark .settings-header p {
 body.dark .clear-all-btn {
     background: #4a2c2c;
     color: #ff6b6b;
-}
-
-body.dark .clear-all-btn:hover {
-    background: #5a3636;
 }
