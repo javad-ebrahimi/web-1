@@ -40,7 +40,7 @@ function toggleTheme() {
 
 // ===== 🚀 تزریق هوشمند قالب و سایدبار =====
 function initThemeAndSidebar() {
-    // ۱. لینک کردن فایل CSS جدید
+    // ۱. لینک کردن فایل CSS جدید (فقط اگه از قبل نیست)
     if (!document.querySelector('link[href="css/theme.css"]')) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
@@ -48,12 +48,19 @@ function initThemeAndSidebar() {
         document.head.appendChild(link);
     }
 
-    // ۲. ساخت سایدبار کامل
+    // ۲. ساخت سایدبار و دکمه موبایل (توی همه صفحات)
     if (!document.querySelector('.sidebar')) {
+        
+        // دکمه همبرگری برای موبایل
+        const mobileBtn = document.createElement('button');
+        mobileBtn.className = 'mobile-menu-btn';
+        mobileBtn.innerHTML = '☰';
+        document.body.appendChild(mobileBtn);
+
+        // نوار کناری
         const sidebar = document.createElement('aside');
         sidebar.className = 'sidebar';
         
-        // ساخت منوی کامل با آیکون و متن
         sidebar.innerHTML = `
             <div style="display: flex; flex-direction: column; gap: 5px; width: 100%;">
                 <a href="index.html" class="nav-item-home" title="خانه">🏠 <span>خانه</span></a>
@@ -68,6 +75,11 @@ function initThemeAndSidebar() {
             </div>
         `;
         document.body.appendChild(sidebar);
+
+        // باز و بسته کردن منو با کلیک روی دکمه همبرگری
+        mobileBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('mobile-open');
+        });
     }
 
     // ۳. پیدا کردن کانتینر اصلی قدیمی
