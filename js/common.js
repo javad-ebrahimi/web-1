@@ -38,7 +38,7 @@ function toggleTheme() {
     }
 }
 
-// ===== 🚀 تزریق سایدبار (فقط دکمه خانه) =====
+// ===== 🚀 تزریق سایدبار =====
 function initThemeAndSidebar() {
     if (!document.querySelector('link[href="css/theme.css"]')) {
         const link = document.createElement('link');
@@ -48,16 +48,31 @@ function initThemeAndSidebar() {
     }
 
     if (!document.querySelector('.sidebar')) {
-        const sidebar = document.createElement('aside');
-        sidebar.className = 'sidebar';
-        
-        // فقط دکمه خانه
-        sidebar.innerHTML = `
-            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center;">
-                <a href="index.html" class="nav-item-home" title="بازگشت به خانه">🏠</a>
+        // ۱. منوی کامل برای دسکتاپ
+        const desktopNav = document.createElement('aside');
+        desktopNav.className = 'sidebar desktop-nav';
+        desktopNav.innerHTML = `
+            <div style="display: flex; flex-direction: column; gap: 5px; width: 100%;">
+                <a href="index.html" class="nav-item-home" title="خانه">🏠 <span>خانه</span></a>
+                <a href="tasks.html" class="nav-item-home" title="کارها">📋 <span>کارها</span></a>
+                <a href="expenses.html" class="nav-item-home" title="هزینه‌ها">💰 <span>هزینه‌ها</span></a>
+                <a href="calculator.html" class="nav-item-home" title="ماشین‌حساب">🧮 <span>ماشین‌حساب</span></a>
+                <a href="calendar.html" class="nav-item-home" title="تقویم">📅 <span>تقویم</span></a>
+                <a href="notes.html" class="nav-item-home" title="یادداشت‌ها">📝 <span>یادداشت</span></a>
+                <a href="password.html" class="nav-item-home" title="تولید رمز">🔐 <span>تولید رمز</span></a>
+                <a href="memory.html" class="nav-item-home" title="بازی حافظه">🧠 <span>بازی حافظه</span></a>
+                <a href="settings.html" class="nav-item-home" title="تنظیمات">⚙️ <span>تنظیمات</span></a>
             </div>
         `;
-        document.body.appendChild(sidebar);
+        document.body.appendChild(desktopNav);
+
+        // ۲. منوی موبایل (فقط دکمه خانه)
+        const mobileNav = document.createElement('aside');
+        mobileNav.className = 'sidebar mobile-nav';
+        mobileNav.innerHTML = `
+            <a href="index.html" class="nav-item-home" title="بازگشت به خانه">🏠</a>
+        `;
+        document.body.appendChild(mobileNav);
     }
 
     const oldApp = document.querySelector('.app');
