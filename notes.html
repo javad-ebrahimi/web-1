@@ -4,53 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>یادداشت‌ها</title>
-    <script>
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.style.background = "#1a1d29";
-        }
-    </script>
-    <link rel="stylesheet" href="css/base.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    
+    <!-- فایل مادر -->
+    <link rel="stylesheet" href="css/theme.css">
+    
+    <!-- فایل اختصاصی یادداشت‌ها -->
     <link rel="stylesheet" href="css/notes.css">
-    <link rel="stylesheet" href="css/dark.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="nav-link">🏠 خانه</a>
-        <a href="tasks.html" class="nav-link">📋 کارها</a>
-        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
-        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
-        <a href="calendar.html" class="nav-link">📅 تقویم</a>
-        <a href="password.html" class="nav-link">🔐 رمز</a>
-        <a href="memory.html" class="nav-link">🧠 حافظه</a>
-        <a href="notes.html" class="nav-link active">📝 یادداشت</a>
-    </nav>
-
-    <div class="app">
-        <h1>📝 یادداشت‌های من</h1>
-
-        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+    <main class="main-content">
+        
+        <header class="page-header">
+            <div>
+                <h1>📝 یادداشت‌های من</h1>
+                <p>ایده‌ها و نکته‌ها</p>
+            </div>
+            <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
 
         <!-- دکمه افزودن -->
-        <button id="addNoteBtn" class="add-note-btn">+ یادداشت جدید</button>
+        <button id="addNoteBtn" class="btn-primary" style="width: 100%; margin-bottom: 20px;">+ یادداشت جدید</button>
 
         <!-- لیست یادداشت‌ها -->
-        <div id="notesList" class="notes-list"></div>
+        <div id="notesList" style="display: flex; flex-direction: column;"></div>
 
         <!-- حالت خالی -->
-        <div id="emptyState" class="empty-state" style="display:none;">
-            <div class="empty-icon">📝</div>
-            <p>هنوز یادداشتی نداری.</p>
-            <p class="empty-hint">روی «یادداشت جدید» بزن تا شروع کنی.</p>
+        <div id="emptyState" class="app-card" style="display:none; text-align: center; padding: 40px;">
+            <div style="font-size: 40px; opacity: 0.5; margin-bottom: 10px;">📝</div>
+            <p style="color: #86868b;">هنوز یادداشتی نداری.</p>
         </div>
-    </div>
+
+    </main>
 
     <!-- مودال ویرایش/افزودن -->
     <div class="modal" id="noteModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitle">یادداشت جدید</h2>
-                <button id="closeModalBtn" class="modal-close">✕</button>
+                <h2 id="modalTitle" style="font-size: 18px;">یادداشت جدید</h2>
+                <button id="closeModalBtn" style="background:none; border:none; font-size:20px; cursor:pointer;">✕</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -59,11 +52,11 @@
                 </div>
                 <div class="form-group">
                     <label>متن یادداشت</label>
-                    <textarea id="noteContent" placeholder="هرچی می‌خوای بنویس..."></textarea>
+                    <textarea id="noteContent" placeholder="هرچی می‌خوای بنویس..." style="min-height: 120px; resize: vertical;"></textarea>
                 </div>
-                <div class="modal-actions">
-                    <button type="button" id="cancelNoteBtn" class="bulk-cancel-btn">انصراف</button>
-                    <button type="button" id="saveNoteBtn" class="bulk-submit-btn">ذخیره</button>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" id="cancelNoteBtn" class="btn-secondary" style="flex: 1;">انصراف</button>
+                    <button type="button" id="saveNoteBtn" class="btn-primary" style="flex: 2;">ذخیره</button>
                 </div>
             </div>
         </div>

@@ -4,45 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تقویم</title>
-    <script>
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.style.background = "#1a1d29";
-        }
-    </script>
-    <link rel="stylesheet" href="css/base.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/calendar.css">
-    <link rel="stylesheet" href="css/dark.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="nav-link">🏠 خانه</a>
-        <a href="tasks.html" class="nav-link">📋 کارها</a>
-        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
-        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
-        <a href="calendar.html" class="nav-link active">📅 تقویم</a>
-        <a href="password.html" class="nav-link">🔐 رمز</a>
-        <a href="memory.html" class="nav-link">🧠 حافظه</a>
-        <a href="notes.html" class="nav-link">📝 یادداشت</a>
-    </nav>
+    <main class="main-content">
+        
+        <header class="page-header">
+            <div>
+                <h1>📅 تقویم</h1>
+                <p id="dateLabel">نمای ماهانه</p>
+            </div>
+            <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
 
-    <div class="app">
-        <h1>📅 تقویم</h1>
+        <!-- کارت تقویم -->
+        <div class="app-card">
+            <!-- هدر تقویم -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <button id="prevMonthBtn" class="btn-secondary" style="padding: 8px 16px;">◀</button>
+                <div id="monthLabel" style="font-weight: 800; font-size: 16px; color: #1d1d1f;">-</div>
+                <button id="nextMonthBtn" class="btn-secondary" style="padding: 8px 16px;">▶</button>
+            </div>
 
-        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
-
-        <div class="calendar-nav">
-            <button id="prevMonthBtn" title="ماه قبل">▶</button>
-            <div class="calendar-month-label" id="monthLabel">-</div>
-            <button id="nextMonthBtn" title="ماه بعد">◀</button>
+            <!-- شبکه تقویم -->
+            <div class="calendar-grid" id="calendarGrid"></div>
         </div>
 
-        <div class="calendar-grid" id="calendarGrid"></div>
-
-        <div class="day-info" id="dayInfo">
-            <div class="day-info-title">روزی را انتخاب کنید</div>
+        <!-- کارت اطلاعات روز -->
+        <div class="app-card" id="dayInfo" style="min-height: 100px;">
+            <div style="text-align: center; color: #aaa;">روزی را انتخاب کنید</div>
         </div>
-    </div>
+
+    </main>
 
     <script src="js/common.js"></script>
     <script src="js/calendar.js"></script>

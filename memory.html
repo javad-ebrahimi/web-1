@@ -4,63 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بازی حافظه</title>
-    <script>
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.style.background = "#1a1d29";
-        }
-    </script>
-    <link rel="stylesheet" href="css/base.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/memory.css">
-    <link rel="stylesheet" href="css/dark.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="nav-link">🏠 خانه</a>
-        <a href="tasks.html" class="nav-link">📋 کارها</a>
-        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
-        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
-        <a href="calendar.html" class="nav-link">📅 تقویم</a>
-        <a href="password.html" class="nav-link">🔐 رمز</a>
-        <a href="memory.html" class="nav-link active">🧠 حافظه</a>
-        <a href="notes.html" class="nav-link">📝 یادداشت</a>
-    </nav>
-
-    <div class="app">
-        <h1>🧠 بازی حافظه</h1>
-
-        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
+    <main class="main-content">
+        
+        <header class="page-header">
+            <div>
+                <h1>🧠 بازی حافظه</h1>
+                <p>جفت‌های همسان را پیدا کن</p>
+            </div>
+            <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
 
         <!-- آمار بازی -->
-        <div class="memory-stats">
-            <div class="memory-stat">
-                <span class="memory-stat-label">حرکات</span>
-                <span class="memory-stat-value" id="movesCount">۰</span>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
+                <span style="font-size: 12px; color: #86868b;">حرکات</span>
+                <h2 id="movesCount" style="font-size: 20px; color: #1d1d1f; margin-top: 5px;">۰</h2>
             </div>
-            <div class="memory-stat">
-                <span class="memory-stat-label">زمان</span>
-                <span class="memory-stat-value" id="timer">۰۰:۰۰</span>
+            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
+                <span style="font-size: 12px; color: #86868b;">زمان</span>
+                <h2 id="timer" style="font-size: 20px; color: #1d1d1f; margin-top: 5px;">۰۰:۰۰</h2>
             </div>
-            <div class="memory-stat">
-                <span class="memory-stat-label">بهترین</span>
-                <span class="memory-stat-value" id="bestScore">-</span>
+            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
+                <span style="font-size: 12px; color: #86868b;">بهترین</span>
+                <h2 id="bestScore" style="font-size: 20px; color: #ff9500; margin-top: 5px;">-</h2>
             </div>
         </div>
 
         <!-- صفحه بازی -->
-        <div class="memory-board" id="memoryBoard"></div>
-
-        <!-- پیام برد -->
-        <div class="win-message" id="winMessage">
-            <div class="win-icon">🎉</div>
-            <h2>آفرین!</h2>
-            <p id="winText">بازی رو تموم کردی!</p>
-            <button id="playAgainBtn" class="play-again-btn">بازی مجدد</button>
+        <div class="app-card">
+            <div class="memory-board" id="memoryBoard"></div>
+            <button id="newGameBtn" class="btn-primary" style="width: 100%; margin-top: 20px;">🔄 بازی جدید</button>
         </div>
 
-        <!-- دکمه بازی جدید -->
-        <button id="newGameBtn" class="new-game-btn">🔄 بازی جدید</button>
-    </div>
+        <!-- پیام برد -->
+        <div class="win-message" id="winMessage" style="display: none; text-align: center; padding: 30px; background: #e8f8ed; border-radius: 20px; border: 1px solid #34c759; margin-top: 20px;">
+            <div style="font-size: 50px; margin-bottom: 10px;">🎉</div>
+            <h2 style="color: #1d1d1f;">آفرین!</h2>
+            <p id="winText" style="color: #555; margin: 10px 0 20px 0;">بازی رو تموم کردی!</p>
+            <button id="playAgainBtn" class="btn-primary">بازی مجدد</button>
+        </div>
+
+    </main>
 
     <script src="js/common.js"></script>
     <script src="js/memory.js"></script>

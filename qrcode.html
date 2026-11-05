@@ -4,44 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سازنده QR Code</title>
-    <script>
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.style.background = "#1a1d29";
-        }
-    </script>
-    <link rel="stylesheet" href="css/base.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/qrcode.css">
-    <link rel="stylesheet" href="css/dark.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="nav-link">🏠 خانه</a>
-        <a href="tasks.html" class="nav-link">📋 کارها</a>
-        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
-        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
-        <a href="calendar.html" class="nav-link">📅 تقویم</a>
-        <a href="qrcode.html" class="nav-link active">📱 QR Code</a>
-        <a href="notes.html" class="nav-link">📝 یادداشت</a>
-        <a href="settings.html" class="nav-link">⚙️ تنظیمات</a>
-    </nav>
+    <main class="main-content">
+        
+        <header class="page-header">
+            <div>
+                <h1>📱 QR Code</h1>
+                <p>تبدیل لینک یا متن به QR</p>
+            </div>
+            <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
 
-    <div class="app">
-        <h1>📱 سازنده QR Code</h1>
-
-        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
-
-        <div class="qr-input-card">
-            <label for="qrText">متن یا لینک خود را وارد کنید:</label>
-            <textarea id="qrText" placeholder="مثلاً: https://google.com"></textarea>
-            <button id="generateQrBtn" class="generate-btn">ساخت QR Code</button>
+        <!-- کارت ورودی -->
+        <div class="app-card">
+            <div class="app-card-title">متن یا لینک خود را وارد کنید</div>
+            <textarea id="qrText" style="min-height: 100px; resize: vertical; direction: ltr;" placeholder="مثلاً: https://google.com"></textarea>
+            <button id="generateQrBtn" class="btn-primary" style="width: 100%;">ساخت QR Code</button>
         </div>
 
-        <div class="qr-result-card" id="qrResultCard" style="display: none;">
-            <div id="qrcode" class="qr-image-container"></div>
-            <button id="downloadQrBtn" class="download-btn">📥 دانلود تصویر</button>
+        <!-- کارت نتیجه -->
+        <div class="app-card" id="qrResultCard" style="display: none; text-align: center;">
+            <div id="qrcode" style="display: flex; justify-content: center; margin-bottom: 20px; padding: 15px; background: white; border-radius: 12px;"></div>
+            <button id="downloadQrBtn" class="btn-primary" style="width: 100%; background: #34c759;">📥 دانلود تصویر</button>
         </div>
-    </div>
+
+    </main>
 
     <!-- کتابخانه ساخت QR -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>

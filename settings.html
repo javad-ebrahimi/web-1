@@ -3,60 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تنظیمات و پشتیبان‌گیری</title>
-    <script>
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.style.background = "#1a1d29";
-        }
-    </script>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/settings.css">
-    <link rel="stylesheet" href="css/dark.css">
+    <title>تنظیمات</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="nav-link">🏠 خانه</a>
-        <a href="tasks.html" class="nav-link">📋 کارها</a>
-        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
-        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
-        <a href="calendar.html" class="nav-link">📅 تقویم</a>
-        <a href="password.html" class="nav-link">🔐 رمز</a>
-        <a href="memory.html" class="nav-link">🧠 حافظه</a>
-        <a href="notes.html" class="nav-link">📝 یادداشت</a>
-        <a href="settings.html" class="nav-link active">⚙️ تنظیمات</a>
-    </nav>
-
-    <div class="app">
-        <h1>⚙️ تنظیمات</h1>
-
-        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
-
-        <div class="settings-card">
-            <div class="settings-header">
-                <h2>📤 دانلود پشتیبان</h2>
-                <p>تمام داده‌های خود (کارها، هزینه‌ها، یادداشت‌ها) را در یک فایل ذخیره کنید.</p>
+    <main class="main-content">
+        
+        <header class="page-header">
+            <div>
+                <h1>⚙️ تنظیمات</h1>
+                <p>مدیریت داده‌ها و پشتیبان‌گیری</p>
             </div>
-            <button id="exportBtn" class="settings-btn export-btn">دانلود فایل پشتیبان (JSON)</button>
+            <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
+
+        <!-- پشتیبان‌گیری -->
+        <div class="app-card">
+            <div class="app-card-title">📤 دانلود پشتیبان</div>
+            <p style="font-size: 13px; color: #86868b; margin-bottom: 15px;">تمام داده‌های خود (کارها، هزینه‌ها، یادداشت‌ها) را در یک فایل ذخیره کنید.</p>
+            <button id="exportBtn" class="btn-primary" style="width: 100%; background: #34c759;">دانلود فایل پشتیبان (JSON)</button>
         </div>
 
-        <div class="settings-card warning-card">
-            <div class="settings-header">
-                <h2>📥 بازیابی از پشتیبان</h2>
-                <p>فایل پشتیبان قبلی را آپلود کنید. <strong style="color:#e74c3c;">هشدار: داده‌های فعلی پاک می‌شوند!</strong></p>
-            </div>
+        <!-- بازیابی -->
+        <div class="app-card" style="border-right: 4px solid #ff9500;">
+            <div class="app-card-title">📥 بازیابی از پشتیبان</div>
+            <p style="font-size: 13px; color: #86868b; margin-bottom: 15px;">فایل پشتیبان قبلی را آپلود کنید. <strong style="color: #ff3b30;">هشدار: داده‌های فعلی پاک می‌شوند!</strong></p>
             <input type="file" id="importFile" accept=".json" style="display: none;">
-            <button id="importBtn" class="settings-btn import-btn">انتخاب فایل پشتیبان</button>
+            <button id="importBtn" class="btn-primary" style="width: 100%;">انتخاب فایل پشتیبان</button>
         </div>
 
-        <div class="settings-card danger-card">
-            <div class="settings-header">
-                <h2>🗑️ پاک کردن همه داده‌ها</h2>
-                <p>تمام کارها، هزینه‌ها و یادداشت‌ها برای همیشه پاک می‌شوند.</p>
-            </div>
-            <button id="clearAllBtn" class="settings-btn clear-all-btn">پاک کردن کل اطلاعات</button>
+        <!-- پاک کردن -->
+        <div class="app-card" style="border-right: 4px solid #ff3b30;">
+            <div class="app-card-title">🗑️ پاک کردن همه داده‌ها</div>
+            <p style="font-size: 13px; color: #86868b; margin-bottom: 15px;">تمام کارها، هزینه‌ها و یادداشت‌ها برای همیشه پاک می‌شوند.</p>
+            <button id="clearAllBtn" class="btn-secondary" style="width: 100%; background: #ffe5e0; color: #ff3b30;">پاک کردن کل اطلاعات</button>
         </div>
-    </div>
+
+    </main>
 
     <script src="js/common.js"></script>
     <script src="js/settings.js"></script>

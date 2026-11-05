@@ -3,114 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>برنامه‌ریزی من</title>
-    <script>
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.style.background = "#1a1d29";
+    <title>داشبورد من</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
+    
+    <style>
+        /* استایل اختصاصی بنر بالای صفحه اصلی */
+        .hero-banner {
+            background: linear-gradient(135deg, #0071e3, #42a5f5);
+            border-radius: 24px;
+            padding: 30px;
+            color: white;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 113, 227, 0.2);
+            transition: all 0.3s;
         }
-    </script>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/dark.css">
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: -50px; left: -50px;
+            width: 200px; height: 200px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+        }
+
+        .hero-banner h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: white !important;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-banner p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.85) !important;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        body.dark .hero-banner {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* کلاس برای متن ابزارها که توی تم تاریک سفید بشه */
+        .tool-title {
+            font-weight: bold;
+            color: #1d1d1f;
+            transition: color 0.3s;
+        }
+        body.dark .tool-title {
+            color: #f8fafc;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- نوار ناوبری -->
-    <nav class="navbar">
-        <a href="index.html" class="nav-link active">🏠 خانه</a>
-        <a href="tasks.html" class="nav-link">📋 کارها</a>
-        <a href="expenses.html" class="nav-link">💰 هزینه‌ها</a>
-        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
-        <a href="calendar.html" class="nav-link">📅 تقویم</a>
-        <a href="password.html" class="nav-link">🔐 رمز</a>
-        <a href="memory.html" class="nav-link">🧠 حافظه</a>
-        <a href="notes.html" class="nav-link">📝 یادداشت</a>
-    </nav>
-
-    <!-- داشبورد -->
-    <div class="app">
-        <h1 id="greeting">سلام 👋</h1>
-
-        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
-
-        <!-- خلاصه کارها -->
-        <div class="dashboard-card">
-            <div class="dashboard-header">
-                <span>📋 کارهای امروز</span>
-                <a href="tasks.html" class="dashboard-link">مشاهده همه ←</a>
+    <main class="main-content">
+        
+        <!-- هدر بالای صفحه (دکمه تم) -->
+        <header class="page-header" style="margin-bottom: 20px;">
+            <div>
+                <h1>داشبورد</h1>
             </div>
-            <div id="tasksSummary" class="dashboard-content">
-                در حال بارگذاری...
+            <button id="themeBtn" class="theme-btn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
+
+        <!-- بنر گرادیانتی -->
+        <header class="hero-banner">
+            <h1 id="greetingText">سلام 👋</h1>
+            <p id="currentDate">تاریخ امروز</p>
+        </header>
+
+        <!-- آمار سریع -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
+                <span style="font-size: 12px; color: #86868b;">کارها</span>
+                <h2 id="statTasks" style="font-size: 20px; color: #0071e3; margin-top: 5px;">۰ / ۰</h2>
+            </div>
+            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
+                <span style="font-size: 12px; color: #86868b;">هزینه</span>
+                <h2 id="statExpenses" style="font-size: 20px; color: #34c759; margin-top: 5px;">۰</h2>
+            </div>
+            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
+                <span style="font-size: 12px; color: #86868b;">استریک</span>
+                <h2 id="statStreak" style="font-size: 20px; color: #ff9500; margin-top: 5px;">۰</h2>
             </div>
         </div>
 
-        <!-- خلاصه هزینه‌ها -->
-        <div class="dashboard-card">
-            <div class="dashboard-header">
-                <span>💰 هزینه‌های امروز</span>
-                <a href="expenses.html" class="dashboard-link">مشاهده همه ←</a>
+        <!-- بخش کارها و هزینه -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+            
+            <div class="app-card" style="margin-bottom: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div class="app-card-title" style="margin-bottom: 0; font-size: 14px;">📋 کارهای امروز</div>
+                    <a href="tasks.html" style="font-size: 12px; color: #0071e3; text-decoration: none;">مشاهده ←</a>
+                </div>
+                <ul id="homeTaskList" style="list-style: none; padding: 0; margin: 0;"></ul>
             </div>
-            <div id="expensesSummary" class="dashboard-content">
-                در حال بارگذاری...
+
+            <div class="app-card" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div class="app-card-title" style="font-size: 14px; margin-bottom: 15px;">💰 هزینه امروز</div>
+                <div id="homeExpensesList" style="font-size: 14px; color: #555; width: 100%;"></div>
             </div>
+
         </div>
 
         <!-- یادداشت‌های اخیر -->
-        <div class="dashboard-card">
-            <div class="dashboard-header">
-                <span>📝 یادداشت‌های اخیر</span>
-                <a href="notes.html" class="dashboard-link">مشاهده همه ←</a>
+        <div class="app-card" style="margin-bottom: 25px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div class="app-card-title" style="margin-bottom: 0; font-size: 14px;">📝 یادداشت‌های اخیر</div>
+                <a href="notes.html" style="font-size: 12px; color: #0071e3; text-decoration: none;">مشاهده ←</a>
             </div>
-            <div id="notesSummary" class="dashboard-content">
-                در حال بارگذاری...
-            </div>
+            <div id="homeNotesList" style="font-size: 13px; color: #555;"></div>
         </div>
 
         <!-- ابزارها -->
-        <h2 class="home-section-title">ابزارها</h2>
-        <div class="home-menu">
-            <a href="tasks.html" class="menu-card">
-                <div class="menu-icon">📋</div>
-                <div class="menu-title">کارها</div>
+        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 15px;">ابزارهای من</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+            <a href="tasks.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">📋</div>
+                <div class="tool-title">کارها</div>
             </a>
-            <a href="expenses.html" class="menu-card">
-                <div class="menu-icon">💰</div>
-                <div class="menu-title">هزینه‌ها</div>
+            <a href="expenses.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">💰</div>
+                <div class="tool-title">هزینه‌ها</div>
             </a>
-            <a href="calendar.html" class="menu-card">
-                <div class="menu-icon">📅</div>
-                <div class="menu-title">تقویم</div>
+            <a href="calculator.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">🧮</div>
+                <div class="tool-title">ماشین‌حساب</div>
             </a>
-            <a href="notes.html" class="menu-card">
-                <div class="menu-icon">📝</div>
-                <div class="menu-title">یادداشت</div>
+            <a href="calendar.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">📅</div>
+                <div class="tool-title">تقویم</div>
             </a>
-            <a href="calculator.html" class="menu-card">
-                <div class="menu-icon">🧮</div>
-                <div class="menu-title">ماشین‌حساب</div>
+            <a href="notes.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">📝</div>
+                <div class="tool-title">یادداشت</div>
             </a>
-            <a href="password.html" class="menu-card">
-                <div class="menu-icon">🔐</div>
-                <div class="menu-title">رمز</div>
+            <a href="password.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">🔐</div>
+                <div class="tool-title">تولید رمز</div>
             </a>
-            <a href="memory.html" class="menu-card">
-                <div class="menu-icon">🧠</div>
-                <div class="menu-title">بازی حافظه</div>
+            <a href="memory.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">🧠</div>
+                <div class="tool-title">بازی حافظه</div>
             </a>
-            <a href="settings.html" class="menu-card">
-                <div class="menu-icon">⚙️</div>
-                <div class="menu-title">تنظیمات</div>
+            <a href="settings.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">⚙️</div>
+                <div class="tool-title">تنظیمات</div>
             </a>
-
-            <a href="qrcode.html" class="menu-card">
-                <div class="menu-icon">📱</div>
-                <div class="menu-title">QR Code</div>
-            </a>
-
         </div>
 
-    </div>
+    </main>
 
     <script src="js/common.js"></script>
-    <script src="js/home.js"></script>
+    <script>
+        // ===== اسکریپت اختصاصی صفحه اصلی =====
+        document.getElementById("currentDate").textContent = toPersianDate(getTodayString());
+        const hour = new Date().getHours();
+        document.getElementById("greetingText").textContent = hour < 12 ? "صبح بخیر ☀️" : hour < 18 ? "ظهر بخیر 🌤️" : "شب بخیر 🌙";
+
+        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+        const notes = JSON.parse(localStorage.getItem("notes")) || [];
+        const today = getTodayString();
+
+        const todayTasks = tasks.filter(t => t.date === today);
+        const doneTasks = todayTasks.filter(t => t.done).length;
+        const todayExpenses = expenses.filter(e => e.date === today);
+        const totalExp = todayExpenses.reduce((sum, e) => sum + e.amount, 0);
+
+        document.getElementById("statTasks").textContent = doneTasks + " / " + todayTasks.length;
+        document.getElementById("statExpenses").textContent = totalExp.toLocaleString("fa-IR");
+        
+        let streak = 0;
+        let checkDate = today;
+        for(let i=0; i<365; i++) {
+            const dTasks = tasks.filter(t => t.date === checkDate);
+            if(dTasks.length > 0 && dTasks.filter(t => t.done).length === 0) break;
+            if(dTasks.filter(t => t.done).length > 0) streak++;
+            checkDate = addDays(checkDate, -1);
+        }
+        document.getElementById("statStreak").textContent = streak;
+
+        // لیست کارهای امروز
+        const homeTaskList = document.getElementById("homeTaskList");
+        if (todayTasks.length === 0) {
+            homeTaskList.innerHTML = '<li style="text-align:center; color:#aaa; font-size:13px; padding:10px 0;">کاری ثبت نشده</li>';
+        } else {
+            todayTasks.slice(0, 3).forEach(function(task) {
+                const li = document.createElement("li");
+                li.style.cssText = "display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.05); font-size:13px;";
+                if (task.done) li.style.opacity = "0.5";
+                li.innerHTML = `
+                    <span>${task.done ? '☑' : '☐'}</span>
+                    <span style="${task.done ? 'text-decoration:line-through;' : ''}">${task.text}</span>
+                `;
+                homeTaskList.appendChild(li);
+            });
+        }
+
+        // هزینه امروز
+        const homeExpensesList = document.getElementById("homeExpensesList");
+        if (todayExpenses.length === 0) {
+            homeExpensesList.innerHTML = '<div style="text-align:center; color:#aaa; font-size:13px;">هزینه‌ای ثبت نشده</div>';
+        } else {
+            homeExpensesList.innerHTML = `
+                <div style="font-size: 22px; font-weight: 800; color: #34c759;">${totalExp.toLocaleString("fa-IR")}</div>
+                <div style="font-size: 12px; color: #888; margin-top: 5px;">تومان</div>
+            `;
+        }
+
+        // یادداشت‌های اخیر
+        const homeNotesList = document.getElementById("homeNotesList");
+        const recentNotes = [...notes].sort((a, b) => b.id - a.id).slice(0, 2);
+        
+        if (recentNotes.length === 0) {
+            homeNotesList.innerHTML = '<div style="text-align:center; color:#aaa; font-size:13px; padding:10px 0;">یادداشتی نداری</div>';
+        } else {
+            let html = '';
+            recentNotes.forEach(function(note) {
+                html += `
+                    <div style="display:flex; flex-direction:column; gap:4px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.05); cursor:pointer;" onclick="window.location.href='notes.html'">
+                        <div style="font-weight: 700; font-size: 13px; color: #1d1d1f;">${note.title}</div>
+                        <div style="color: #86868b; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                            ${note.content}
+                        </div>
+                    </div>
+                `;
+            });
+            homeNotesList.innerHTML = html;
+        }
+    </script>
 </body>
 </html>

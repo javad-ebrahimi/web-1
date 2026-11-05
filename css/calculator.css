@@ -1,38 +1,8 @@
-/* ===== ماشین‌حساب ===== */
-.calc-display {
-    background: #f0f3fa;
-    border-radius: 12px;
-    padding: 15px 20px;
-    margin-bottom: 18px;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    direction: ltr;
-}
-
-.calc-history {
-    text-align: right;
-    font-size: 14px;
-    color: #888;
-    min-height: 20px;
-    word-wrap: break-word;
-    word-break: break-all;
-}
-
-.calc-result {
-    text-align: right;
-    font-size: 32px;
-    font-weight: bold;
-    color: #333;
-    word-wrap: break-word;
-    word-break: break-all;
-}
-
+/* ===== دکمه‌های ماشین‌حساب ===== */
 .calc-keys {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 10px;
 }
 
 .calc-btn {
@@ -40,16 +10,12 @@
     font-size: 20px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 14px;
     cursor: pointer;
     font-family: inherit;
     transition: all 0.15s;
-    background: #f8f9fc;
-    color: #333;
-}
-
-.calc-btn:hover {
-    background: #e8ecf5;
+    background: #f5f5f7;
+    color: #1d1d1f;
 }
 
 .calc-btn:active {
@@ -57,51 +23,31 @@
 }
 
 .calc-num {
-    background: white;
-    border: 2px solid #e5e9f2;
+    background: #ffffff;
+    border: 1px solid #e5e5ea;
 }
 
 .calc-num:hover {
-    background: #f8f9fc;
-    border-color: #4a6cf7;
+    background: #f5f5f7;
+    border-color: #0071e3;
 }
 
 .calc-clear {
     background: #ffe5e0;
-    color: #e74c3c;
-}
-
-.calc-clear:hover {
-    background: #ffd0c8;
+    color: #ff3b30;
 }
 
 .calc-action {
-    background: #f0f3fa;
-    color: #4a6cf7;
-}
-
-.calc-action:hover {
-    background: #e3e8f5;
+    background: #e8f0fe;
+    color: #0071e3;
 }
 
 .calc-operator {
-    background: #4a6cf7;
+    background: #0071e3;
     color: white;
-}
-
-.calc-operator:hover {
-    background: #3a56c4;
 }
 
 .calc-equals {
-    background: #10b981;
+    background: #34c759;
     color: white;
-}
-
-.calc-equals:hover {
-    background: #0d9668;
-}
-
-.calc-wide {
-    grid-column: span 1;
 }

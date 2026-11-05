@@ -4,82 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مدیریت هزینه‌ها</title>
-    <script>
-        if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.style.background = "#1a1d29";
-        }
-    </script>
-    <link rel="stylesheet" href="css/base.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/expenses.css">
-    <link rel="stylesheet" href="css/dark.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="index.html" class="nav-link">🏠 خانه</a>
-        <a href="tasks.html" class="nav-link">📋 کارها</a>
-        <a href="expenses.html" class="nav-link active">💰 هزینه‌ها</a>
-        <a href="calculator.html" class="nav-link">🧮 ماشین‌حساب</a>
-        <a href="calendar.html" class="nav-link">📅 تقویم</a>
-        <a href="password.html" class="nav-link">🔐 رمز</a>
-        <a href="memory.html" class="nav-link">🧠 حافظه</a>
-        <a href="notes.html" class="nav-link">📝 یادداشت</a>
-        <a href="settings.html" class="nav-link">⚙️ تنظیمات</a>
-    </nav>
+    <main class="main-content">
+        
+        <header class="page-header">
+            <div>
+                <h1>💰 مدیریت هزینه‌ها</h1>
+                <p id="dateLabel">امروز</p>
+            </div>
+            <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
 
-    <div class="app">
-        <h1>💰 مدیریت هزینه‌ها</h1>
-
-        <button id="themeBtn" class="theme-btn" title="تغییر تم">🌙</button>
-
-        <div class="date-nav">
-            <button id="prevDayBtn" title="روز قبل">▶</button>
-            <div class="date-label" id="dateLabel">امروز</div>
-            <button id="nextDayBtn" title="روز بعد">◀</button>
+        <!-- کارت انتخاب روز -->
+        <div class="app-card" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
+            <button id="prevDayBtn" class="btn-secondary" style="padding: 8px 16px;">▶ دیروز</button>
+            <span id="currentDateFull" style="font-weight: bold; font-size: 14px;">تاریخ</span>
+            <button id="nextDayBtn" class="btn-secondary" style="padding: 8px 16px;">فردا ◀</button>
         </div>
 
-        <div class="expense-card">
-            <div class="expense-header">💰 هزینه‌های این روز</div>
-
-            <div class="expense-input-row">
-                <input type="text" id="expenseDesc" placeholder="توضیح (مثلاً: ناهار)">
-                <input type="text" id="expenseAmount" placeholder="مبلغ (تومان)" inputmode="numeric">
-                <button id="addExpenseBtn">افزودن</button>
+        <!-- کارت افزودن هزینه -->
+        <div class="app-card">
+            <div class="app-card-title">ثبت هزینه جدید</div>
+            <input type="text" id="expenseDesc" placeholder="توضیح (مثلاً: ناهار)">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="expenseAmount" placeholder="مبلغ (تومان)" inputmode="numeric" style="flex: 1;">
+                <button id="addExpenseBtn" class="btn-primary" style="flex: 1;">+ ثبت</button>
             </div>
+        </div>
 
-            <ul id="expenseList" class="expense-list"></ul>
-
-            <div class="expense-total">
+        <!-- کارت لیست هزینه‌های روز -->
+        <div class="app-card">
+            <div class="app-card-title">هزینه‌های این روز</div>
+            <ul id="expenseList" style="list-style: none; padding: 0; margin: 0;"></ul>
+            <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0; font-weight: bold; color: #1d1d1f;">
                 <span>جمع این روز:</span>
-                <span id="expenseTotal">۰ تومان</span>
+                <span id="expenseTotal" style="color: #34c759;">۰ تومان</span>
             </div>
         </div>
 
-        <div class="stats-card">
-            <div class="stats-header">📊 آمار ماه</div>
-            <div class="stats-row">
-                <span>جمع ماه:</span>
-                <span id="monthTotal">۰ تومان</span>
+        <!-- کارت آمار ماه -->
+        <div class="app-card">
+            <div class="app-card-title">📊 آمار ماه</div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                <span style="color: #86868b;">جمع ماه:</span>
+                <strong id="monthTotal" style="color: #1d1d1f;">۰ تومان</strong>
             </div>
-            <div class="stats-row">
-                <span>تعداد هزینه‌ها:</span>
-                <span id="monthCount">۰</span>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                <span style="color: #86868b;">تعداد هزینه‌ها:</span>
+                <strong id="monthCount" style="color: #1d1d1f;">۰</strong>
             </div>
         </div>
 
-        <!-- نمودار هزینه‌ها -->
-        <div class="chart-card">
-            <div class="chart-header">📊 نمودار هزینه‌های ماه</div>
-            <div class="chart-wrapper">
+        <!-- کارت نمودار -->
+        <div class="app-card">
+            <div class="app-card-title">📊 نمودار هزینه‌های ماه</div>
+            <div style="position: relative; height: 250px; width: 100%;">
                 <canvas id="expensesChart"></canvas>
             </div>
         </div>
 
-    </div>
+    </main>
 
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <script src="js/common.js"></script>
     <script src="js/expenses.js"></script>
 </body>
