@@ -38,9 +38,8 @@ function toggleTheme() {
     }
 }
 
-// ===== 🚀 تزریق هوشمند قالب و سایدبار =====
+// ===== 🚀 تزریق سایدبار (فقط دکمه خانه) =====
 function initThemeAndSidebar() {
-    // ۱. لینک کردن فایل CSS جدید (فقط اگه از قبل نیست)
     if (!document.querySelector('link[href="css/theme.css"]')) {
         const link = document.createElement('link');
         link.rel = 'stylesheet';
@@ -48,48 +47,25 @@ function initThemeAndSidebar() {
         document.head.appendChild(link);
     }
 
-    // ۲. ساخت سایدبار و دکمه موبایل (توی همه صفحات)
     if (!document.querySelector('.sidebar')) {
-        
-        // دکمه همبرگری برای موبایل
-        const mobileBtn = document.createElement('button');
-        mobileBtn.className = 'mobile-menu-btn';
-        mobileBtn.innerHTML = '☰';
-        document.body.appendChild(mobileBtn);
-
-        // نوار کناری
         const sidebar = document.createElement('aside');
         sidebar.className = 'sidebar';
         
+        // فقط دکمه خانه
         sidebar.innerHTML = `
-            <div style="display: flex; flex-direction: column; gap: 5px; width: 100%;">
-                <a href="index.html" class="nav-item-home" title="خانه">🏠 <span>خانه</span></a>
-                <a href="tasks.html" class="nav-item-home" title="کارها">📋 <span>کارها</span></a>
-                <a href="expenses.html" class="nav-item-home" title="هزینه‌ها">💰 <span>هزینه‌ها</span></a>
-                <a href="calculator.html" class="nav-item-home" title="ماشین‌حساب">🧮 <span>ماشین‌حساب</span></a>
-                <a href="calendar.html" class="nav-item-home" title="تقویم">📅 <span>تقویم</span></a>
-                <a href="notes.html" class="nav-item-home" title="یادداشت‌ها">📝 <span>یادداشت</span></a>
-                <a href="password.html" class="nav-item-home" title="تولید رمز">🔐 <span>تولید رمز</span></a>
-                <a href="memory.html" class="nav-item-home" title="بازی حافظه">🧠 <span>بازی حافظه</span></a>
-                <a href="settings.html" class="nav-item-home" title="تنظیمات">⚙️ <span>تنظیمات</span></a>
+            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center;">
+                <a href="index.html" class="nav-item-home" title="بازگشت به خانه">🏠</a>
             </div>
         `;
         document.body.appendChild(sidebar);
-
-        // باز و بسته کردن منو با کلیک روی دکمه همبرگری
-        mobileBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('mobile-open');
-        });
     }
 
-    // ۳. پیدا کردن کانتینر اصلی قدیمی
     const oldApp = document.querySelector('.app');
     if (oldApp) {
         oldApp.className = 'main-content'; 
         oldApp.style.cssText = ''; 
     }
 
-    // ۴. اعمال تم
     applySavedTheme();
     const themeBtn = document.getElementById("themeBtn");
     if (themeBtn) themeBtn.addEventListener("click", toggleTheme);

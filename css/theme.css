@@ -251,80 +251,50 @@ body.dark .modal-content { background: #1e293b; border: 1px solid rgba(255, 255,
 body.dark .modal-header { border-bottom-color: #334155; }
 body.dark .modal-header h2 { color: #f8fafc; }
 
-/* ===== واکنش‌گرایی (منوی همبرگری در موبایل) ===== */
+/* ===== واکنش‌گرایی (فقط دکمه خانه در بالای موبایل) ===== */
 @media (max-width: 900px) {
-    /* نمایش دکمه منو در بالا سمت راست */
-    .mobile-menu-btn {
+    /* نوار بالای صفحه فقط برای دکمه خانه */
+    .sidebar {
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 60px;
+        flex-direction: row;
+        justify-content: flex-end; /* دکمه خانه سمت راست */
+        align-items: center;
+        padding: 0 15px;
+        border-left: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        background-color: #ffffff !important;
+    }
+
+    .nav-item-home {
         display: flex;
-        position: fixed;
-        top: 15px;
-        right: 15px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
         width: 45px;
         height: 45px;
-        background: #ffffff;
-        border: 1px solid #e5e5ea;
-        border-radius: 12px;
-        align-items: center;
-        justify-content: center;
+        padding: 0;
         font-size: 24px;
-        color: #1d1d1f;
-        cursor: pointer;
-        z-index: 10000;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
-    /* سایدبار از سمت راست بیرون میره (مخفی میشه) */
-    .sidebar {
-        position: fixed;
-        top: 0;
-        right: -100%; /* مخفی */
-        width: 250px;
-        height: 100vh;
-        background-color: #ffffff;
-        flex-direction: column;
-        justify-content: flex-start;
-        padding: 70px 20px 20px 20px;
-        z-index: 9999;
-        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
-        transition: right 0.3s ease-in-out;
-    }
+    /* مخفی کردن متن‌ها (چون فقط آیکون داریم) */
+    .nav-item-home span { display: none; }
 
-    /* وقتی کلاس open اضافه میشه، میاد وسط */
-    .sidebar.mobile-open {
-        right: 0;
-    }
-
-    /* استایل آیتم‌های منو در موبایل */
-    .nav-item-home {
-        flex-direction: row;
-        justify-content: flex-start;
-        padding: 15px;
-        font-size: 18px;
-        margin-bottom: 5px;
-    }
-
-    .nav-item-home span {
-        display: block; 
-        font-size: 15px;
-        margin-right: 10px;
-    }
-
-    /* محتوا فول میشه */
+    /* محتوا میره پایین‌تر */
     .main-content {
         margin-right: 0 !important;
         margin-top: 80px !important;
         width: 100% !important;
         max-width: 100%;
-        padding: 0 15px 20px 15px !important;
+        padding: 20px 15px !important;
     }
 
-    /* حالت تاریک */
-    body.dark .mobile-menu-btn {
-        background: #1e293b;
-        border-color: #334155;
-        color: #f8fafc;
-    }
+    /* حالت تاریک نوار بالا */
     body.dark .sidebar {
-        background-color: #1e293b;
+        background-color: #1e293b !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 }
