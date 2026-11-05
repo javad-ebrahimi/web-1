@@ -406,7 +406,7 @@ body.dark #dateLabel { color: #f8fafc !important; }
     }
 }
 
-/* ===== خط کشیدن روی متن کارهای انجام‌شده ===== */
+/* === خط کشیدن روی متن کارهای انجام‌شده ===== */
 #taskList li.done span,
 #taskList li.done .task-text {
     text-decoration: line-through !important;

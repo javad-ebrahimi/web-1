@@ -193,3 +193,4 @@ document.addEventListener("keydown", function(e) {
 // ===== شروع =====
 initCommon();
 updateDisplay();
+
