@@ -19,6 +19,7 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 113, 227, 0.2);
             transition: all 0.3s;
+            text-align: center; /* وسط‌چین کردن متن */
         }
 
         .hero-banner::after {
@@ -54,8 +55,10 @@
 
         /* کلاس برای متن ابزارها که توی تم تاریک سفید بشه */
         .tool-title {
-            font-weight: bold;
+            font-weight: 800;
+            font-size: 16px;
             color: #1d1d1f;
+            margin-top: 5px;
             transition: color 0.3s;
         }
         body.dark .tool-title {
@@ -125,7 +128,7 @@
         </div>
 
         <!-- ابزارها -->
-        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 15px;">ابزارهای من</h2>
+        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #1d1d1f;">ابزارهای من</h2>
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
             <a href="tasks.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
                 <div style="font-size: 30px; margin-bottom: 10px;">📋</div>
@@ -155,6 +158,10 @@
                 <div style="font-size: 30px; margin-bottom: 10px;">🧠</div>
                 <div class="tool-title">بازی حافظه</div>
             </a>
+            <a href="qrcode.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
+                <div style="font-size: 30px; margin-bottom: 10px;">📱</div>
+                <div class="tool-title">QR Code</div>
+            </a>
             <a href="settings.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;">
                 <div style="font-size: 30px; margin-bottom: 10px;">⚙️</div>
                 <div class="tool-title">تنظیمات</div>
@@ -165,7 +172,14 @@
 
     <script src="js/common.js"></script>
     <script>
-        // ===== اسکریپت اختصاصی صفحه اصلی =====
+        // 🌟 ۱. راه‌اندازی تم (باید حتماً باشه تا دکمه ماه/خورشید کار کنه)
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof initCommon === 'function') {
+                initCommon();
+            }
+        });
+
+        // 🌟 ۲. اسکریپت اختصاصی صفحه اصلی
         document.getElementById("currentDate").textContent = toPersianDate(getTodayString());
         const hour = new Date().getHours();
         document.getElementById("greetingText").textContent = hour < 12 ? "صبح بخیر ☀️" : hour < 18 ? "ظهر بخیر 🌤️" : "شب بخیر 🌙";
@@ -217,7 +231,7 @@
         } else {
             homeExpensesList.innerHTML = `
                 <div style="font-size: 22px; font-weight: 800; color: #34c759;">${totalExp.toLocaleString("fa-IR")}</div>
-                <div style="font-size: 12px; color: #888; margin-top: 5px;">تومان</div>
+                <div style="font-size: 12px; color: #888; margin-top: 5px;">ریال</div>
             `;
         }
 

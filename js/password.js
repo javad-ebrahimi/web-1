@@ -1,4 +1,4 @@
-// ===== المان‌ها =====
+// ===== متغیرها =====
 const passwordOutput = document.getElementById("passwordOutput");
 const copyBtn = document.getElementById("copyBtn");
 const lengthInput = document.getElementById("lengthInput");
@@ -11,7 +11,6 @@ const generateBtn = document.getElementById("generateBtn");
 const strengthFill = document.getElementById("strengthFill");
 const strengthLabel = document.getElementById("strengthLabel");
 
-// ===== کاراکترهای مجاز =====
 const CHARS = {
     uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     lowercase: "abcdefghijklmnopqrstuvwxyz",
@@ -19,17 +18,15 @@ const CHARS = {
     symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?"
 };
 
-// ===== تولید عدد تصادفی امن =====
+// ===== توابع =====
 function secureRandom(max) {
     const array = new Uint32Array(1);
     crypto.getRandomValues(array);
     return array[0] % max;
 }
 
-// ===== تولید رمز =====
 function generatePassword() {
     const length = Number(lengthInput.value);
-
     let chars = "";
     if (uppercaseCheck.checked) chars += CHARS.uppercase;
     if (lowercaseCheck.checked) chars += CHARS.lowercase;
@@ -46,26 +43,17 @@ function generatePassword() {
     for (let i = 0; i < length; i++) {
         password += chars[secureRandom(chars.length)];
     }
-
     passwordOutput.textContent = password;
     updateStrength(chars.length, length);
 }
 
-// ===== محاسبه قدرت رمز =====
 function updateStrength(charsetSize, length) {
     const entropy = length * Math.log2(charsetSize || 1);
+    let percent = 0; let level = ""; let label = "";
 
-    let percent = 0;
-    let level = "";
-    let label = "";
-
-    if (entropy < 40) {
-        percent = 30; level = "weak"; label = "ضعیف";
-    } else if (entropy < 70) {
-        percent = 60; level = "medium"; label = "متوسط";
-    } else {
-        percent = 100; level = "strong"; label = "قوی";
-    }
+    if (entropy < 40) { percent = 30; level = "weak"; label = "ضعیف"; }
+    else if (entropy < 70) { percent = 60; level = "medium"; label = "متوسط"; }
+    else { percent = 100; level = "strong"; label = "قوی"; }
 
     strengthFill.className = "strength-fill " + level;
     strengthFill.style.width = percent + "%";
@@ -73,7 +61,6 @@ function updateStrength(charsetSize, length) {
     strengthLabel.textContent = "قدرت رمز: " + label;
 }
 
-// ===== کپی =====
 function copyPassword() {
     const text = passwordOutput.textContent;
     if (!text || text === "-" || text === "یه گزینه انتخاب کن!") return;
@@ -81,7 +68,6 @@ function copyPassword() {
     navigator.clipboard.writeText(text).then(function() {
         copyBtn.textContent = "✓";
         copyBtn.classList.add("copied");
-
         setTimeout(function() {
             copyBtn.textContent = "📋";
             copyBtn.classList.remove("copied");
@@ -89,19 +75,20 @@ function copyPassword() {
     });
 }
 
-// ===== رویدادها =====
-lengthInput.addEventListener("input", function() {
-    lengthValue.textContent = lengthInput.value;
+// ===== 🌟 شروع نهایی (بعد از لود کامل DOM) =====
+document.addEventListener("DOMContentLoaded", function() {
+    if (typeof initCommon === 'function') initCommon();
     generatePassword();
+
+    lengthInput.addEventListener("input", function() {
+        lengthValue.textContent = lengthInput.value;
+        generatePassword();
+    });
+
+    [uppercaseCheck, lowercaseCheck, numbersCheck, symbolsCheck].forEach(function(checkbox) {
+        checkbox.addEventListener("change", generatePassword);
+    });
+
+    generateBtn.addEventListener("click", generatePassword);
+    copyBtn.addEventListener("click", copyPassword);
 });
-
-[uppercaseCheck, lowercaseCheck, numbersCheck, symbolsCheck].forEach(function(checkbox) {
-    checkbox.addEventListener("change", generatePassword);
-});
-
-generateBtn.addEventListener("click", generatePassword);
-copyBtn.addEventListener("click", copyPassword);
-
-// ===== شروع =====
-initCommon();
-generatePassword();

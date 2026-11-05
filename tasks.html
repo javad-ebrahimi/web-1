@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>برنامه‌ریزی کارها</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
-    
-    <!-- فقط دو تا فایل CSS لازمه -->
     <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="css/tasks.css">
 </head>
 <body>
 
@@ -17,7 +14,7 @@
         <header class="page-header">
             <div>
                 <h1>📋 برنامه‌ریزی کارها</h1>
-                <p id="dateLabel">امروز</p>
+                <p>کارهای خود را مدیریت کنید</p>
             </div>
             <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
         </header>
@@ -35,10 +32,16 @@
             </div>
         </div>
 
-        <!-- کارت انتخاب روز -->
+        <!-- کارت انتخاب روز (با ظاهر مرتب دو خطی) -->
         <div class="app-card" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
             <button id="prevDayBtn" class="btn-secondary" style="padding: 8px 16px;">▶ دیروز</button>
-            <span id="currentDateFull" style="font-weight: bold; font-size: 14px;">تاریخ</span>
+            
+            <!-- تاریخ دو خطی -->
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                <span id="dayPrefix" style="font-size: 11px; color: #86868b; font-weight: bold;">امروز</span>
+                <span id="dateLabel" style="font-weight: 800; font-size: 15px; color: #1d1d1f;">در حال بارگذاری...</span>
+            </div>
+
             <button id="nextDayBtn" class="btn-secondary" style="padding: 8px 16px;">فردا ◀</button>
         </div>
 
@@ -58,13 +61,12 @@
             <div class="app-card-title">لیست کارها</div>
             <ul id="taskList" style="list-style: none; padding: 0; margin: 0;"></ul>
             <p id="counter" style="text-align: center; color: #86868b; font-size: 13px; margin-top: 15px;">۰ کار</p>
-            
             <button id="reportBtn" class="btn-secondary" style="width: 100%; margin-top: 15px;">📊 مشاهده گزارش ماهانه</button>
         </div>
 
     </main>
 
-    <!-- ===== مودال گزارش ماهانه ===== -->
+    <!-- مودال‌ها -->
     <div class="modal" id="reportModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -75,7 +77,6 @@
         </div>
     </div>
 
-    <!-- ===== مودال کار تکراری ===== -->
     <div class="modal" id="recurringModal">
         <div class="modal-content">
             <div class="modal-header">

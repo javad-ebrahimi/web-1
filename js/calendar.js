@@ -1,21 +1,24 @@
-// ===== داده‌ها =====
-const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+// ===== متغیرهای سراسری =====
+let tasks = [];
+let expenses = [];
+let currentYear = new Date().getFullYear();
+let currentMonth = new Date().getMonth();
+let selectedDate = null;
+
+const weekdays = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه"];
 
 // ===== المان‌ها =====
 const monthLabel = document.getElementById("monthLabel");
 const calendarGrid = document.getElementById("calendarGrid");
 const dayInfo = document.getElementById("dayInfo");
 
-// ===== متغیرها =====
-const today = new Date();
-let currentYear = today.getFullYear();
-let currentMonth = today.getMonth();
-let selectedDate = null;
+// ===== توابع تقویم =====
+function formatDate(year, month, day) {
+    const m = String(month + 1).padStart(2, "0");
+    const d = String(day).padStart(2, "0");
+    return `${year}-${m}-${d}`;
+}
 
-const weekdays = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه"];
-
-// ===== نمایش ماه =====
 function renderCalendar() {
     calendarGrid.innerHTML = "";
 
@@ -23,13 +26,15 @@ function renderCalendar() {
         year: "numeric",
         month: "long"
     });
+    
     monthLabel.textContent = monthName;
+    monthLabel.className = "calendar-month-label"; 
 
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     let startOffset = (firstDay + 1) % 7;
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    // سرصفحه
+    // سرصفحه روزهای هفته
     const weekdaysRow = document.createElement("div");
     weekdaysRow.className = "calendar-weekdays";
     weekdaysRow.style.gridColumn = "1 / -1";
@@ -68,19 +73,16 @@ function renderCalendar() {
         if (dayTasks.length > 0 || dayExpenses.length > 0) {
             const dots = document.createElement("div");
             dots.className = "dot";
-
             if (dayTasks.length > 0) {
                 const dot = document.createElement("span");
                 dot.className = "dot-task";
                 dots.appendChild(dot);
             }
-
             if (dayExpenses.length > 0) {
                 const dot = document.createElement("span");
                 dot.className = "dot-expense";
                 dots.appendChild(dot);
             }
-
             btn.appendChild(dots);
         }
 
@@ -94,41 +96,29 @@ function renderCalendar() {
     }
 }
 
-// ===== فرمت تاریخ =====
-function formatDate(year, month, day) {
-    const m = String(month + 1).padStart(2, "0");
-    const d = String(day).padStart(2, "0");
-    return `${year}-${m}-${d}`;
-}
-
-// ===== نمایش اطلاعات روز =====
 function showDayInfo(dateStr) {
     const dayTasks = tasks.filter(t => t.date === dateStr);
     const dayExpenses = expenses.filter(e => e.date === dateStr);
-
     const persianDate = toPersianDate(dateStr);
 
     let html = `<div class="day-info-title">${persianDate}</div>`;
 
     if (dayTasks.length === 0 && dayExpenses.length === 0) {
-        html += `<div class="day-info-empty">این روز خالی است</div>`;
+        html += `<div style="text-align:center; color:#aaa; padding:20px;">این روز خالی است</div>`;
         dayInfo.innerHTML = html;
         return;
     }
 
     // کارها
     if (dayTasks.length > 0) {
-        html += `<div class="day-info-section">`;
-        html += `<h4>📋 کارها (${dayTasks.length})</h4>`;
+        html += `<div style="margin-bottom: 15px;">`;
+        html += `<h4 style="font-size: 13px; margin-bottom: 8px; color: #888;">📋 کارها (${dayTasks.length})</h4>`;
         html += `<ul class="day-info-list">`;
-
         dayTasks.forEach(function(task) {
-            html += `
-                <li class="${task.done ? "done" : ""}">
-                    <span>${task.done ? "☑" : "☐"}</span>
-                    <span>${task.text}</span>
-                </li>
-            `;
+            html += `<li class="${task.done ? 'done' : ''}">
+                <span>${task.done ? "☑" : "☐"}</span>
+                <span>${task.text}</span>
+            </li>`;
         });
         html += `</ul></div>`;
     }
@@ -136,47 +126,53 @@ function showDayInfo(dateStr) {
     // هزینه‌ها
     if (dayExpenses.length > 0) {
         let total = 0;
-        html += `<div class="day-info-section">`;
-        html += `<h4>💰 هزینه‌ها (${dayExpenses.length})</h4>`;
+        html += `<div>`;
+        html += `<h4 style="font-size: 13px; margin-bottom: 8px; color: #888;">💰 هزینه‌ها (${dayExpenses.length})</h4>`;
         html += `<ul class="day-info-list">`;
-
         dayExpenses.forEach(function(exp) {
             total += exp.amount;
-            html += `
-                <li>
-                    <span>💵</span>
-                    <span>${exp.desc}</span>
-                    <span style="margin-right:auto; color:#10b981; font-weight:bold;">${formatNumber(exp.amount)} تومان</span>
-                </li>
-            `;
+            html += `<li>
+                <span>💵</span>
+                <span>${exp.desc}</span>
+                <span class="expense-amount" style="margin-right:auto;">${formatNumber(exp.amount)} ریال</span>
+            </li>`;
         });
         html += `</ul>`;
-        html += `<div class="day-info-total"><span>جمع:</span><span>${formatNumber(total)} تومان</span></div>`;
+        html += `<div class="day-info-total"><span>جمع:</span><span>${formatNumber(total)} ریال</span></div>`;
         html += `</div>`;
     }
 
     dayInfo.innerHTML = html;
 }
 
-// ===== تغییر ماه =====
-document.getElementById("prevMonthBtn").addEventListener("click", function() {
-    currentMonth--;
-    if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-    }
-    renderCalendar();
-});
+// ===== 🌟 شروع نهایی (بعد از لود کامل DOM) =====
+document.addEventListener("DOMContentLoaded", function() {
+    // ۱. خواندن داده‌ها
+    tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
-document.getElementById("nextMonthBtn").addEventListener("click", function() {
-    currentMonth++;
-    if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-    }
-    renderCalendar();
-});
+    // ۲. اجرای تم
+    if (typeof initCommon === 'function') initCommon();
 
-// ===== شروع =====
-initCommon();
-renderCalendar();
+    // ۳. نمایش اولیه تقویم
+    renderCalendar();
+
+    // ۴. اتصال دکمه‌های تغییر ماه
+    document.getElementById("prevMonthBtn").addEventListener("click", function() {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        renderCalendar();
+    });
+
+    document.getElementById("nextMonthBtn").addEventListener("click", function() {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        renderCalendar();
+    });
+});

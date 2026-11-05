@@ -6,7 +6,6 @@
     <title>مدیریت هزینه‌ها</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="css/expenses.css">
 </head>
 <body>
 
@@ -15,7 +14,7 @@
         <header class="page-header">
             <div>
                 <h1>💰 مدیریت هزینه‌ها</h1>
-                <p id="dateLabel">امروز</p>
+                <p>ثبت و بررسی هزینه‌های روزانه</p>
             </div>
             <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
         </header>
@@ -23,7 +22,10 @@
         <!-- کارت انتخاب روز -->
         <div class="app-card" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
             <button id="prevDayBtn" class="btn-secondary" style="padding: 8px 16px;">▶ دیروز</button>
-            <span id="currentDateFull" style="font-weight: bold; font-size: 14px;">تاریخ</span>
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                <span id="dayPrefix" style="font-size: 11px; color: #86868b; font-weight: bold;">امروز</span>
+                <span id="dateLabel" style="font-weight: 800; font-size: 15px; color: #1d1d1f;">در حال بارگذاری...</span>
+            </div>
             <button id="nextDayBtn" class="btn-secondary" style="padding: 8px 16px;">فردا ◀</button>
         </div>
 
@@ -32,8 +34,8 @@
             <div class="app-card-title">ثبت هزینه جدید</div>
             <input type="text" id="expenseDesc" placeholder="توضیح (مثلاً: ناهار)">
             <div style="display: flex; gap: 10px;">
-                <input type="text" id="expenseAmount" placeholder="مبلغ (تومان)" inputmode="numeric" style="flex: 1;">
-                <button id="addExpenseBtn" class="btn-primary" style="flex: 1;">+ ثبت</button>
+                <input type="text" id="expenseAmount" placeholder="مبلغ (ریال)" inputmode="numeric" style="flex: 1;">
+                <button id="addExpenseBtn" class="btn-primary" style="flex: 1; background: #34c759;">+ ثبت</button>
             </div>
         </div>
 
@@ -41,30 +43,22 @@
         <div class="app-card">
             <div class="app-card-title">هزینه‌های این روز</div>
             <ul id="expenseList" style="list-style: none; padding: 0; margin: 0;"></ul>
-            <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0; font-weight: bold; color: #1d1d1f;">
+            <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0; font-weight: bold;">
                 <span>جمع این روز:</span>
-                <span id="expenseTotal" style="color: #34c759;">۰ تومان</span>
+                <span id="expenseTotal" style="color: #34c759;">۰ ریال</span>
             </div>
         </div>
 
         <!-- کارت آمار ماه -->
-        <div class="app-card">
+        <div class="app-card stats-card">
             <div class="app-card-title">📊 آمار ماه</div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
-                <span style="color: #86868b;">جمع ماه:</span>
-                <strong id="monthTotal" style="color: #1d1d1f;">۰ تومان</strong>
+            <div class="stats-row" style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                <span>جمع ماه:</span>
+                <strong id="monthTotal" style="color: #34c759;">۰ ریال</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
-                <span style="color: #86868b;">تعداد هزینه‌ها:</span>
-                <strong id="monthCount" style="color: #1d1d1f;">۰</strong>
-            </div>
-        </div>
-
-        <!-- کارت نمودار -->
-        <div class="app-card">
-            <div class="app-card-title">📊 نمودار هزینه‌های ماه</div>
-            <div style="position: relative; height: 250px; width: 100%;">
-                <canvas id="expensesChart"></canvas>
+            <div class="stats-row" style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                <span>تعداد هزینه‌ها:</span>
+                <strong id="monthCount">۰</strong>
             </div>
         </div>
 

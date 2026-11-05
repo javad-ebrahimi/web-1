@@ -1,7 +1,7 @@
-    // ===== داده‌ها =====
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+// ===== متغیرهای سراسری =====
+let tasks = [];
 let specificDates = [];
-let activeDate = getTodayString();
+let activeDate = "";
 
 // ===== المان‌ها =====
 const taskInput = document.getElementById("taskInput");
@@ -9,12 +9,12 @@ const timeInput = document.getElementById("timeInput");
 const addBtn = document.getElementById("addBtn");
 const taskList = document.getElementById("taskList");
 const counter = document.getElementById("counter");
-const dateLabel = document.getElementById("dateLabel");
+const dayPrefixEl = document.getElementById("dayPrefix");
+const dateLabelEl = document.getElementById("dateLabel");
 const prevDayBtn = document.getElementById("prevDayBtn");
 const nextDayBtn = document.getElementById("nextDayBtn");
 
 const todayStats = document.getElementById("todayStats");
-const todayProgress = document.getElementById("todayProgress");
 const streakStats = document.getElementById("streakStats");
 const totalStats = document.getElementById("totalStats");
 
@@ -42,22 +42,27 @@ const recSpecificDate = document.getElementById("recSpecificDate");
 const addSpecificDateBtn = document.getElementById("addSpecificDateBtn");
 const specificDatesList = document.getElementById("specificDatesList");
 
-// ===== نمایش تاریخ =====
+// ===== توابع =====
 function updateDateLabel() {
     const today = getTodayString();
-    let prefix = "";
 
-    if (activeDate === today) prefix = "امروز — ";
-    else if (activeDate === addDays(today, -1)) prefix = "دیروز — ";
-    else if (activeDate === addDays(today, 1)) prefix = "فردا — ";
+    // ۱. تعیین کلمه بالای تاریخ
+    if (activeDate === today) dayPrefixEl.textContent = "امروز";
+    else if (activeDate === addDays(today, -1)) dayPrefixEl.textContent = "دیروز";
+    else if (activeDate === addDays(today, 1)) dayPrefixEl.textContent = "فردا";
+    else dayPrefixEl.textContent = "تاریخ";
 
-    dateLabel.textContent = prefix + toPersianDate(activeDate);
+    // ۲. گرفتن تاریخ شمسی دقیق
+    const persianDate = new Date(activeDate + "T00:00:00").toLocaleDateString("fa-IR", {
+        weekday: "long", month: "long", day: "numeric"
+    });
+
+    // ۳. گذاشتن تاریخ توی خط دوم
+    dateLabelEl.textContent = persianDate;
 }
 
-// ===== نمایش کارها =====
 function showTasks() {
     const dayTasks = tasks.filter(t => t.date === activeDate);
-
     taskList.innerHTML = "";
 
     if (dayTasks.length === 0) {
@@ -71,7 +76,6 @@ function showTasks() {
         const index = tasks.indexOf(task);
         const li = document.createElement("li");
         li.className = "task-item";
-
         if (task.done) li.classList.add("done");
 
         li.innerHTML = `
@@ -82,17 +86,14 @@ function showTasks() {
             </div>
             <button class="delete-btn" onclick="deleteTask(${index})">✕</button>
         `;
-
         taskList.appendChild(li);
     });
 
     const doneCount = dayTasks.filter(t => t.done).length;
     counter.textContent = `${doneCount} از ${dayTasks.length} انجام شده`;
-
     updateStats();
 }
 
-// ===== آمار =====
 function updateStats() {
     const today = getTodayString();
     const todayTasks = tasks.filter(t => t.date === today);
@@ -101,10 +102,8 @@ function updateStats() {
     const todayPercent = todayTotal === 0 ? 0 : Math.round((todayDone / todayTotal) * 100);
 
     todayStats.textContent = `${todayDone} از ${todayTotal} انجام شده (${todayPercent}٪)`;
-    todayProgress.style.width = todayPercent + "%";
 
     const streak = calculateStreak();
-
     if (streak === 0) streakStats.textContent = "شروع کن! 💪";
     else if (streak === 1) streakStats.textContent = "۱ روز";
     else streakStats.textContent = `${streak} روز`;
@@ -116,73 +115,44 @@ function updateStats() {
 
 function calculateStreak() {
     if (tasks.length === 0) return 0;
-
     let streak = 0;
     let checkDate = getTodayString();
-
     for (let i = 0; i < 365; i++) {
         const dayTasks = tasks.filter(t => t.date === checkDate);
         const dayDone = dayTasks.filter(t => t.done).length;
-
         if (dayTasks.length > 0 && dayDone === 0) break;
         if (dayDone > 0) streak++;
         checkDate = addDays(checkDate, -1);
     }
-
     return streak;
 }
 
-// ===== عملیات کارها =====
 function addTask() {
     const text = taskInput.value.trim();
-
-    if (text === "") {
-        alert("لطفاً یک کار بنویس");
-        return;
-    }
-
-    tasks.push({
-        text: text,
-        done: false,
-        date: activeDate,
-        time: timeInput.value
-    });
-
-    taskInput.value = "";
+    if (text === "") { alert("لطفاً یک کار بنویس"); return; }
+    
+    tasks.push({ text: text, done: false, date: activeDate, time: timeInput.value });
+    taskInput.value = ""; 
     timeInput.value = "";
-
-    saveTasks();
+    saveTasks(); 
     showTasks();
 }
 
-function toggleTask(index) {
+window.toggleTask = function(index) {
     tasks[index].done = !tasks[index].done;
-    saveTasks();
+    saveTasks(); 
     showTasks();
 }
 
-function deleteTask(index) {
+window.deleteTask = function(index) {
     tasks.splice(index, 1);
-    saveTasks();
+    saveTasks(); 
     showTasks();
 }
 
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
-
-// ===== تغییر روز =====
-prevDayBtn.addEventListener("click", function() {
-    activeDate = addDays(activeDate, -1);
-    updateDateLabel();
-    showTasks();
-});
-
-nextDayBtn.addEventListener("click", function() {
-    activeDate = addDays(activeDate, 1);
-    updateDateLabel();
-    showTasks();
-});
 
 // ===== گزارش ماهانه =====
 function showMonthlyReport() {
@@ -199,29 +169,26 @@ function showMonthlyReport() {
     const done = monthTasks.filter(t => t.done).length;
     const pending = total - done;
     const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+    const monthName = refDate.toLocaleDateString("fa-IR", { year: "numeric", month: "long" });
 
-    const monthName = refDate.toLocaleDateString("fa-IR", {
-        year: "numeric",
-        month: "long"
-    });
-
-    let html = `<h3 style="margin-top:0; text-align:center; color:#4a6cf7;">${monthName}</h3>`;
+    let html = `<h3 style="margin-top:0; text-align:center; color:#0071e3; font-size:18px;">${monthName}</h3>`;
 
     if (total === 0) {
-        html += `<p class="empty-report">این ماه هیچ کاری ثبت نشده</p>`;
+        html += `<p style="text-align:center; color:#aaa;">این ماه هیچ کاری ثبت نشده</p>`;
         reportBody.innerHTML = html;
         return;
     }
 
     html += `
-        <div class="report-stats">
-            <div class="stat-box"><div class="number">${total}</div><div class="label">کل کارها</div></div>
-            <div class="stat-box done"><div class="number">${done}</div><div class="label">انجام‌شده</div></div>
-            <div class="stat-box pending"><div class="number">${pending}</div><div class="label">باقی‌مانده</div></div>
-            <div class="stat-box"><div class="number">${percent}%</div><div class="label">درصد انجام</div></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px;">
+            <div style="background:#f5f5f7; padding:15px; border-radius:10px; text-align:center;"><div style="font-size:20px; font-weight:bold; color:#0071e3;">${total}</div><div style="font-size:12px; color:#888;">کل کارها</div></div>
+            <div style="background:#f5f5f7; padding:15px; border-radius:10px; text-align:center;"><div style="font-size:20px; font-weight:bold; color:#34c759;">${done}</div><div style="font-size:12px; color:#888;">انجام‌شده</div></div>
+            <div style="background:#f5f5f7; padding:15px; border-radius:10px; text-align:center;"><div style="font-size:20px; font-weight:bold; color:#ff9500;">${pending}</div><div style="font-size:12px; color:#888;">باقی‌مانده</div></div>
+            <div style="background:#f5f5f7; padding:15px; border-radius:10px; text-align:center;"><div style="font-size:20px; font-weight:bold; color:#0071e3;">${percent}%</div><div style="font-size:12px; color:#888;">درصد انجام</div></div>
         </div>
-        <div class="progress-bar"><div class="progress-fill" style="width: ${percent}%"></div></div>
-        <p class="progress-text">${done} از ${total} کار انجام شده</p>
+        <div style="background:#e5e5ea; height:20px; border-radius:10px; overflow:hidden; margin-bottom:20px;">
+            <div style="background:linear-gradient(90deg, #34c759, #30d158); height:100%; width:${percent}%; border-radius:10px; transition:width 0.5s;"></div>
+        </div>
     `;
 
     const dayCounts = {};
@@ -231,55 +198,32 @@ function showMonthlyReport() {
         if (task.done) dayCounts[task.date].done++;
     });
 
-    html += `<div class="month-section"><h3>روزهای فعال</h3>`;
+    html += `<div style="margin-top:20px;"><h3 style="font-size:15px; margin-bottom:10px;">روزهای فعال</h3>`;
     Object.keys(dayCounts).sort().forEach(function(date) {
         const c = dayCounts[date];
-        html += `<div class="day-row"><span class="day-date">${toPersianDate(date)}</span><span class="day-count">${c.done} از ${c.total}</span></div>`;
+        html += `<div style="display:flex; justify-content:space-between; padding:10px; background:#f5f5f7; border-radius:8px; margin-bottom:5px; font-size:13px;"><span style="color:#555;">${toPersianDate(date)}</span><span style="color:#0071e3; font-weight:bold;">${c.done} از ${c.total}</span></div>`;
     });
     html += `</div>`;
-
     reportBody.innerHTML = html;
 }
 
-reportBtn.addEventListener("click", function() {
-    showMonthlyReport();
-    reportModal.classList.add("active");
-});
-
-closeReportBtn.addEventListener("click", function() {
-    reportModal.classList.remove("active");
-});
-
-reportModal.addEventListener("click", function(e) {
-    if (e.target === reportModal) reportModal.classList.remove("active");
-});
-
 // ===== کار تکراری =====
 function openRecurringModal() {
-    recTitle.value = "";
-    recTime.value = "";
-    recStartDate.value = "";
-    recEndDate.value = "";
-    recWeekStart.value = "";
-    recWeekEnd.value = "";
-    recSpecificDate.value = "";
-    specificDates = [];
+    recTitle.value = ""; recTime.value = ""; recStartDate.value = ""; recEndDate.value = "";
+    recWeekStart.value = ""; recWeekEnd.value = ""; recSpecificDate.value = "";
+    specificDates = []; 
     renderSpecificDates();
-
-    recTypeRadios.forEach(r => r.checked = false);
-    recTypeRadios[0].checked = true;
+    
+    recTypeRadios.forEach(r => r.checked = false); 
+    recTypeRadios[0].checked = true; 
     showRecSection("range");
-
+    
     document.querySelectorAll(".weekday").forEach(cb => cb.checked = false);
-
     recurringModal.classList.add("active");
 }
 
 function showRecSection(type) {
-    recRangeSection.style.display = "none";
-    recWeekdaysSection.style.display = "none";
-    recSpecificSection.style.display = "none";
-
+    recRangeSection.style.display = "none"; recWeekdaysSection.style.display = "none"; recSpecificSection.style.display = "none";
     if (type === "range") recRangeSection.style.display = "block";
     else if (type === "weekdays") recWeekdaysSection.style.display = "block";
     else if (type === "specific") recSpecificSection.style.display = "block";
@@ -287,185 +231,113 @@ function showRecSection(type) {
 
 function renderSpecificDates() {
     specificDatesList.innerHTML = "";
-
     if (specificDates.length === 0) {
-        specificDatesList.innerHTML = '<li style="text-align:center; color:#aaa; background:none;">هنوز روزی اضافه نشده</li>';
+        specificDatesList.innerHTML = '<li style="text-align:center; color:#aaa; background:none; padding:10px;">هنوز روزی اضافه نشده</li>';
         return;
     }
-
     specificDates.forEach(function(date, index) {
         const li = document.createElement("li");
-        li.innerHTML = `
-            <span>${toPersianDate(date)}</span>
-            <button class="remove-date-btn" onclick="removeSpecificDate(${index})">✕</button>
-        `;
+        li.style.cssText = "display:flex; justify-content:space-between; padding:8px; background:#f5f5f7; border-radius:8px; margin-bottom:5px; font-size:13px;";
+        li.innerHTML = `<span>${toPersianDate(date)}</span><button class="remove-date-btn" onclick="removeSpecificDate(${index})" style="background:none; border:none; color:#ff3b30; cursor:pointer;">✕</button>`;
         specificDatesList.appendChild(li);
     });
 }
 
-function removeSpecificDate(index) {
-    specificDates.splice(index, 1);
+window.removeSpecificDate = function(index) {
+    specificDates.splice(index, 1); 
     renderSpecificDates();
 }
 
 function buildRecurringTasks() {
-    const title = recTitle.value.trim();
-    const time = recTime.value;
+    const title = recTitle.value.trim(); const time = recTime.value;
+    if (title === "") { alert("لطفاً عنوان کار را بنویس"); return; }
 
-    if (title === "") {
-        alert("لطفاً عنوان کار را بنویس");
-        return;
-    }
-
-    let type = "";
-    recTypeRadios.forEach(r => { if (r.checked) type = r.value; });
-
+    let type = ""; recTypeRadios.forEach(r => { if (r.checked) type = r.value; });
     let allDates = [];
 
     if (type === "range") {
-        const start = recStartDate.value;
-        const end = recEndDate.value;
-
-        if (!start || !end) {
-            alert("لطفاً تاریخ شروع و پایان را انتخاب کن");
-            return;
-        }
-        if (start > end) {
-            alert("تاریخ شروع باید قبل از پایان باشد");
-            return;
-        }
-
+        const start = recStartDate.value; const end = recEndDate.value;
+        if (!start || !end) { alert("لطفاً تاریخ شروع و پایان را انتخاب کن"); return; }
+        if (start > end) { alert("تاریخ شروع باید قبل از پایان باشد"); return; }
         let current = start;
-        while (current <= end) {
-            allDates.push(current);
-            current = addDays(current, 1);
-        }
-    }
-    else if (type === "weekdays") {
+        while (current <= end) { allDates.push(current); current = addDays(current, 1); }
+    } else if (type === "weekdays") {
         const selectedWeekdays = [];
-        document.querySelectorAll(".weekday").forEach(cb => {
-            if (cb.checked) selectedWeekdays.push(Number(cb.value));
-        });
-
-        if (selectedWeekdays.length === 0) {
-            alert("حداقل یک روز هفته را انتخاب کن");
-            return;
-        }
-
-        const start = recWeekStart.value;
-        const end = recWeekEnd.value;
-
-        if (!start || !end) {
-            alert("لطفاً تاریخ شروع و پایان را انتخاب کن");
-            return;
-        }
-        if (start > end) {
-            alert("تاریخ شروع باید قبل از پایان باشد");
-            return;
-        }
-
+        document.querySelectorAll(".weekday").forEach(cb => { if (cb.checked) selectedWeekdays.push(Number(cb.value)); });
+        if (selectedWeekdays.length === 0) { alert("حداقل یک روز هفته را انتخاب کن"); return; }
+        const start = recWeekStart.value; const end = recWeekEnd.value;
+        if (!start || !end) { alert("لطفاً تاریخ شروع و پایان را انتخاب کن"); return; }
+        if (start > end) { alert("تاریخ شروع باید قبل از پایان باشد"); return; }
         let current = start;
         while (current <= end) {
             const dayOfWeek = new Date(current + "T00:00:00").getDay();
-            if (selectedWeekdays.includes(dayOfWeek)) {
-                allDates.push(current);
-            }
+            if (selectedWeekdays.includes(dayOfWeek)) allDates.push(current);
             current = addDays(current, 1);
         }
-    }
-    else if (type === "specific") {
-        if (specificDates.length === 0) {
-            alert("حداقل یک روز اضافه کن");
-            return;
-        }
+    } else if (type === "specific") {
+        if (specificDates.length === 0) { alert("حداقل یک روز اضافه کن"); return; }
         allDates = [...specificDates];
     }
 
-    if (allDates.length === 0) {
-        alert("هیچ روزی برای ساخت کار پیدا نشد");
-        return;
-    }
+    if (allDates.length === 0) { alert("هیچ روزی برای ساخت کار پیدا نشد"); return; }
 
-    allDates.forEach(function(date) {
-        tasks.push({
-            text: title,
-            done: false,
-            date: date,
-            time: time
-        });
-    });
-
-    saveTasks();
-    showTasks();
-    recurringModal.classList.remove("active");
+    allDates.forEach(function(date) { tasks.push({ text: title, done: false, date: date, time: time }); });
+    saveTasks(); showTasks(); recurringModal.classList.remove("active");
     alert(`${allDates.length} کار ساخته شد ✅`);
 }
 
-recurringBtn.addEventListener("click", openRecurringModal);
+// ===== 🌟 شروع نهایی =====
+document.addEventListener("DOMContentLoaded", function() {
+    tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    activeDate = getTodayString();
 
-closeRecurringBtn.addEventListener("click", function() {
-    recurringModal.classList.remove("active");
-});
+    if (typeof initCommon === 'function') initCommon();
 
-recCancelBtn.addEventListener("click", function() {
-    recurringModal.classList.remove("active");
-});
+    updateDateLabel();
+    showTasks();
 
-recurringModal.addEventListener("click", function(e) {
-    if (e.target === recurringModal) recurringModal.classList.remove("active");
-});
+    addBtn.addEventListener("click", addTask);
+    taskInput.addEventListener("keypress", function(e) { if (e.key === "Enter") addTask(); });
 
-recTypeRadios.forEach(function(radio) {
-    radio.addEventListener("change", function() {
-        showRecSection(radio.value);
+    prevDayBtn.addEventListener("click", function() { activeDate = addDays(activeDate, -1); updateDateLabel(); showTasks(); });
+    nextDayBtn.addEventListener("click", function() { activeDate = addDays(activeDate, 1); updateDateLabel(); showTasks(); });
+
+    reportBtn.addEventListener("click", function() { showMonthlyReport(); reportModal.classList.add("active"); });
+    closeReportBtn.addEventListener("click", function() { reportModal.classList.remove("active"); });
+
+    recurringBtn.addEventListener("click", openRecurringModal);
+    closeRecurringBtn.addEventListener("click", function() { recurringModal.classList.remove("active"); });
+    recCancelBtn.addEventListener("click", function() { recurringModal.classList.remove("active"); });
+    recSubmitBtn.addEventListener("click", buildRecurringTasks);
+
+    recTypeRadios.forEach(function(radio) { radio.addEventListener("change", function() { showRecSection(radio.value); }); });
+
+    addSpecificDateBtn.addEventListener("click", function() {
+        const date = recSpecificDate.value;
+        if (!date) { alert("لطفاً یک تاریخ انتخاب کن"); return; }
+        if (specificDates.includes(date)) { alert("این تاریخ قبلاً اضافه شده"); return; }
+        specificDates.push(date); specificDates.sort(); renderSpecificDates(); recSpecificDate.value = "";
     });
-});
 
-addSpecificDateBtn.addEventListener("click", function() {
-    const date = recSpecificDate.value;
-    if (!date) {
-        alert("لطفاً یک تاریخ انتخاب کن");
-        return;
-    }
-    if (specificDates.includes(date)) {
-        alert("این تاریخ قبلاً اضافه شده");
-        return;
-    }
-    specificDates.push(date);
-    specificDates.sort();
-    renderSpecificDates();
-    recSpecificDate.value = "";
-});
-
-recSubmitBtn.addEventListener("click", buildRecurringTasks);
-
-// ===== اتصال دکمه افزودن =====
-addBtn.addEventListener("click", addTask);
-
-taskInput.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") addTask();
-});
-
-// ===== کشوی آمار =====
-const statsToggle = document.getElementById("statsToggle");
-const statsCard = statsToggle ? statsToggle.closest(".stats-card") : null;
-
-if (statsToggle && statsCard) {
-    if (localStorage.getItem("statsOpen") === "true") {
-        statsCard.classList.add("open");
-    }
-
-    statsToggle.addEventListener("click", function() {
-        statsCard.classList.toggle("open");
-        if (statsCard.classList.contains("open")) {
-            localStorage.setItem("statsOpen", "true");
-        } else {
-            localStorage.setItem("statsOpen", "false");
+    const statsToggle = document.getElementById("statsToggle");
+    const statsBody = document.getElementById("statsBody");
+    const statsArrow = document.getElementById("statsArrow");
+    if (statsToggle && statsBody) {
+        if (localStorage.getItem("statsOpen") === "true") {
+            statsBody.style.maxHeight = "200px"; statsBody.style.paddingBottom = "15px";
+            if (statsArrow) statsArrow.style.transform = "rotate(180deg)";
         }
-    });
-}
-
-// ===== شروع =====
-initCommon();
-updateDateLabel();
-showTasks();
+        statsToggle.addEventListener("click", function() {
+            const isOpen = statsBody.style.maxHeight && statsBody.style.maxHeight !== "0px";
+            if (isOpen) {
+                statsBody.style.maxHeight = "0px"; statsBody.style.paddingBottom = "0px";
+                if (statsArrow) statsArrow.style.transform = "rotate(0deg)";
+                localStorage.setItem("statsOpen", "false");
+            } else {
+                statsBody.style.maxHeight = "200px"; statsBody.style.paddingBottom = "15px";
+                if (statsArrow) statsArrow.style.transform = "rotate(180deg)";
+                localStorage.setItem("statsOpen", "true");
+            }
+        });
+    }
+});

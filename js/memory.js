@@ -1,4 +1,4 @@
-// ===== المان‌ها =====
+// ===== متغیرها =====
 const memoryBoard = document.getElementById("memoryBoard");
 const movesCount = document.getElementById("movesCount");
 const timer = document.getElementById("timer");
@@ -8,10 +8,8 @@ const winText = document.getElementById("winText");
 const newGameBtn = document.getElementById("newGameBtn");
 const playAgainBtn = document.getElementById("playAgainBtn");
 
-// ===== ایموجی‌های بازی =====
 const EMOJIS = ["🍎", "🍌", "🍇", "🍓", "🍒", "🥝", "🍑", "🍍"];
 
-// ===== متغیرهای بازی =====
 let cards = [];
 let flippedCards = [];
 let matchedPairs = 0;
@@ -21,10 +19,12 @@ let timerInterval = null;
 let seconds = 0;
 let gameStarted = false;
 
-// ===== شروع بازی =====
+// ===== توابع بازی =====
+
 function startGame() {
     memoryBoard.innerHTML = "";
     winMessage.classList.remove("active");
+    winMessage.style.display = "none";
     flippedCards = [];
     matchedPairs = 0;
     moves = 0;
@@ -61,7 +61,6 @@ function startGame() {
     showBestScore();
 }
 
-// ===== بُر زدن کارت‌ها =====
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -70,7 +69,6 @@ function shuffle(array) {
     return array;
 }
 
-// ===== برگرداندن کارت =====
 function flipCard(card) {
     if (lockBoard) return;
     if (card.classList.contains("flipped")) return;
@@ -91,7 +89,6 @@ function flipCard(card) {
     }
 }
 
-// ===== چک کردن تطابق =====
 function checkMatch() {
     const [card1, card2] = flippedCards;
     const isMatch = card1.dataset.emoji === card2.dataset.emoji;
@@ -107,7 +104,6 @@ function checkMatch() {
         }
     } else {
         lockBoard = true;
-
         setTimeout(function() {
             card1.classList.remove("flipped");
             card2.classList.remove("flipped");
@@ -117,7 +113,6 @@ function checkMatch() {
     }
 }
 
-// ===== تایمر =====
 function startTimer() {
     timerInterval = setInterval(function() {
         seconds++;
@@ -131,7 +126,6 @@ function formatTime(sec) {
     return String(min).padStart(2, "0") + ":" + String(s).padStart(2, "0");
 }
 
-// ===== پایان بازی =====
 function endGame() {
     clearInterval(timerInterval);
 
@@ -145,12 +139,12 @@ function endGame() {
         winText.innerHTML = `${formatNumber(moves)} حرکت در ${formatTime(seconds)}<br>بهترین رکورد: ${formatNumber(best.moves)} حرکت`;
     }
 
+    winMessage.style.display = "block";
     winMessage.classList.add("active");
     showBestScore();
     winMessage.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-// ===== رکورد =====
 function getBestScore() {
     const best = localStorage.getItem("memoryBest");
     return best ? JSON.parse(best) : null;
@@ -169,10 +163,11 @@ function showBestScore() {
     }
 }
 
-// ===== رویدادها =====
-newGameBtn.addEventListener("click", startGame);
-playAgainBtn.addEventListener("click", startGame);
+// ===== 🌟 شروع نهایی (بعد از لود کامل DOM) =====
+document.addEventListener("DOMContentLoaded", function() {
+    if (typeof initCommon === 'function') initCommon();
+    startGame();
 
-// ===== شروع =====
-initCommon();
-startGame();
+    newGameBtn.addEventListener("click", startGame);
+    playAgainBtn.addEventListener("click", startGame);
+});
