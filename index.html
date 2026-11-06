@@ -6,250 +6,142 @@
     <title>داشبورد من</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="css/theme.css">
-    
-    <style>
-        .hero-banner {
-            background: linear-gradient(135deg, #0071e3, #42a5f5);
-            border-radius: 24px; padding: 30px; color: white; margin-bottom: 30px;
-            position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 113, 227, 0.2);
-            transition: all 0.3s; text-align: center;
-        }
-        .hero-banner::after {
-            content: ''; position: absolute; top: -50px; left: -50px;
-            width: 200px; height: 200px; background: rgba(255,255,255,0.15); border-radius: 50%;
-        }
-        .hero-banner h1 {
-            font-size: 28px; font-weight: 800; color: white !important;
-            margin-bottom: 8px; position: relative; z-index: 1;
-        }
-        .hero-banner p {
-            font-size: 14px; color: rgba(255,255,255,0.85) !important;
-            font-weight: 500; position: relative; z-index: 1;
-        }
-        body.dark .hero-banner {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-        .tool-title {
-            font-weight: 800; font-size: 16px; color: #1d1d1f; margin-top: 5px; transition: color 0.3s;
-        }
-        body.dark .tool-title { color: #f8fafc; }
-
-        /* مخفی کردن نوار موبایل در صفحه اصلی */
-        @media (max-width: 900px) {
-            .mobile-header { display: none !important; }
-            .main-content { padding-top: 20px !important; }
-        }
-    </style>
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
     <main class="main-content">
-        
-        <header class="page-header" style="margin-bottom: 20px;">
+
+        <!-- ═══════ هدر ═══════ -->
+        <header class="page-header" style="margin-bottom: 15px;">
             <div>
                 <h1>داشبورد</h1>
             </div>
             <button id="themeBtn" class="theme-btn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
         </header>
 
+        <!-- ═══════ بنر خوش‌آمد ═══════ -->
         <header class="hero-banner">
             <h1 id="greetingText">سلام 👋</h1>
             <p id="currentDate">تاریخ امروز</p>
         </header>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
-                <span style="font-size: 12px; color: #86868b;">کارها</span>
-                <h2 id="statTasks" style="font-size: 20px; color: #0071e3; margin-top: 5px;">۰ / ۰</h2>
-            </div>
-            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
-                <span style="font-size: 12px; color: #86868b;">هزینه</span>
-                <h2 id="statExpenses" style="font-size: 20px; color: #34c759; margin-top: 5px;">۰</h2>
-            </div>
-            <div class="app-card" style="text-align: center; padding: 15px; margin-bottom: 0;">
-                <span style="font-size: 12px; color: #86868b;">استریک</span>
-                <h2 id="statStreak" style="font-size: 20px; color: #ff9500; margin-top: 5px;">۰</h2>
-            </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-            <div class="app-card" style="margin-bottom: 0;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <div class="app-card-title" style="margin-bottom: 0; font-size: 14px;">📋 کارهای امروز</div>
-                    <a href="tasks.html" style="font-size: 12px; color: #0071e3; text-decoration: none;">مشاهده ←</a>
+        <!-- ═══════ حلقه پیشرفت کارهای امروز ═══════ -->
+        <div class="progress-card">
+            <div class="progress-ring-wrap">
+                <svg class="progress-ring" viewBox="0 0 120 120">
+                    <circle class="progress-ring-bg" cx="60" cy="60" r="52"></circle>
+                    <circle class="progress-ring-fill" id="progressRing" cx="60" cy="60" r="52"></circle>
+                </svg>
+                <div class="progress-ring-text">
+                    <span id="progressPercent">۰٪</span>
+                    <small>امروز</small>
                 </div>
-                <ul id="homeTaskList" style="list-style: none; padding: 0; margin: 0;"></ul>
             </div>
-
-            <div class="app-card" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                <div class="app-card-title" style="font-size: 14px; margin-bottom: 15px;">💰 هزینه امروز</div>
-                <div id="homeExpensesList" style="font-size: 14px; color: #555; width: 100%;"></div>
+            <div class="progress-info">
+                <h3 id="progressTitle">کارهای امروز</h3>
+                <p id="progressDetail">۰ از ۰ انجام شده</p>
+                <div class="progress-stats-mini">
+                    <div>
+                        <span class="mini-label">استریک</span>
+                        <strong id="statStreak" style="color:#ff9500;">۰</strong>
+                    </div>
+                    <div>
+                        <span class="mini-label">کل کارها</span>
+                        <strong id="statTotalTasks" style="color:#0071e3;">۰</strong>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="app-card" style="margin-bottom: 25px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <div class="app-card-title" style="margin-bottom: 0; font-size: 14px;">📝 یادداشت‌های اخیر</div>
-                <a href="notes.html" style="font-size: 12px; color: #0071e3; text-decoration: none;">مشاهده ←</a>
+        <!-- ═══════ نمودار روند هزینه (۷ روز) ═══════ -->
+        <div class="app-card">
+            <div class="app-card-title">📈 هزینه‌های ۷ روز اخیر</div>
+            <div class="chart-wrap">
+                <canvas id="expensesWeekChart"></canvas>
             </div>
-            <div id="homeNotesList" style="font-size: 13px; color: #555;"></div>
         </div>
 
-        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #1d1d1f;">ابزارهای من</h2>
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-            <a href="tasks.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">📋</div><div class="tool-title">کارها</div></a>
-            <a href="expenses.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">💰</div><div class="tool-title">هزینه‌ها</div></a>
-            <a href="calculator.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">🧮</div><div class="tool-title">ماشین‌حساب</div></a>
-            <a href="calendar.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">📅</div><div class="tool-title">تقویم</div></a>
-            <a href="notes.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">📝</div><div class="tool-title">یادداشت</div></a>
-            <a href="password.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">🔐</div><div class="tool-title">تولید رمز</div></a>
-            <a href="memory.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">🧠</div><div class="tool-title">بازی حافظه</div></a>
-            <a href="qrcode.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">📱</div><div class="tool-title">QR Code</div></a>
-            <a href="settings.html" class="app-card" style="text-decoration: none; text-align: center; padding: 20px; margin-bottom: 0;"><div style="font-size: 30px; margin-bottom: 10px;">⚙️</div><div class="tool-title">تنظیمات</div></a>
+        <!-- ═══════ نمودار کارهای هفته ═══════ -->
+        <div class="app-card">
+            <div class="app-card-title">✅ عملکرد هفته</div>
+            <div class="chart-wrap">
+                <canvas id="tasksWeekChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ═══════ کارهای امروز + هزینه امروز ═══════ -->
+        <div class="two-col-grid">
+            <div class="app-card">
+                <div class="card-header-row">
+                    <div class="app-card-title" style="margin:0;">📋 امروز</div>
+                    <a href="tasks.html" class="card-link">مشاهده ←</a>
+                </div>
+                <ul id="homeTaskList" class="mini-task-list"></ul>
+            </div>
+
+            <div class="app-card">
+                <div class="card-header-row">
+                    <div class="app-card-title" style="margin:0;">💰 هزینه امروز</div>
+                    <a href="expenses.html" class="card-link">مشاهده ←</a>
+                </div>
+                <div id="homeExpensesList" class="mini-expense-list"></div>
+            </div>
+        </div>
+
+        <!-- ═══════ بودجه ماه ═══════ -->
+        <div class="app-card budget-mini-card">
+            <div class="card-header-row">
+                <div class="app-card-title" style="margin:0;">🎯 بودجه ماه</div>
+                <a href="expenses.html" class="card-link">مدیریت ←</a>
+            </div>
+            <div class="budget-mini-info">
+                <span>مصرف: <strong id="budgetSpent" style="color:#34c759;">۰ ریال</strong></span>
+                <span>بودجه: <strong id="budgetLimit" style="color:#0071e3;">۰ ریال</strong></span>
+            </div>
+            <div class="budget-mini-bar">
+                <div class="budget-mini-fill" id="budgetMiniFill"></div>
+            </div>
+            <div id="budgetMiniStatus" class="budget-mini-status">در حال بارگذاری...</div>
+        </div>
+
+        <!-- ═══════ یادداشت‌های اخیر ═══════ -->
+        <div class="app-card">
+            <div class="card-header-row">
+                <div class="app-card-title" style="margin:0;">📝 یادداشت‌های اخیر</div>
+                <a href="notes.html" class="card-link">مشاهده ←</a>
+            </div>
+            <div id="homeNotesList" class="mini-notes-list"></div>
+        </div>
+
+        <!-- ═══════ ابزارها ═══════ -->
+        <h2 class="tools-title">ابزارهای من</h2>
+        <div class="tools-grid">
+            <a href="tasks.html" class="tool-card"><div class="tool-icon">📋</div><div class="tool-title">کارها</div></a>
+            <a href="expenses.html" class="tool-card"><div class="tool-icon">💰</div><div class="tool-title">هزینه‌ها</div></a>
+            <a href="calculator.html" class="tool-card"><div class="tool-icon">🧮</div><div class="tool-title">ماشین‌حساب</div></a>
+            <a href="calendar.html" class="tool-card"><div class="tool-icon">📅</div><div class="tool-title">تقویم</div></a>
+            <a href="notes.html" class="tool-card"><div class="tool-icon">📝</div><div class="tool-title">یادداشت</div></a>
+            <a href="password.html" class="tool-card"><div class="tool-icon">🔐</div><div class="tool-title">تولید رمز</div></a>
+            <a href="memory.html" class="tool-card"><div class="tool-icon">🧠</div><div class="tool-title">بازی حافظه</div></a>
+            <a href="qrcode.html" class="tool-card"><div class="tool-icon">📱</div><div class="tool-title">QR Code</div></a>
+            <a href="settings.html" class="tool-card"><div class="tool-icon">⚙️</div><div class="tool-title">تنظیمات</div></a>
         </div>
 
     </main>
 
-    <!-- مودال جمله روز -->
-    <div class="modal" id="quoteModal" style="z-index: 99999;">
-        <div class="modal-content" style="text-align: center; padding: 30px 20px;">
-            <div style="font-size: 40px; margin-bottom: 15px;">💬</div>
-            <h2 style="font-size: 18px; color: #0071e3; margin-bottom: 15px;">جمله امروز</h2>
-            
-            <p id="quoteText" style="font-size: 16px; color: #555; line-height: 1.8; font-style: italic; margin-bottom: 25px; padding: 0 10px;">
-                در حال بارگذاری...
-            </p>
-            
-            <div style="display: flex; justify-content: center;">
-                <button id="closeQuoteBtn" class="btn-primary" style="width: 100%;">بستن</button>
-            </div>
+    <!-- ═══════ مودال جمله روز ═══════ -->
+    <div class="quote-modal" id="quoteModal">
+        <div class="quote-modal-content">
+            <div class="quote-icon">💬</div>
+            <h2 class="quote-modal-title">جمله امروز</h2>
+            <p class="quote-modal-text" id="quoteText">در حال بارگذاری...</p>
+            <button class="quote-modal-btn" id="closeQuoteBtn">بــــرررررو بـــــررررریم 🚀</button>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/common.js"></script>
-    <script>
-        // 🌟 راه‌اندازی دکمه تم صفحه اصلی
-        const homeThemeBtn = document.getElementById("themeBtn");
-        if (homeThemeBtn) {
-            homeThemeBtn.addEventListener("click", toggleTheme);
-        }
-
-        // ===== اسکریپت اختصاصی صفحه اصلی =====
-        document.getElementById("currentDate").textContent = toPersianDate(getTodayString());
-        const hour = new Date().getHours();
-        document.getElementById("greetingText").textContent = hour < 12 ? "صبح بخیر ☀️" : hour < 18 ? "ظهر بخیر 🌤️" : "شب بخیر 🌙";
-
-        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-        const notes = JSON.parse(localStorage.getItem("notes")) || [];
-        const today = getTodayString();
-
-        const todayTasks = tasks.filter(t => t.date === today);
-        const doneTasks = todayTasks.filter(t => t.done).length;
-        const todayExpenses = expenses.filter(e => e.date === today);
-        const totalExp = todayExpenses.reduce((sum, e) => sum + e.amount, 0);
-
-        document.getElementById("statTasks").textContent = doneTasks + " / " + todayTasks.length;
-        document.getElementById("statExpenses").textContent = totalExp.toLocaleString("fa-IR");
-        
-        let streak = 0;
-        let checkDate = today;
-        for(let i=0; i<365; i++) {
-            const dTasks = tasks.filter(t => t.date === checkDate);
-            if(dTasks.length > 0 && dTasks.filter(t => t.done).length === 0) break;
-            if(dTasks.filter(t => t.done).length > 0) streak++;
-            checkDate = addDays(checkDate, -1);
-        }
-        document.getElementById("statStreak").textContent = streak;
-
-        const homeTaskList = document.getElementById("homeTaskList");
-        if (todayTasks.length === 0) {
-            homeTaskList.innerHTML = '<li style="text-align:center; color:#aaa; font-size:13px; padding:10px 0;">کاری ثبت نشده</li>';
-        } else {
-            todayTasks.slice(0, 3).forEach(function(task) {
-                const li = document.createElement("li");
-                li.style.cssText = "display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.05); font-size:13px;";
-                if (task.done) li.style.opacity = "0.5";
-                li.innerHTML = `<span>${task.done ? '☑' : '☐'}</span><span style="${task.done ? 'text-decoration:line-through;' : ''}">${task.text}</span>`;
-                homeTaskList.appendChild(li);
-            });
-        }
-
-        const homeExpensesList = document.getElementById("homeExpensesList");
-        if (todayExpenses.length === 0) {
-            homeExpensesList.innerHTML = '<div style="text-align:center; color:#aaa; font-size:13px;">هزینه‌ای ثبت نشده</div>';
-        } else {
-            homeExpensesList.innerHTML = `
-                <div style="font-size: 22px; font-weight: 800; color: #34c759;">${totalExp.toLocaleString("fa-IR")}</div>
-                <div style="font-size: 12px; color: #888; margin-top: 5px;">ریال</div>
-            `;
-        }
-
-        const homeNotesList = document.getElementById("homeNotesList");
-        const recentNotes = [...notes].sort((a, b) => b.id - a.id).slice(0, 2);
-        if (recentNotes.length === 0) {
-            homeNotesList.innerHTML = '<div style="text-align:center; color:#aaa; font-size:13px; padding:10px 0;">یادداشتی نداری</div>';
-        } else {
-            let html = '';
-            recentNotes.forEach(function(note) {
-                html += `
-                    <div style="display:flex; flex-direction:column; gap:4px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.05); cursor:pointer;" onclick="window.location.href='notes.html'">
-                        <div style="font-weight: 700; font-size: 13px; color: #1d1d1f;">${note.title}</div>
-                        <div style="color: #86868b; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">${note.content}</div>
-                    </div>
-                `;
-            });
-            homeNotesList.innerHTML = html;
-        }
-
-        // ===== مودال جمله روز =====
-        const dailyQuotes = [
-            "امروز بهترین روز برای شروع است.",
-            "موفقیت از قدم‌های کوچک شروع می‌شود.",
-            "بهترین زمان برای کاشتن درخت، ۲۰ سال پیش بود. دومین بهترین زمان، الان است.",
-            "به جای اینکه منتظر انگیزه باشی، شروع کن؛ انگیزه در مسیر پیدا می‌شود.",
-            "هر روز یک فرصت جدید برای بهتر شدن است.",
-            "کارهای بزرگ با قدم‌های کوچک ساخته می‌شوند.",
-            "شکست، پله‌ای برای رسیدن به موفقیت است.",
-            "به خودت ایمان داشته باش، تو توانایی بیشتری از آنچه فکر می‌کنی داری.",
-            "تنها راه انجام دادن کارها، شروع کردن است.",
-            "پیشرفت، نتیجه‌ی تکرار کارهای کوچک است.",
-            "اگر می‌خواهی چیزی را تغییر دهی، از خودت شروع کن.",
-            "به جای تمرکز بر موانع، بر اهدافت تمرکز کن.",
-            "هر صبح یک شانس جدید است.",
-            "تلاش امروز، موفقیت فرداست.",
-            "به خودت سخت نگیر، فقط هر روز بهتر از دیروز باش.",
-            "زمانی که فکر می‌کنی نمی‌توانی، همان زمانی است که باید ادامه بدهی.",
-            "زندگی کوتاه‌تر از آن است که با پشیمانی بگذرد.",
-            "لبخند بزن، فردا روز بهتری است.",
-            "اولین قدم همیشه سخت‌ترین است.",
-            "خودت را با هیچ‌کس مقایسه نکن، تو مسیر خودت را داری."
-        ];
-
-        const quoteModal = document.getElementById("quoteModal");
-        const quoteText = document.getElementById("quoteText");
-        const closeQuoteBtn = document.getElementById("closeQuoteBtn");
-
-        function showRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * dailyQuotes.length);
-            quoteText.textContent = `«${dailyQuotes[randomIndex]}»`;
-        }
-
-        function closeQuoteModal() {
-            quoteModal.classList.remove("active");
-        }
-
-        closeQuoteBtn.addEventListener("click", closeQuoteModal);
-
-        quoteModal.addEventListener("click", function(e) {
-            if (e.target === quoteModal) closeQuoteModal();
-        });
-
-        // نمایش مودال هنگام باز شدن سایت
-        setTimeout(function() {
-            showRandomQuote();
-            quoteModal.classList.add("active");
-        }, 500);
-    </script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>

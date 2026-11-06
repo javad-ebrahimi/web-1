@@ -86,3 +86,50 @@
     padding-bottom: 10px;
     border-bottom: 1px solid #e5e5ea;
 }
+
+/* ══════════════════════════════════════════ */
+/* ═══════ حالت تاریک تقویم ═══════ */
+/* ══════════════════════════════════════════ */
+
+/* روزهای تقویم */
+body.dark .calendar-day {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f8fafc;
+}
+body.dark .calendar-day:hover {
+    background: #334155;
+    border-color: #3b82f6;
+}
+body.dark .calendar-day.empty {
+    background: transparent;
+    border: none;
+}
+
+/* روز امروز */
+body.dark .calendar-day.today {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+/* روز انتخاب‌شده */
+body.dark .calendar-day.selected {
+    background: #1e3a2e;
+    border-color: #34c759;
+    color: #f8fafc;
+}
+
+/* نام روزهای هفته */
+body.dark .calendar-weekday {
+    color: #94a3b8;
+}
+
+/* عنوان ماه */
+body.dark .calendar-month-label {
+    color: #f8fafc !important;
+}
+
+/* نقطه‌های رویداد */
+body.dark .calendar-day .dot .dot-task { background: #60a5fa; }
+body.dark .calendar-day .dot .dot-expense { background: #4ade80; }

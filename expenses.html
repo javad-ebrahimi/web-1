@@ -6,6 +6,7 @@
     <title>مدیریت هزینه‌ها</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
     <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/expenses.css">
 </head>
 <body>
 
@@ -13,56 +14,141 @@
         
         <header class="page-header">
             <div>
-                <h1>💰 مدیریت هزینه‌ها</h1>
-                <p>ثبت و بررسی هزینه‌های روزانه</p>
+                <h1>💰 هزینه‌ها</h1>
+                <p>ثبت روزانه</p>
             </div>
             <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
         </header>
 
-        <!-- کارت انتخاب روز -->
-        <div class="app-card" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
-            <button id="prevDayBtn" class="btn-secondary" style="padding: 8px 16px;">▶ دیروز</button>
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
-                <span id="dayPrefix" style="font-size: 11px; color: #86868b; font-weight: bold;">امروز</span>
-                <span id="dateLabel" style="font-weight: 800; font-size: 15px; color: #1d1d1f;">در حال بارگذاری...</span>
+        <!-- ═══════ ۱. نوار تاریخ فشرده ═══════ -->
+        <div class="date-bar">
+            <button id="prevDayBtn" class="date-nav-btn">▶</button>
+            <div class="date-center">
+                <span id="dayPrefix" class="date-prefix">امروز</span>
+                <span id="dateLabel" class="date-full">در حال بارگذاری...</span>
             </div>
-            <button id="nextDayBtn" class="btn-secondary" style="padding: 8px 16px;">فردا ◀</button>
+            <button id="nextDayBtn" class="date-nav-btn">◀</button>
         </div>
 
-        <!-- کارت افزودن هزینه -->
-        <div class="app-card">
-            <div class="app-card-title">ثبت هزینه جدید</div>
-            <input type="text" id="expenseDesc" placeholder="توضیح (مثلاً: ناهار)">
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="expenseAmount" placeholder="مبلغ (ریال)" inputmode="numeric" style="flex: 1;">
-                <button id="addExpenseBtn" class="btn-primary" style="flex: 1; background: #34c759;">+ ثبت</button>
+        <!-- ═══════ ۲. خلاصه سریع (جمع + بودجه) ═══════ -->
+        <div class="summary-card">
+            <div class="summary-row">
+                <div class="summary-item">
+                    <span class="summary-label">جمع امروز</span>
+                    <strong id="expenseTotal" class="summary-value green">۰ ریال</strong>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-item">
+                    <span class="summary-label">بودجه ماه</span>
+                    <strong id="budgetAmount" class="summary-value blue">۰ ریال</strong>
+                </div>
+                <button id="editBudgetBtn" class="edit-budget-btn" title="ویرایش بودجه">✎</button>
             </div>
+            <div class="budget-bar-bg">
+                <div class="budget-bar-fill" id="budgetProgressFill"></div>
+            </div>
+            <div id="budgetStatus" class="budget-status">در حال بارگذاری...</div>
         </div>
 
-        <!-- کارت لیست هزینه‌های روز -->
-        <div class="app-card">
-            <div class="app-card-title">هزینه‌های این روز</div>
-            <ul id="expenseList" style="list-style: none; padding: 0; margin: 0;"></ul>
-            <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0; font-weight: bold;">
-                <span>جمع این روز:</span>
-                <span id="expenseTotal" style="color: #34c759;">۰ ریال</span>
-            </div>
+        <!-- ═══════ ۳. دکمه ثبت هزینه ═══════ -->
+        <button id="openAddExpense" class="add-expense-btn">
+            <span style="font-size: 22px;">＋</span>
+            <span>ثبت هزینه جدید</span>
+        </button>
+
+        <!-- ═══════ ۴. لیست هزینه‌های امروز ═══════ -->
+        <div class="app-card list-card">
+            <div class="app-card-title">📋 هزینه‌های این روز</div>
+            <ul id="expenseList" class="expense-list"></ul>
         </div>
 
-        <!-- کارت آمار ماه -->
-        <div class="app-card stats-card">
-            <div class="app-card-title">📊 آمار ماه</div>
-            <div class="stats-row" style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
-                <span>جمع ماه:</span>
-                <strong id="monthTotal" style="color: #34c759;">۰ ریال</strong>
+        <!-- ═══════ ۵. کشوی آمار (پنهان) ═══════ -->
+        <details class="collapsible-card">
+            <summary>
+                <span>📊 آمار و نمودار</span>
+                <span class="chevron">▼</span>
+            </summary>
+            <div class="collapsible-body">
+                <!-- آمار ماه -->
+                <div class="stat-row">
+                    <span>جمع این ماه:</span>
+                    <strong id="monthTotal" class="green">۰ ریال</strong>
+                </div>
+                <div class="stat-row">
+                    <span>تعداد هزینه:</span>
+                    <strong id="monthCount">۰</strong>
+                </div>
+
+                <!-- مقایسه ماه -->
+                <div id="compareResult" class="compare-badge">-</div>
+                <div class="compare-details">
+                    <span id="currentMonthLabel">این ماه:</span>
+                    <strong id="currentMonthTotal" class="green">۰ ریال</strong>
+                </div>
+                <div class="compare-details">
+                    <span id="prevMonthLabel">ماه قبل:</span>
+                    <strong id="prevMonthTotal" style="color:#86868b;">۰ ریال</strong>
+                </div>
+
+                <!-- نمودار -->
+                <div class="chart-container">
+                    <canvas id="expensesChart"></canvas>
+                </div>
             </div>
-            <div class="stats-row" style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
-                <span>تعداد هزینه‌ها:</span>
-                <strong id="monthCount">۰</strong>
-            </div>
-        </div>
+        </details>
 
     </main>
+
+    <!-- ═══════ مودال افزودن هزینه ═══════ -->
+    <div class="modal" id="addExpenseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="font-size: 18px;">➕ ثبت هزینه جدید</h2>
+                <button class="modal-close-btn" id="closeAddExpense">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>توضیح</label>
+                    <input type="text" id="expenseDesc" placeholder="مثلاً: ناهار">
+                </div>
+                <div class="form-group">
+                    <label>دسته‌بندی</label>
+                    <select id="expenseCategory">
+                        <option value="غذا">🍔 غذا</option>
+                        <option value="حمل و نقل">🚕 حمل و نقل</option>
+                        <option value="خرید">🛍️ خرید</option>
+                        <option value="قبوض">📄 قبوض</option>
+                        <option value="سلامت">💊 سلامت</option>
+                        <option value="سرگرمی">🎮 سرگرمی</option>
+                        <option value="سایر">📦 سایر</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>مبلغ (ریال)</label>
+                    <input type="text" id="expenseAmount" placeholder="مثلاً: 150,000" inputmode="numeric">
+                </div>
+                <button id="addExpenseBtn" class="btn-primary" style="width:100%; background:#34c759; margin-top:10px;">ثبت هزینه</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ مودال بودجه ═══════ -->
+    <div class="modal" id="budgetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="font-size: 18px;">🎯 بودجه ماهانه</h2>
+                <button class="modal-close-btn" id="closeBudgetBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 13px; color: #86868b; margin-bottom: 15px;">حداکثر بودجه این ماه رو وارد کن:</p>
+                <input type="text" id="budgetInput" placeholder="مثلاً: 10,000,000" inputmode="numeric" style="width:100%; padding:14px; border:2px solid #e5e5ea; border-radius:12px; font-family:inherit; font-size:14px; margin-bottom:15px;">
+                <div style="display: flex; gap: 10px;">
+                    <button id="cancelBudgetBtn" class="btn-secondary" style="flex:1;">انصراف</button>
+                    <button id="saveBudgetBtn" class="btn-primary" style="flex:2;">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/common.js"></script>
