@@ -86,7 +86,7 @@ function initThemeAndSidebar() {
         mobileHeader.className = 'mobile-header';
         mobileHeader.innerHTML = `
             <button class="mobile-menu-btn">☰</button>
-            <div class="mobile-title">برنامه‌ریزی من</div>
+            <div class="mobile-title">مدیریت برنامه و هزینه</div>
             <a href="index.html" class="mobile-logo-btn" title="بازگشت به خانه">🏠</a>
         `;
         document.body.prepend(mobileHeader);
@@ -165,31 +165,19 @@ if (!window.location.pathname.includes("stats.html")) {
 // ═══════ راه‌اندازی PWA (نصب روی گوشی) ═══════
 // ═══════════════════════════════════════════════
 
-// اضافه کردن لینک Manifest به Head همه صفحات
+// اضافه کردن لینک Manifest به Head همه صفحات (با مسیر نسبی)
 if (!document.querySelector('link[rel="manifest"]')) {
     const manifestLink = document.createElement('link');
     manifestLink.rel = 'manifest';
-    manifestLink.href = 'manifest.json';
+    manifestLink.href = './manifest.json';
     document.head.appendChild(manifestLink);
 }
 
-// اضافه کردن تم رنگی
-if (!document.querySelector('meta[name="theme-color"]')) {
-    const themeColor = document.createElement('meta');
-    themeColor.name = 'theme-color';
-    themeColor.content = '#0071e3';
-    document.head.appendChild(themeColor);
-}
-
-// ثبت Service Worker
+// ثبت Service Worker (با مسیر نسبی تا در گیت‌هاب هم کار کنه)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                console.log('✅ Service Worker ثبت شد.');
-            })
-            .catch(err => {
-                console.log('❌ خطا در ثبت Service Worker:', err);
-            });
+            .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+            .catch(err => console.error('❌ Service Worker failed:', err));
     });
 }
