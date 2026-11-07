@@ -137,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // ⚡ رفع نهایی مشکل تم: با هر کلیک روی هر جایی از صفحه چک کن
     document.body.addEventListener("click", function(e) {
-        // اگه روی دکمه‌ای با آیدی themeBtn یا کلاس theme-btn کلیک شد
         if (e.target.closest("#themeBtn") || e.target.closest(".theme-btn")) {
             toggleTheme();
         }
@@ -145,10 +144,14 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // ═══════════════════════════════════════════════
-// ═══════ لود خودکار سیستم آمار و دستاوردها ═══════
+// ═══════ لود هوشمند سیستم آمار و دستاوردها ═══════
 // ═══════════════════════════════════════════════
 
-if (!window.location.pathname.includes("stats.html")) {
+// این فایل فقط در صفحاتی لود می‌شود که به دستاوردها نیاز دارند
+const pagesNeedingStats = ["tasks.html", "expenses.html", "goals.html", "index.html", ""];
+const currentPage = window.location.pathname.split("/").pop();
+
+if (pagesNeedingStats.includes(currentPage)) {
     if (!document.querySelector('script[src="js/stats.js"]')) {
         const script = document.createElement("script");
         script.src = "js/stats.js";
