@@ -21,11 +21,17 @@ function formatNumber(num) { return num.toLocaleString("fa-IR"); }
 // ===== تم تاریک/روشن =====
 function applySavedTheme() {
     const saved = localStorage.getItem("theme");
-    if (saved === "dark") document.body.classList.add("dark");
+    if (saved === "dark") {
+        document.body.classList.add("dark");
+    } else {
+        document.body.classList.remove("dark");
+    }
     
-    // آپدیت آیکون دکمه تم صفحه اصلی
-    const homeThemeBtn = document.getElementById("themeBtn");
-    if (homeThemeBtn) homeThemeBtn.textContent = (saved === "dark") ? "☀️" : "🌙";
+    // آپدیت آیکون همه دکمه‌های تم در صفحه
+    const themeBtns = document.querySelectorAll("#themeBtn, .theme-btn");
+    themeBtns.forEach(btn => {
+        btn.textContent = (saved === "dark") ? "☀️" : "🌙";
+    });
 }
 
 function toggleTheme() {
@@ -34,9 +40,11 @@ function toggleTheme() {
     
     localStorage.setItem("theme", isDark ? "dark" : "light");
     
-    // آپدیت آیکون دکمه تم صفحه اصلی
-    const homeThemeBtn = document.getElementById("themeBtn");
-    if (homeThemeBtn) homeThemeBtn.textContent = isDark ? "☀️" : "🌙";
+    // آپدیت آیکون همه دکمه‌های تم
+    const themeBtns = document.querySelectorAll("#themeBtn, .theme-btn");
+    themeBtns.forEach(btn => {
+        btn.textContent = isDark ? "☀️" : "🌙";
+    });
     
     window.dispatchEvent(new Event("themeChanged"));
 }
@@ -52,7 +60,7 @@ function initThemeAndSidebar() {
 
     if (!document.querySelector('.desktop-nav')) {
         
-        // 👇 ۱. منوی دسکتاپ (بدون دکمه تم)
+        // ۱. منوی دسکتاپ
         const desktopNav = document.createElement('aside');
         desktopNav.className = 'desktop-nav';
         desktopNav.innerHTML = `
@@ -60,6 +68,8 @@ function initThemeAndSidebar() {
                 <a href="index.html" class="nav-item-home" title="خانه">🏠 <span>خانه</span></a>
                 <a href="tasks.html" class="nav-item-home" title="کارها">📋 <span>کارها</span></a>
                 <a href="expenses.html" class="nav-item-home" title="هزینه‌ها">💰 <span>هزینه‌ها</span></a>
+                <a href="goals.html" class="nav-item-home" title="اهداف مالی">🎯 <span>اهداف</span></a>
+                <a href="stats.html" class="nav-item-home" title="آمار و دستاوردها">📊 <span>آمار</span></a>
                 <a href="calculator.html" class="nav-item-home" title="ماشین‌حساب">🧮 <span>ماشین‌حساب</span></a>
                 <a href="calendar.html" class="nav-item-home" title="تقویم">📅 <span>تقویم</span></a>
                 <a href="notes.html" class="nav-item-home" title="یادداشت‌ها">📝 <span>یادداشت</span></a>
@@ -71,7 +81,7 @@ function initThemeAndSidebar() {
         `;
         document.body.appendChild(desktopNav);
 
-        // 👇 ۲. هدر موبایل (بدون دکمه تم)
+        // ۲. هدر موبایل
         const mobileHeader = document.createElement('div');
         mobileHeader.className = 'mobile-header';
         mobileHeader.innerHTML = `
@@ -83,7 +93,7 @@ function initThemeAndSidebar() {
         
         const mobileBtn = mobileHeader.querySelector('.mobile-menu-btn');
 
-        // 👇 ۳. منوی کشویی موبایل
+        // ۳. منوی کشویی موبایل
         const mobileMenu = document.createElement('aside');
         mobileMenu.className = 'mobile-menu-overlay';
         mobileMenu.innerHTML = `
@@ -93,6 +103,8 @@ function initThemeAndSidebar() {
                     <a href="index.html" class="nav-item-home" style="flex-direction: row;">🏠 <span>خانه</span></a>
                     <a href="tasks.html" class="nav-item-home" style="flex-direction: row;">📋 <span>کارها</span></a>
                     <a href="expenses.html" class="nav-item-home" style="flex-direction: row;">💰 <span>هزینه‌ها</span></a>
+                    <a href="goals.html" class="nav-item-home" style="flex-direction: row;">🎯 <span>اهداف</span></a>
+                    <a href="stats.html" class="nav-item-home" style="flex-direction: row;">📊 <span>آمار</span></a>
                     <a href="calculator.html" class="nav-item-home" style="flex-direction: row;">🧮 <span>ماشین‌حساب</span></a>
                     <a href="calendar.html" class="nav-item-home" style="flex-direction: row;">📅 <span>تقویم</span></a>
                     <a href="notes.html" class="nav-item-home" style="flex-direction: row;">📝 <span>یادداشت‌ها</span></a>
@@ -117,12 +129,67 @@ function initThemeAndSidebar() {
     }
 
     applySavedTheme();
+}
+
+// ===== 🌟 راه‌اندازی سراسری =====
+document.addEventListener("DOMContentLoaded", function() {
+    initThemeAndSidebar();
     
-    // 🌟 اتصال دکمه تم صفحه اصلی (اگه وجود داشت)
-    const homeThemeBtn = document.getElementById("themeBtn");
-    if (homeThemeBtn) {
-        homeThemeBtn.addEventListener("click", toggleTheme);
+    // ⚡ رفع نهایی مشکل تم: با هر کلیک روی هر جایی از صفحه چک کن
+    document.body.addEventListener("click", function(e) {
+        // اگه روی دکمه‌ای با آیدی themeBtn یا کلاس theme-btn کلیک شد
+        if (e.target.closest("#themeBtn") || e.target.closest(".theme-btn")) {
+            toggleTheme();
+        }
+    });
+});
+
+// ═══════════════════════════════════════════════
+// ═══════ لود خودکار سیستم آمار و دستاوردها ═══════
+// ═══════════════════════════════════════════════
+
+if (!window.location.pathname.includes("stats.html")) {
+    if (!document.querySelector('script[src="js/stats.js"]')) {
+        const script = document.createElement("script");
+        script.src = "js/stats.js";
+        script.onload = function() {
+            if (typeof checkAchievements === 'function') {
+                checkAchievements();
+            }
+        };
+        document.body.appendChild(script);
     }
 }
 
-document.addEventListener("DOMContentLoaded", initThemeAndSidebar);
+// ═══════════════════════════════════════════════
+// ═══════ راه‌اندازی PWA (نصب روی گوشی) ═══════
+// ═══════════════════════════════════════════════
+
+// اضافه کردن لینک Manifest به Head همه صفحات
+if (!document.querySelector('link[rel="manifest"]')) {
+    const manifestLink = document.createElement('link');
+    manifestLink.rel = 'manifest';
+    manifestLink.href = 'manifest.json';
+    document.head.appendChild(manifestLink);
+}
+
+// اضافه کردن تم رنگی
+if (!document.querySelector('meta[name="theme-color"]')) {
+    const themeColor = document.createElement('meta');
+    themeColor.name = 'theme-color';
+    themeColor.content = '#0071e3';
+    document.head.appendChild(themeColor);
+}
+
+// ثبت Service Worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(registration => {
+                console.log('✅ Service Worker ثبت شد.');
+            })
+            .catch(err => {
+                console.log('❌ خطا در ثبت Service Worker:', err);
+            });
+    });
+}

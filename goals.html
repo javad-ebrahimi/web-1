@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اهداف مالی</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/goals.css">
+</head>
+<body>
+
+    <main class="main-content">
+        
+        <header class="page-header">
+            <div>
+                <h1>🎯 اهداف مالی</h1>
+                <p>برای رویاهات پس‌انداز کن</p>
+            </div>
+            <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
+
+        <!-- دکمه افزودن هدف -->
+        <button id="addGoalBtn" class="btn-primary" style="width: 100%; margin-bottom: 20px; background: #0071e3;">
+            + هدف جدید
+        </button>
+
+        <!-- لیست اهداف -->
+        <div id="goalsList" class="goals-list"></div>
+
+        <!-- حالت خالی -->
+        <div id="emptyGoals" class="app-card" style="display: none; text-align: center; padding: 40px;">
+            <div style="font-size: 50px; opacity: 0.5; margin-bottom: 15px;">🎯</div>
+            <h3 style="color: #1d1d1f; margin-bottom: 8px;">هنوز هدفی نداری</h3>
+            <p style="color: #86868b; font-size: 13px;">اولین هدفت رو تعیین کن و برای رسیدن بهش تلاش کن!</p>
+        </div>
+
+    </main>
+
+    <!-- ═══════ مودال افزودن/ویرایش هدف ═══════ -->
+    <div class="modal" id="goalModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" style="font-size: 18px;">🎯 هدف جدید</h2>
+                <button class="modal-close-btn" id="closeGoalModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>اسم هدف</label>
+                    <input type="text" id="goalTitle" placeholder="مثلاً: لپ‌تاپ جدید">
+                </div>
+                
+                <div class="form-group">
+                    <label>مبلغ هدف (ریال)</label>
+                    <input type="text" id="goalTargetAmount" placeholder="مثلاً: 50,000,000" inputmode="numeric">
+                </div>
+
+                <div class="form-group">
+                    <label>مبلغ فعلی (اختیاری)</label>
+                    <input type="text" id="goalCurrentAmount" placeholder="اگه چیزی جمع کردی بنویس" inputmode="numeric">
+                </div>
+
+                <div class="form-group">
+                    <label>آیکون (اختیاری)</label>
+                    <select id="goalIcon">
+                        <option value="🎯">🎯 هدف عمومی</option>
+                        <option value="💻">💻 لپ‌تاپ / کامپیوتر</option>
+                        <option value="📱">📱 گوشی</option>
+                        <option value="🚗">🚗 ماشین</option>
+                        <option value="🏠">🏠 خانه</option>
+                        <option value="✈️">✈️ سفر</option>
+                        <option value="🎓">🎓 تحصیل</option>
+                        <option value="💍">💍 ازدواج</option>
+                        <option value="🎁">🎁 هدیه</option>
+                        <option value="💰">💰 پس‌انداز</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" id="cancelGoalBtn" class="btn-secondary" style="flex: 1;">انصراف</button>
+                    <button type="button" id="saveGoalBtn" class="btn-primary" style="flex: 2;">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ مودال افزودن پول به هدف ═══════ -->
+    <div class="modal" id="depositModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="font-size: 18px;">💰 افزودن به هدف</h2>
+                <button class="modal-close-btn" id="closeDepositModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <p id="depositGoalTitle" style="font-size: 14px; color: #86868b; margin-bottom: 15px; text-align: center;">-</p>
+                <div class="form-group">
+                    <label>مبلغ (ریال)</label>
+                    <input type="text" id="depositAmount" placeholder="مثلاً: 5,000,000" inputmode="numeric">
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" id="cancelDepositBtn" class="btn-secondary" style="flex: 1;">انصراف</button>
+                    <button type="button" id="saveDepositBtn" class="btn-primary" style="flex: 2; background: #34c759;">افزودن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/goals.js"></script>
+</body>
+</html>

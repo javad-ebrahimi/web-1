@@ -1,0 +1,495 @@
+/* ══════════════════════════════════════════ */
+/* ═══════ تنظیمات کلی صفحه آمار ═══════ */
+/* ══════════════════════════════════════════ */
+
+/* محدود کردن عرض کل صفحه تا در دسکتاپ خیلی پهن و کشیده نشه */
+.main-content {
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    padding: 30px 20px !important;
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ کارت‌های آمار (۴ عدد) ═══════ */
+/* ══════════════════════════════════════════ */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px 10px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* هاله رنگی پس‌زمینه کارت‌ها */
+.stat-box::before {
+    content: '';
+    position: absolute;
+    top: -50px; left: 50%;
+    transform: translateX(-50%);
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.stat-box:nth-child(1)::before { background: #0071e3; }
+.stat-box:nth-child(2)::before { background: #ff9500; }
+.stat-box:nth-child(3)::before { background: #34c759; }
+.stat-box:nth-child(4)::before { background: #af52de; }
+
+.stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+.stat-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    animation: floatIcon 3s ease-in-out infinite;
+}
+.stat-box:nth-child(2) .stat-icon { animation-delay: 0.2s; }
+.stat-box:nth-child(3) .stat-icon { animation-delay: 0.4s; }
+.stat-box:nth-child(4) .stat-icon { animation-delay: 0.6s; }
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1d1d1f;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #86868b;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ نوار پیشرفت کلی ═══════ */
+/* ══════════════════════════════════════════ */
+
+.overall-progress-card {
+    background: linear-gradient(135deg, #ffffff, #f8faff);
+    border: 1px solid rgba(0,113,227,0.1);
+    box-shadow: 0 10px 30px rgba(0,113,227,0.06);
+    border-radius: 24px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.overall-progress-card::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(0,113,227,0.1), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.overall-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.overall-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #1d1d1f;
+    margin-bottom: 4px;
+}
+
+.overall-sub {
+    font-size: 12px;
+    color: #86868b;
+    font-weight: 600;
+}
+
+.overall-percent {
+    font-size: 24px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #0071e3, #42a5f5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.overall-bar-bg {
+    background: #e5e5ea;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.overall-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0071e3, #42a5f5, #34c759);
+    background-size: 200% 100%;
+    border-radius: 6px;
+    width: 0%;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: gradientMove 3s linear infinite;
+    box-shadow: 0 0 10px rgba(0,113,227,0.3);
+}
+
+@keyframes gradientMove {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ نمودارها (زیر هم و تمام عرض) ═══════ */
+/* ══════════════════════════════════════════ */
+
+.stats-charts-grid {
+    display: flex;
+    flex-direction: column; /* زیر هم */
+    gap: 15px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.chart-card {
+    padding: 20px 25px !important;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chart-header h3 {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1d1d1f;
+    margin: 0;
+}
+
+.chart-sub {
+    font-size: 11px;
+    color: #86868b;
+    font-weight: 700;
+}
+
+.chart-wrap {
+    position: relative;
+    height: 250px; /* ارتفاع مناسب برای حالت تمام عرض */
+    width: 100%;
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ لیست نشان‌ها ═══════ */
+/* ══════════════════════════════════════════ */
+
+.section-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: #1d1d1f;
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #e5e5ea, transparent);
+    border-radius: 1px;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* نشان‌ها در دسکتاپ ۳ ستون */
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.achievement-card {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 25px 15px 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+    border: 2px solid transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-card.locked {
+    opacity: 0.6;
+    filter: grayscale(0.8);
+    background: #fafafa;
+}
+
+.achievement-card.locked:hover {
+    opacity: 0.8;
+    filter: grayscale(0.4);
+    transform: translateY(-3px);
+}
+
+.achievement-card.unlocked {
+    border-color: #ffd700;
+    background: linear-gradient(135deg, #fffef7, #fff9e0);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15);
+}
+
+.achievement-card.unlocked:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.25);
+}
+
+.achievement-card.unlocked::after {
+    content: '✓';
+    position: absolute;
+    top: 12px; left: 12px;
+    background: #34c759;
+    color: white;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 900;
+    box-shadow: 0 4px 10px rgba(52,199,89,0.4);
+    z-index: 2;
+}
+
+.achievement-card.unlocked::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%);
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.8s;
+    pointer-events: none;
+}
+
+.achievement-card.unlocked:hover::before {
+    transform: rotate(45deg) translateX(100%);
+}
+
+.achievement-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s;
+}
+
+.achievement-card:hover .achievement-icon {
+    transform: scale(1.15) rotate(5deg);
+}
+
+.achievement-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1d1d1f;
+    margin-bottom: 6px;
+    line-height: 1.4;
+    position: relative;
+    z-index: 1;
+}
+
+.achievement-desc {
+    font-size: 11px;
+    color: #86868b;
+    line-height: 1.6;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ Toast (پیام تبریک) ═══════ */
+/* ══════════════════════════════════════════ */
+
+.achievement-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-200%);
+    background: linear-gradient(135deg, #1d1d1f, #333);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    z-index: 999999;
+    max-width: 90%;
+    width: 380px;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid #ffd700;
+}
+
+.achievement-toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-icon {
+    font-size: 40px;
+    flex-shrink: 0;
+    animation: toastFloat 2s ease-in-out infinite;
+}
+
+@keyframes toastFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+.toast-content { flex: 1; }
+
+.toast-label {
+    font-size: 11px;
+    color: #ffd700;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.toast-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 2px;
+}
+
+.toast-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ حالت تاریک ═══════ */
+/* ══════════════════════════════════════════ */
+
+body.dark .stat-box {
+    background: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+body.dark .stat-box:hover { box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+body.dark .stat-value { color: #f8fafc; }
+body.dark .stat-label { color: #94a3b8; }
+
+body.dark .overall-progress-card {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-color: #334155;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+body.dark .overall-title { color: #f8fafc; }
+body.dark .section-title { color: #f8fafc; }
+body.dark .section-title::after { background: linear-gradient(90deg, #334155, transparent); }
+body.dark .overall-bar-bg { background: #334155; }
+
+body.dark .chart-header h3 { color: #f8fafc; }
+body.dark .chart-sub { color: #94a3b8; }
+
+body.dark .achievement-card { background: #1e293b; border-color: #334155; }
+body.dark .achievement-card.locked { background: #0f172a; }
+body.dark .achievement-card.unlocked {
+    background: linear-gradient(135deg, #2d2415, #3d3018);
+    border-color: #d4a017;
+    box-shadow: 0 10px 30px rgba(212, 160, 23, 0.15);
+}
+body.dark .achievement-title { color: #f8fafc; }
+body.dark .achievement-desc { color: #94a3b8; }
+
+/* ══════════════════════════════════════════ */
+/* ═══════ موبایل و تبلت ═══════ */
+/* ══════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+    .main-content {
+        max-width: 100% !important;
+        padding: 20px 15px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-charts-grid {
+        grid-template-columns: 1fr;
+    }
+    .achievements-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .chart-wrap {
+        height: 200px;
+    }
+}
+
+@media (max-width: 500px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .stat-box {
+        padding: 15px 8px;
+    }
+    .stat-icon { font-size: 24px; margin-bottom: 8px; }
+    .stat-value { font-size: 17px; }
+    .stat-label { font-size: 10px; }
+    
+    .overall-progress-card {
+        padding: 15px 20px;
+        border-radius: 20px;
+    }
+    .overall-percent { font-size: 20px; }
+    
+    .achievements-grid {
+        grid-template-columns: 1fr;
+    }
+    .achievement-card {
+        padding: 20px 12px 15px;
+        border-radius: 18px;
+    }
+    .achievement-icon { font-size: 40px; }
+    .achievement-title { font-size: 13px; }
+    .achievement-desc { font-size: 10px; }
+}

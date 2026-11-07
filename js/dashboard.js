@@ -1,77 +1,33 @@
 // ═══════════════════════════════════════════════
-// ═══════ داشبورد هوشمند ═══════
+// ═══════ داشبورد ═══════
 // ═══════════════════════════════════════════════
 
-// ===== داده‌ها =====
 let tasks = [];
 let expenses = [];
 let notes = [];
 let budget = 0;
 
-// ===== چارت‌ها =====
-let expensesWeekChart = null;
-let tasksWeekChart = null;
-
-// ===== شروع =====
 document.addEventListener("DOMContentLoaded", function() {
-
-    // ۱. خواندن داده‌ها
     tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     expenses = JSON.parse(localStorage.getItem("expenses")) || [];
     notes = JSON.parse(localStorage.getItem("notes")) || [];
     budget = Number(localStorage.getItem("budget")) || 0;
 
-    // ۲. اجرای هدر و منو
-    if (typeof initThemeAndSidebar === 'function' && !document.querySelector('.desktop-nav')) {
-        initThemeAndSidebar();
-    } else {
-        if (typeof applySavedTheme === 'function') applySavedTheme();
-    }
+    if (typeof initThemeAndSidebar === 'function') initThemeAndSidebar();
 
-    // ۳. دکمه تم
-    const homeThemeBtn = document.getElementById("themeBtn");
-    if (homeThemeBtn && typeof toggleTheme === 'function') {
-        homeThemeBtn.addEventListener("click", toggleTheme);
-    }
-
-    // ۴. هدر و جمله روز
     initHeader();
     initQuoteModal();
-
-    // ۵. حلقه پیشرفت
+    checkBackupReminder();
     updateProgressRing();
-
-    // ۶. کارهای امروز
     renderTodayTasks();
-
-    // ۷. هزینه امروز
     renderTodayExpenses();
-
-    // ۸. بودجه ماه
-    renderBudget();
-
-    // ۹. یادداشت‌های اخیر
     renderRecentNotes();
-
-    // ۱۰. نمودارها
-    setTimeout(function() {
-        renderExpensesWeekChart();
-        renderTasksWeekChart();
-    }, 100);
 });
-
-// ═══════════════════════════════════════════════
-// ═══════ هدر ═══════
-// ═══════════════════════════════════════════════
 
 function initHeader() {
     const currentDateEl = document.getElementById("currentDate");
     const greetingEl = document.getElementById("greetingText");
-
-    if (currentDateEl) {
-        currentDateEl.textContent = toPersianDate(getTodayString());
-    }
-
+    if (currentDateEl) currentDateEl.textContent = toPersianDate(getTodayString());
     const hour = new Date().getHours();
     let greet = "سلام 👋";
     if (hour < 12) greet = "صبح بخیر ☀️";
@@ -80,79 +36,34 @@ function initHeader() {
     if (greetingEl) greetingEl.textContent = greet;
 }
 
-// ═══════════════════════════════════════════════
-// ═══════ مودال جمله روز ═══════
-// ═══════════════════════════════════════════════
+function checkBackupReminder() {
+    const banner = document.getElementById("backupBanner");
+    if (!banner) return;
 
-function initQuoteModal() {
-    const modal = document.getElementById("quoteModal");
-    const quoteText = document.getElementById("quoteText");
-    const closeBtn = document.getElementById("closeQuoteBtn");
+    const lastBackup = localStorage.getItem("lastBackupDate");
+    let showBanner = false;
 
-    if (!modal || !quoteText) return;
+    if (!lastBackup) {
+        const totalItems = tasks.length + expenses.length + notes.length;
+        if (totalItems >= 3) showBanner = true;
+    } else {
+        const lastDate = new Date(lastBackup);
+        const now = new Date();
+        const diffDays = Math.ceil(Math.abs(now - lastDate) / (1000 * 60 * 60 * 24));
+        if (diffDays >= 7) showBanner = true;
+    }
 
-    // لیست جمله‌ها
-    const quotes = [
-        "امروز بهترین روز برای شروع است.",
-        "موفقیت از قدم‌های کوچک شروع می‌شود.",
-        "بهترین زمان برای کاشتن درخت، ۲۰ سال پیش بود. دومین بهترین زمان، الان است.",
-        "به جای اینکه منتظر انگیزه باشی، شروع کن؛ انگیزه در مسیر پیدا می‌شود.",
-        "هر روز یک فرصت جدید برای بهتر شدن است.",
-        "کارهای بزرگ با قدم‌های کوچک ساخته می‌شوند.",
-        "شکست، پله‌ای برای رسیدن به موفقیت است.",
-        "به خودت ایمان داشته باش، تو توانایی بیشتری از آنچه فکر می‌کنی داری.",
-        "تنها راه انجام دادن کارها، شروع کردن است.",
-        "پیشرفت، نتیجه‌ی تکرار کارهای کوچک است.",
-        "اگر می‌خواهی چیزی را تغییر دهی، از خودت شروع کن.",
-        "به جای تمرکز بر موانع، بر اهدافت تمرکز کن.",
-        "هر صبح یک شانس جدید است.",
-        "تلاش امروز، موفقیت فرداست.",
-        "به خودت سخت نگیر، فقط هر روز بهتر از دیروز باش.",
-        "زمانی که فکر می‌کنی نمی‌توانی، همان زمانی است که باید ادامه بدهی.",
-        "زندگی کوتاه‌تر از آن است که با پشیمانی بگذرد.",
-        "لبخند بزن، فردا روز بهتری است.",
-        "اولین قدم همیشه سخت‌ترین است.",
-        "خودت را با هیچ‌کس مقایسه نکن، تو مسیر خودت را داری."
-    ];
+    if (showBanner) banner.style.display = "flex";
+    else banner.style.display = "none";
 
-    // انتخاب جمله بر اساس روز سال (ثابت در طول یک روز)
-    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    const quote = quotes[dayOfYear % quotes.length];
-
-    quoteText.textContent = `«${quote}»`;
-
-    // نمایش مودال با تأخیر کوتاه برای انیمیشن
-    setTimeout(function() {
-        modal.classList.add("active");
-    }, 300);
-
-    // بستن با دکمه
+    const closeBtn = document.getElementById("closeBackupBanner");
     if (closeBtn) {
         closeBtn.addEventListener("click", function() {
-            closeQuoteModal();
+            banner.style.display = "none";
+            localStorage.setItem("lastBackupDate", new Date().toISOString());
         });
     }
-
-    // بستن با کلیک بیرون
-    modal.addEventListener("click", function(e) {
-        if (e.target === modal) closeQuoteModal();
-    });
-
-    // بستن با Escape
-    document.addEventListener("keydown", function(e) {
-        if (e.key === "Escape" && modal.classList.contains("active")) {
-            closeQuoteModal();
-        }
-    });
-
-    function closeQuoteModal() {
-        modal.classList.remove("active");
-    }
 }
-
-// ═══════════════════════════════════════════════
-// ═══════ حلقه پیشرفت ═══════
-// ═══════════════════════════════════════════════
 
 function updateProgressRing() {
     const today = getTodayString();
@@ -162,35 +73,17 @@ function updateProgressRing() {
     const percent = total === 0 ? 0 : Math.round((done / total) * 100);
 
     const ring = document.getElementById("progressRing");
-    const percentEl = document.getElementById("progressPercent");
-    const detailEl = document.getElementById("progressDetail");
-    const titleEl = document.getElementById("progressTitle");
-    const streakEl = document.getElementById("statStreak");
-    const totalEl = document.getElementById("statTotalTasks");
-
     if (!ring) return;
 
-    const radius = 52;
-    const circumference = 2 * Math.PI * radius;
-    const offset = circumference - (percent / 100) * circumference;
+    const offset = (2 * Math.PI * 52) - (percent / 100) * (2 * Math.PI * 52);
     ring.style.strokeDashoffset = offset;
+    ring.style.stroke = percent >= 80 ? "#34c759" : percent >= 40 ? "#ff9500" : percent > 0 ? "#0071e3" : "#e5e5ea";
 
-    if (percent >= 80) ring.style.stroke = "#34c759";
-    else if (percent >= 40) ring.style.stroke = "#ff9500";
-    else if (percent > 0) ring.style.stroke = "#0071e3";
-    else ring.style.stroke = "#e5e5ea";
-
-    if (percentEl) percentEl.textContent = formatNumber(percent) + "٪";
-    if (detailEl) detailEl.textContent = `${formatNumber(done)} از ${formatNumber(total)} انجام شده`;
-    if (titleEl) {
-        if (total === 0) titleEl.textContent = "کاری ثبت نشده";
-        else if (percent === 100) titleEl.textContent = "🎉 همه انجام شد!";
-        else titleEl.textContent = "کارهای امروز";
-    }
-
-    const streak = calculateStreak();
-    if (streakEl) streakEl.textContent = formatNumber(streak);
-    if (totalEl) totalEl.textContent = formatNumber(tasks.length);
+    document.getElementById("progressPercent").textContent = formatNumber(percent) + "٪";
+    document.getElementById("progressDetail").textContent = `${formatNumber(done)} از ${formatNumber(total)} انجام شده`;
+    document.getElementById("progressTitle").textContent = total === 0 ? "کاری ثبت نشده" : percent === 100 ? "🎉 همه انجام شد!" : "کارهای امروز";
+    document.getElementById("statStreak").textContent = formatNumber(calculateStreak());
+    document.getElementById("statTotalTasks").textContent = formatNumber(tasks.length);
 }
 
 function calculateStreak() {
@@ -207,10 +100,6 @@ function calculateStreak() {
     return streak;
 }
 
-// ═══════════════════════════════════════════════
-// ═══════ کارهای امروز ═══════
-// ═══════════════════════════════════════════════
-
 function renderTodayTasks() {
     const today = getTodayString();
     const todayTasks = tasks.filter(t => t.date === today);
@@ -222,16 +111,13 @@ function renderTodayTasks() {
         return;
     }
 
-    const sorted = [...todayTasks].sort(function(a, b) {
+    const sorted = [...todayTasks].sort((a, b) => {
         if (a.done !== b.done) return a.done ? 1 : -1;
-        if (a.time && b.time) return a.time.localeCompare(b.time);
-        if (a.time) return -1;
-        if (b.time) return 1;
-        return 0;
+        return (a.time || "").localeCompare(b.time || "");
     });
 
     listEl.innerHTML = "";
-    sorted.slice(0, 5).forEach(function(task) {
+    sorted.slice(0, 4).forEach(task => {
         const li = document.createElement("li");
         if (task.done) li.classList.add("done");
         li.innerHTML = `
@@ -242,17 +128,13 @@ function renderTodayTasks() {
         listEl.appendChild(li);
     });
 
-    if (todayTasks.length > 5) {
+    if (todayTasks.length > 4) {
         const li = document.createElement("li");
-        li.style.cssText = "text-align:center; color:#86868b; font-size:11px; padding:8px 0; border:none;";
-        li.textContent = `و ${formatNumber(todayTasks.length - 5)} کار دیگر...`;
+        li.style.cssText = "text-align:center; color:#0071e3; font-size:11px; padding:8px 0; border:none; font-weight:bold;";
+        li.textContent = `و ${formatNumber(todayTasks.length - 4)} کار دیگر`;
         listEl.appendChild(li);
     }
 }
-
-// ═══════════════════════════════════════════════
-// ═══════ هزینه امروز ═══════
-// ═══════════════════════════════════════════════
 
 function renderTodayExpenses() {
     const today = getTodayString();
@@ -260,75 +142,18 @@ function renderTodayExpenses() {
     const listEl = document.getElementById("homeExpensesList");
     if (!listEl) return;
 
-    const total = todayExpenses.reduce((sum, e) => sum + e.amount, 0);
-
     if (todayExpenses.length === 0) {
         listEl.innerHTML = '<div style="text-align:center; color:#aaa; font-size:12px; padding:15px 0;">هزینه‌ای ثبت نشده</div>';
         return;
     }
 
+    const total = todayExpenses.reduce((sum, e) => sum + e.amount, 0);
     listEl.innerHTML = `
         <div class="mini-expense-total">${formatNumber(total)}</div>
         <div class="mini-expense-unit">ریال</div>
         <div class="mini-expense-count">در ${formatNumber(todayExpenses.length)} تراکنش</div>
     `;
 }
-
-// ═══════════════════════════════════════════════
-// ═══════ بودجه ماه ═══════
-// ═══════════════════════════════════════════════
-
-function renderBudget() {
-    const spentEl = document.getElementById("budgetSpent");
-    const limitEl = document.getElementById("budgetLimit");
-    const fillEl = document.getElementById("budgetMiniFill");
-    const statusEl = document.getElementById("budgetMiniStatus");
-    if (!spentEl) return;
-
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-
-    const monthExpenses = expenses.filter(function(e) {
-        const d = new Date(e.date + "T00:00:00");
-        return d.getFullYear() === year && d.getMonth() === month;
-    });
-    const spent = monthExpenses.reduce((s, e) => s + e.amount, 0);
-
-    spentEl.textContent = formatNumber(spent) + " ریال";
-    limitEl.textContent = formatNumber(budget) + " ریال";
-
-    if (budget <= 0) {
-        fillEl.style.width = "0%";
-        fillEl.className = "budget-mini-fill";
-        statusEl.textContent = "بودجه‌ای تنظیم نشده";
-        statusEl.style.color = "#888";
-        return;
-    }
-
-    const percent = Math.min((spent / budget) * 100, 100);
-    fillEl.style.width = percent + "%";
-    fillEl.className = "budget-mini-fill";
-
-    const remaining = budget - spent;
-
-    if (spent > budget) {
-        fillEl.classList.add("danger");
-        statusEl.textContent = `⚠️ ${formatNumber(Math.abs(remaining))} ریال بیش از بودجه!`;
-        statusEl.style.color = "#ff3b30";
-    } else if (percent >= 80) {
-        fillEl.classList.add("warning");
-        statusEl.textContent = `⏰ ${formatNumber(remaining)} ریال باقی مونده`;
-        statusEl.style.color = "#ff9500";
-    } else {
-        statusEl.textContent = `✅ ${formatNumber(remaining)} ریال باقی مونده`;
-        statusEl.style.color = "#34c759";
-    }
-}
-
-// ═══════════════════════════════════════════════
-// ═══════ یادداشت‌های اخیر ═══════
-// ═══════════════════════════════════════════════
 
 function renderRecentNotes() {
     const listEl = document.getElementById("homeNotesList");
@@ -342,7 +167,7 @@ function renderRecentNotes() {
     }
 
     listEl.innerHTML = "";
-    recent.forEach(function(note) {
+    recent.forEach(note => {
         const a = document.createElement("a");
         a.href = "notes.html";
         a.className = "mini-note";
@@ -354,186 +179,30 @@ function renderRecentNotes() {
     });
 }
 
-// ═══════════════════════════════════════════════
-// ═══════ نمودار هزینه ۷ روز ═══════
-// ═══════════════════════════════════════════════
+function initQuoteModal() {
+    const modal = document.getElementById("quoteModal");
+    const quoteText = document.getElementById("quoteText");
+    const closeBtn = document.getElementById("closeQuoteBtn");
+    if (!modal || !quoteText) return;
 
-function renderExpensesWeekChart() {
-    const canvas = document.getElementById("expensesWeekChart");
-    if (!canvas || typeof Chart === "undefined") return;
+    const quotes = [
+        "امروز بهترین روز برای شروع است.",
+        "موفقیت از قدم‌های کوچک شروع می‌شود.",
+        "به جای اینکه منتظر انگیزه باشی، شروع کن؛ انگیزه در مسیر پیدا می‌شود.",
+        "هر روز یک فرصت جدید برای بهتر شدن است.",
+        "کارهای بزرگ با قدم‌های کوچک ساخته می‌شوند.",
+        "تنها راه انجام دادن کارها، شروع کردن است.",
+        "پیشرفت، نتیجه‌ی تکرار کارهای کوچک است.",
+        "به خودت ایمان داشته باش، تو توانایی بیشتری از آنچه فکر می‌کنی داری."
+    ];
 
-    const labels = [];
-    const data = [];
-    const today = new Date();
+    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+    quoteText.textContent = `«${quotes[dayOfYear % quotes.length]}»`;
 
-    for (let i = 6; i >= 0; i--) {
-        const d = new Date(today);
-        d.setDate(d.getDate() - i);
-        const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-
-        const persianDay = d.toLocaleDateString("fa-IR", { weekday: "short" });
-        labels.push(persianDay);
-
-        const dayTotal = expenses
-            .filter(e => e.date === dateStr)
-            .reduce((s, e) => s + e.amount, 0);
-        data.push(dayTotal);
-    }
-
-    const ctx = canvas.getContext("2d");
-    const gradient = ctx.createLinearGradient(0, 0, 0, 180);
-    gradient.addColorStop(0, "rgba(52, 199, 89, 0.4)");
-    gradient.addColorStop(1, "rgba(52, 199, 89, 0.02)");
-
-    if (expensesWeekChart) expensesWeekChart.destroy();
-
-    expensesWeekChart = new Chart(canvas, {
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "هزینه روزانه",
-                data: data,
-                borderColor: "#34c759",
-                backgroundColor: gradient,
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-                pointRadius: 4,
-                pointBackgroundColor: "#34c759",
-                pointBorderColor: "#fff",
-                pointBorderWidth: 2,
-                pointHoverRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return formatNumber(context.parsed.y) + " ریال";
-                        }
-                    },
-                    bodyFont: { family: "Vazirmatn" }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        font: { family: "Vazirmatn", size: 10 },
-                        callback: function(value) {
-                            if (value >= 1000000) return (value / 1000000).toFixed(1) + "M";
-                            if (value >= 1000) return (value / 1000).toFixed(0) + "K";
-                            return value;
-                        }
-                    },
-                    grid: { color: "rgba(0,0,0,0.05)" }
-                },
-                x: {
-                    ticks: { font: { family: "Vazirmatn", size: 10 } },
-                    grid: { display: false }
-                }
-            }
-        }
-    });
+    setTimeout(() => modal.classList.add("active"), 300);
+    if (closeBtn) closeBtn.addEventListener("click", () => modal.classList.remove("active"));
+    modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("active"); });
 }
-
-// ═══════════════════════════════════════════════
-// ═══════ نمودار کارهای هفته ═══════
-// ═══════════════════════════════════════════════
-
-function renderTasksWeekChart() {
-    const canvas = document.getElementById("tasksWeekChart");
-    if (!canvas || typeof Chart === "undefined") return;
-
-    const labels = [];
-    const doneData = [];
-    const pendingData = [];
-    const today = new Date();
-
-    for (let i = 6; i >= 0; i--) {
-        const d = new Date(today);
-        d.setDate(d.getDate() - i);
-        const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-
-        const persianDay = d.toLocaleDateString("fa-IR", { weekday: "short" });
-        labels.push(persianDay);
-
-        const dayTasks = tasks.filter(t => t.date === dateStr);
-        const done = dayTasks.filter(t => t.done).length;
-        const pending = dayTasks.length - done;
-
-        doneData.push(done);
-        pendingData.push(pending);
-    }
-
-    if (tasksWeekChart) tasksWeekChart.destroy();
-
-    tasksWeekChart = new Chart(canvas, {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "انجام‌شده",
-                    data: doneData,
-                    backgroundColor: "#34c759",
-                    borderRadius: 6,
-                    borderSkipped: false
-                },
-                {
-                    label: "باقی‌مانده",
-                    data: pendingData,
-                    backgroundColor: "#ff9500",
-                    borderRadius: 6,
-                    borderSkipped: false
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: "bottom",
-                    labels: {
-                        font: { family: "Vazirmatn", size: 11 },
-                        padding: 12,
-                        usePointStyle: true
-                    }
-                },
-                tooltip: {
-                    bodyFont: { family: "Vazirmatn" }
-                }
-            },
-            scales: {
-                x: {
-                    stacked: true,
-                    ticks: { font: { family: "Vazirmatn", size: 10 } },
-                    grid: { display: false }
-                },
-                y: {
-                    stacked: true,
-                    beginAtZero: true,
-                    ticks: {
-                        font: { family: "Vazirmatn", size: 10 },
-                        stepSize: 1,
-                        precision: 0
-                    },
-                    grid: { color: "rgba(0,0,0,0.05)" }
-                }
-            }
-        }
-    });
-}
-
-// ═══════════════════════════════════════════════
-// ═══════ توابع کمکی ═══════
-// ═══════════════════════════════════════════════
 
 function escapeHtml(text) {
     const div = document.createElement("div");

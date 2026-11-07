@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آمار و دستاوردها</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/stats.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <main class="main-content">
+        
+        <header class="page-header">
+            <div>
+                <h1>📊 آمار و دستاوردها</h1>
+                <p>پیشرفت خودت رو ببین</p>
+            </div>
+            <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
+
+        <!-- کارت‌های آمار (۴ عدد) -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="statTasksDone">۰</div>
+                <div class="stat-label">کار انجام‌شده</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-value" id="statStreak">۰ روز</div>
+                <div class="stat-label">استریک</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="statExpenses">۰</div>
+                <div class="stat-label">هزینه ثبت‌شده</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value" id="statGoalsDone">۰</div>
+                <div class="stat-label">هدف تکمیل‌شده</div>
+            </div>
+        </div>
+
+        <!-- نوار پیشرفت دستاوردها -->
+        <div class="app-card overall-progress-card">
+            <div class="overall-header">
+                <div>
+                    <div class="overall-title">🏆 پیشرفت دستاوردها</div>
+                    <div class="overall-sub" id="overallSub">۰ از ۰ نشان</div>
+                </div>
+                <div class="overall-percent" id="overallPercent">۰٪</div>
+            </div>
+            <div class="overall-bar-bg">
+                <div class="overall-bar-fill" id="overallFill"></div>
+            </div>
+        </div>
+
+        <!-- ═══════ نمودارها ═══════ -->
+        <div class="stats-charts-grid">
+            
+            <!-- نمودار هزینه ۷ روز -->
+            <div class="app-card chart-card">
+                <div class="chart-header">
+                    <h3>📈 هزینه‌های ۷ روز اخیر</h3>
+                    <span class="chart-sub">روند خرج روزانه</span>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="expensesWeekChart"></canvas>
+                </div>
+            </div>
+
+            <!-- نمودار عملکرد هفته -->
+            <div class="app-card chart-card">
+                <div class="chart-header">
+                    <h3>✅ عملکرد هفته</h3>
+                    <span class="chart-sub">کارهای انجام‌شده</span>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="tasksWeekChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- لیست نشان‌ها -->
+        <h2 class="section-title">🏅 همه نشان‌ها</h2>
+        <div id="achievementsList" class="achievements-grid"></div>
+
+    </main>
+
+    <script src="js/common.js"></script>
+    <script src="js/stats.js"></script>
+</body>
+</html>

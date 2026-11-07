@@ -1,0 +1,180 @@
+/* ══════════════════════════════════════════ */
+/* ═══════ لیست اهداف ═══════ */
+/* ══════════════════════════════════════════ */
+
+.goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.goal-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.02);
+    transition: all 0.2s;
+    position: relative;
+}
+.goal-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+}
+
+.goal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.goal-icon-wrap {
+    background: #e8f0fe;
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+}
+
+.goal-info {
+    flex: 1;
+}
+
+.goal-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1d1d1f;
+    margin-bottom: 3px;
+}
+
+.goal-amounts {
+    font-size: 12px;
+    color: #86868b;
+    font-weight: 600;
+}
+.goal-amounts strong {
+    color: #0071e3;
+}
+
+.goal-delete {
+    background: none;
+    border: none;
+    color: #ff3b30;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 8px;
+    transition: all 0.15s;
+}
+.goal-delete:hover {
+    background: #ffe5e0;
+}
+
+.goal-progress-bar {
+    background: #f0f2f5;
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.goal-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0071e3, #42a5f5);
+    border-radius: 6px;
+    width: 0%;
+    transition: width 0.8s ease;
+}
+.goal-progress-fill.complete {
+    background: linear-gradient(90deg, #34c759, #30d158);
+}
+
+.goal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.goal-percent {
+    font-weight: 800;
+    color: #0071e3;
+}
+.goal-percent.complete {
+    color: #34c759;
+}
+
+.goal-remaining {
+    color: #86868b;
+    font-weight: 600;
+}
+
+.goal-deposit-btn {
+    background: #e8f8ed;
+    color: #34c759;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    transition: all 0.2s;
+}
+.goal-deposit-btn:hover {
+    background: #34c759;
+    color: white;
+}
+
+.goal-deposit-btn:disabled {
+    background: #f0f0f0;
+    color: #aaa;
+    cursor: not-allowed;
+}
+.goal-deposit-btn:disabled:hover {
+    background: #f0f0f0;
+    color: #aaa;
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ حالت تاریک ═══════ */
+/* ══════════════════════════════════════════ */
+
+body.dark .goal-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+body.dark .goal-icon-wrap {
+    background: #334155;
+}
+body.dark .goal-title {
+    color: #f8fafc;
+}
+body.dark .goal-progress-bar {
+    background: #334155;
+}
+body.dark .goal-amounts {
+    color: #94a3b8;
+}
+body.dark .goal-amounts strong {
+    color: #60a5fa;
+}
+body.dark .goal-percent {
+    color: #60a5fa;
+}
+body.dark .goal-deposit-btn {
+    background: #1e3a2e;
+    color: #4ade80;
+}
+body.dark .goal-deposit-btn:hover {
+    background: #4ade80;
+    color: #0f172a;
+}

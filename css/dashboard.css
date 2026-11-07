@@ -1,64 +1,289 @@
 /* ══════════════════════════════════════════ */
-/* ═══════ داشبورد هوشمند ═══════ */
+/* ═══════ داشبورد مدرن ═══════ */
 /* ══════════════════════════════════════════ */
 
 /* ───── بنر خوش‌آمد ───── */
 .hero-banner {
-    background: linear-gradient(135deg, #0071e3, #42a5f5);
-    border-radius: 24px;
-    padding: 28px 24px;
+    background: linear-gradient(135deg, #0071e3, #42a5f5, #5ac8fa);
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+    border-radius: 28px;
+    padding: 35px 25px;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 113, 227, 0.25);
+    box-shadow: 0 15px 40px rgba(0, 113, 227, 0.3);
     text-align: center;
 }
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* افکت حباب‌های نورانی پس‌زمینه بنر */
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: -80px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 70%);
+    border-radius: 50%;
+    animation: floatBubble 6s ease-in-out infinite;
+}
+
 .hero-banner::after {
     content: '';
     position: absolute;
-    top: -50px; left: -50px;
+    bottom: -60px; right: -60px;
     width: 200px; height: 200px;
-    background: rgba(255,255,255,0.15);
+    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
     border-radius: 50%;
-}
-.hero-banner h1 {
-    font-size: 26px;
-    font-weight: 800;
-    color: white !important;
-    margin-bottom: 6px;
-    position: relative;
-    z-index: 1;
-}
-.hero-banner p {
-    font-size: 13px;
-    color: rgba(255,255,255,0.9) !important;
-    font-weight: 500;
-    position: relative;
-    z-index: 1;
-}
-body.dark .hero-banner {
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    animation: floatBubble 8s ease-in-out infinite reverse;
 }
 
-/* ───── حلقه پیشرفت ───── */
-.progress-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+@keyframes floatBubble {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, 20px) scale(1.1); }
+}
+
+.hero-banner h1 {
+    font-size: 30px;
+    font-weight: 900;
+    color: white !important;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.hero-banner p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.95) !important;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark .hero-banner {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6, #60a5fa);
+    background-size: 200% 200%;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ هشدار پشتیبان‌گیری (کوچیک با متن کامل) ═══════ */
+/* ══════════════════════════════════════════ */
+
+.backup-banner {
     display: flex;
     align-items: center;
-    gap: 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+    gap: 8px;
+    background: #fff9e6;
+    border: 1px solid #ffe69c;
+    border-radius: 12px;
+    padding: 8px 12px; /* پدینگ کوچیک‌تر */
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(255, 149, 0, 0.06);
+    animation: slideDown 0.4s ease;
+    direction: rtl;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.backup-banner-icon {
+    font-size: 16px; /* آیکون کوچیک‌تر */
+    flex-shrink: 0;
+}
+
+.backup-banner-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* فاصله بین عنوان و توضیح */
+    line-height: 1.3;
+}
+
+.backup-banner-text strong {
+    font-size: 11px; /* فونت عنوان کوچیک‌تر */
+    color: #b45309;
+    font-weight: 800;
+}
+
+.backup-banner-text span {
+    font-size: 10px; /* فونت توضیحات کوچیک‌تر (ولی متن کامل هست) */
+    color: #78350f;
+    font-weight: 600;
+    opacity: 0.85;
+}
+
+.backup-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.backup-btn {
+    background: #f59e0b;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px; /* دکمه کوچیک‌تر */
+    border-radius: 6px;
+    font-size: 10px; /* فونت دکمه کوچیک‌تر */
+    font-weight: 800;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.backup-btn:hover {
+    background: #d97706;
+}
+
+.backup-close-btn {
+    background: transparent;
+    border: none;
+    color: #b45309;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    opacity: 0.7;
+}
+
+.backup-close-btn:hover {
+    opacity: 1;
+    color: #ff3b30;
+}
+
+/* حالت تاریک */
+body.dark .backup-banner {
+    background: #422006;
+    border-color: #854d0e;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+body.dark .backup-banner-text strong { color: #fcd34d; }
+body.dark .backup-banner-text span { color: #fbbf24; opacity: 0.9; }
+body.dark .backup-btn { background: #d97706; color: white; }
+body.dark .backup-close-btn { color: #fbbf24; }
+
+/* در موبایل یکم جمع‌وجورتر بشه */
+@media (max-width: 500px) {
+    .backup-banner {
+        padding: 6px 10px;
+        gap: 6px;
+    }
+    .backup-banner-text strong { font-size: 10px; }
+    .backup-banner-text span { font-size: 9px; }
+    .backup-btn { padding: 4px 8px; font-size: 9px; }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.backup-banner-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.backup-banner-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.backup-banner-text strong {
+    font-size: 14px;
+    color: #b45309;
+    font-weight: 900;
+}
+
+.backup-banner-text span {
+    font-size: 12px;
+    color: #78350f;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.backup-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.backup-btn {
+    background: #f59e0b;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    transition: all 0.2s;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
+.backup-btn:hover {
+    background: #d97706;
+    transform: translateY(-2px);
+}
+
+.backup-close-btn {
+    background: transparent;
+    border: none;
+    color: #b45309;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: all 0.15s;
+    border-radius: 6px;
+}
+.backup-close-btn:hover {
+    background: rgba(255, 149, 0, 0.1);
+    color: #ff3b30;
+}
+
+/* ───── کارت پیشرفت ───── */
+.progress-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     border: 1px solid rgba(0,0,0,0.02);
+    transition: all 0.3s;
+}
+
+.progress-card:hover {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
 }
 
 .progress-ring-wrap {
     position: relative;
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
     flex-shrink: 0;
 }
 
@@ -79,7 +304,8 @@ body.dark .hero-banner {
     stroke-linecap: round;
     stroke-dasharray: 326.72;
     stroke-dashoffset: 326.72;
-    transition: stroke-dashoffset 0.8s ease, stroke 0.3s;
+    transition: stroke-dashoffset 1s ease, stroke 0.3s;
+    filter: drop-shadow(0 0 6px rgba(52, 199, 89, 0.4));
 }
 
 .progress-ring-text {
@@ -91,78 +317,93 @@ body.dark .hero-banner {
     justify-content: center;
 }
 .progress-ring-text span {
-    font-size: 24px;
-    font-weight: 800;
+    font-size: 26px;
+    font-weight: 900;
     color: #1d1d1f;
 }
 .progress-ring-text small {
     font-size: 11px;
     color: #86868b;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .progress-info {
     flex: 1;
 }
 .progress-info h3 {
-    font-size: 16px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 900;
     color: #1d1d1f;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 .progress-info p {
     font-size: 13px;
     color: #86868b;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .progress-stats-mini {
     display: flex;
-    gap: 20px;
+    gap: 25px;
 }
 .progress-stats-mini > div {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
+    background: #f8f9fc;
+    padding: 8px 16px;
+    border-radius: 12px;
+    transition: all 0.2s;
+}
+.progress-stats-mini > div:hover {
+    background: #e8f0fe;
+    transform: translateY(-2px);
 }
 .mini-label {
     font-size: 10px;
     color: #86868b;
-    font-weight: 600;
+    font-weight: 700;
 }
 .progress-stats-mini strong {
-    font-size: 16px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 900;
 }
 
 /* ───── چارت‌ها ───── */
 .chart-wrap {
     position: relative;
-    height: 180px;
+    height: 200px;
+    padding: 5px 0;
 }
 
 /* ───── گرید دو ستونی ───── */
 .two-col-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 20px;
+    margin-bottom: 25px;
 }
 
 .card-header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 .card-link {
     font-size: 12px;
     color: #0071e3;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 800;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    background: rgba(0,113,227,0.08);
 }
 .card-link:hover {
-    text-decoration: underline;
+    background: #0071e3;
+    color: white;
 }
 
 /* ───── لیست کارهای مینی ───── */
@@ -175,145 +416,202 @@ body.dark .hero-banner {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.04);
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
     font-size: 13px;
+    transition: all 0.2s;
 }
 .mini-task-list li:last-child { border-bottom: none; }
+.mini-task-list li:hover { padding-right: 5px; }
 .mini-task-list li.done { opacity: 0.55; }
 .mini-task-list li.done .task-mini-text {
     text-decoration: line-through;
 }
-.task-mini-text { flex: 1; color: #1d1d1f; }
+.task-mini-text { flex: 1; color: #1d1d1f; font-weight: 600; }
 .task-mini-time {
     font-size: 10px;
     background: #e8f0fe;
     color: #0071e3;
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-weight: 800;
 }
 
 /* ───── لیست هزینه امروز ───── */
 .mini-expense-list {
     text-align: center;
+    padding: 15px 0;
 }
 .mini-expense-total {
-    font-size: 26px;
-    font-weight: 800;
-    color: #34c759;
-    margin-bottom: 4px;
+    font-size: 30px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #34c759, #30d158);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 5px;
 }
 .mini-expense-unit {
     font-size: 12px;
     color: #888;
+    font-weight: 700;
 }
 .mini-expense-count {
-    margin-top: 10px;
+    margin-top: 12px;
     font-size: 12px;
     color: #86868b;
+    font-weight: 600;
 }
 
 /* ───── بودجه مینی ───── */
-.budget-mini-card { margin-bottom: 20px; }
+.budget-mini-card { margin-bottom: 25px; }
 .budget-mini-info {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    margin-bottom: 8px;
+    font-size: 13px;
+    margin-bottom: 12px;
     color: #555;
+    font-weight: 700;
 }
 .budget-mini-bar {
-    height: 10px;
+    height: 14px;
     background: #e5e5ea;
-    border-radius: 5px;
+    border-radius: 7px;
     overflow: hidden;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 }
 .budget-mini-fill {
     height: 100%;
-    background: #34c759;
-    border-radius: 5px;
+    background: linear-gradient(90deg, #34c759, #30d158);
+    border-radius: 7px;
     width: 0%;
-    transition: width 0.6s, background-color 0.3s;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+    box-shadow: 0 0 10px rgba(52, 199, 89, 0.4);
 }
-.budget-mini-fill.warning { background: #ff9500; }
-.budget-mini-fill.danger  { background: #ff3b30; }
+.budget-mini-fill.warning { 
+    background: linear-gradient(90deg, #ff9500, #ffb84d);
+    box-shadow: 0 0 10px rgba(255, 149, 0, 0.4);
+}
+.budget-mini-fill.danger  { 
+    background: linear-gradient(90deg, #ff3b30, #ff6b6b);
+    box-shadow: 0 0 10px rgba(255, 59, 48, 0.4);
+}
 .budget-mini-status {
     text-align: center;
-    font-size: 11px;
+    font-size: 12px;
     color: #888;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* ───── یادداشت‌های مینی ───── */
 .mini-notes-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 .mini-note {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 10px 12px;
+    gap: 5px;
+    padding: 14px 16px;
     background: #f8f9fc;
-    border-radius: 10px;
-    border-right: 3px solid #0071e3;
+    border-radius: 14px;
+    border-right: 4px solid #0071e3;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
     text-decoration: none;
 }
 .mini-note:hover {
     background: #e8f0fe;
-    transform: translateX(-2px);
+    transform: translateX(-4px);
+    box-shadow: 0 6px 15px rgba(0,113,227,0.1);
 }
 .mini-note-title {
-    font-weight: 700;
-    font-size: 13px;
+    font-weight: 800;
+    font-size: 14px;
     color: #1d1d1f;
 }
 .mini-note-preview {
-    font-size: 11px;
+    font-size: 12px;
     color: #86868b;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 600;
 }
 
-/* ───── ابزارها ───── */
+/* ───── عنوان ابزارها ───── */
 .tools-title {
-    font-size: 18px;
-    font-weight: 800;
-    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 18px;
     color: #1d1d1f;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+.tools-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #e5e5ea, transparent);
+    border-radius: 1px;
+}
+
+/* ───── ابزارها (کارت‌های آیکونی) ───── */
 .tools-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 15px;
 }
 .tool-card {
     text-decoration: none;
     text-align: center;
-    padding: 18px 10px;
+    padding: 22px 15px;
     background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.04);
     border: 1px solid rgba(0,0,0,0.02);
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
+
+/* افکت درخشش روی هاور */
+.tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.6s;
+}
+
+.tool-card:hover::before {
+    left: 100%;
+}
+
 .tool-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(0,113,227,0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,113,227,0.15);
+    border-color: rgba(0,113,227,0.2);
 }
+
 .tool-icon {
-    font-size: 26px;
-    margin-bottom: 6px;
+    font-size: 36px;
+    margin-bottom: 10px;
+    display: inline-block;
+    transition: transform 0.3s;
 }
+
+.tool-card:hover .tool-icon {
+    transform: scale(1.2) rotate(-8deg);
+}
+
 .tool-title {
-    font-weight: 700;
-    font-size: 12px;
+    font-weight: 800;
+    font-size: 13px;
     color: #1d1d1f;
 }
 
@@ -344,48 +642,47 @@ body.dark .hero-banner {
 .quote-modal-content {
     background: linear-gradient(135deg, #ffffff, #f8f9fc);
     width: 100%;
-    max-width: 420px;
-    border-radius: 24px;
-    padding: 35px 25px 25px 25px;
+    max-width: 440px;
+    border-radius: 28px;
+    padding: 40px 30px 30px;
     text-align: center;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.25);
     position: relative;
     overflow: hidden;
-    animation: quoteSlideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: quoteSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 @keyframes quoteSlideUp {
-    from { transform: translateY(50px) scale(0.9); opacity: 0; }
+    from { transform: translateY(60px) scale(0.9); opacity: 0; }
     to { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* هاله پس‌زمینه */
 .quote-modal-content::before {
     content: '';
     position: absolute;
-    top: -80px;
-    right: -80px;
-    width: 200px;
-    height: 200px;
+    top: -100px;
+    right: -100px;
+    width: 250px;
+    height: 250px;
     background: radial-gradient(circle, rgba(0,113,227,0.15), transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
 
 .quote-icon {
-    font-size: 50px;
+    font-size: 60px;
     margin-bottom: 15px;
     position: relative;
     z-index: 1;
     animation: quoteFloat 3s ease-in-out infinite;
 }
 @keyframes quoteFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
 }
 
 .quote-modal-title {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
     color: #0071e3;
     margin-bottom: 20px;
     position: relative;
@@ -393,58 +690,42 @@ body.dark .hero-banner {
 }
 
 .quote-modal-text {
-    font-size: 15px;
+    font-size: 16px;
     color: #444;
     line-height: 2;
     font-style: italic;
-    margin-bottom: 28px;
-    padding: 15px 18px;
-    background: rgba(0,113,227,0.06);
-    border-radius: 14px;
-    border-right: 3px solid #0071e3;
+    margin-bottom: 30px;
+    padding: 18px 20px;
+    background: rgba(0,113,227,0.08);
+    border-radius: 18px;
+    border-right: 4px solid #0071e3;
     position: relative;
     z-index: 1;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .quote-modal-btn {
     background: linear-gradient(135deg, #0071e3, #42a5f5);
     color: white;
     border: none;
-    padding: 14px 20px;
-    border-radius: 12px;
+    padding: 16px 25px;
+    border-radius: 14px;
     font-family: inherit;
-    font-size: 15px;
-    font-weight: 800;
+    font-size: 16px;
+    font-weight: 900;
     cursor: pointer;
     width: 100%;
     transition: all 0.2s;
     position: relative;
     z-index: 1;
-    box-shadow: 0 6px 20px rgba(0,113,227,0.3);
+    box-shadow: 0 8px 25px rgba(0,113,227,0.35);
 }
 .quote-modal-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0,113,227,0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,113,227,0.45);
 }
 .quote-modal-btn:active {
     transform: translateY(0) scale(0.98);
-}
-
-/* حالت تاریک */
-body.dark .quote-modal-content {
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-}
-body.dark .quote-modal-title {
-    color: #60a5fa;
-}
-body.dark .quote-modal-text {
-    color: #cbd5e1;
-    background: rgba(96,165,250,0.1);
-    border-right-color: #60a5fa;
-}
-body.dark .quote-modal-btn {
-    background: linear-gradient(135deg, #3b82f6, #60a5fa);
 }
 
 /* ══════════════════════════════════════════ */
@@ -456,10 +737,23 @@ body.dark .tool-card,
 body.dark .app-card {
     background: #1e293b;
     border-color: #334155;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
+
+body.dark .progress-card:hover {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+body.dark .tool-card:hover {
+    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
 body.dark .progress-ring-bg { stroke: #334155; }
 body.dark .progress-ring-text span { color: #f8fafc; }
 body.dark .progress-info h3 { color: #f8fafc; }
+body.dark .progress-stats-mini > div { background: #0f172a; }
+body.dark .progress-stats-mini > div:hover { background: #334155; }
 body.dark .mini-task-list li { border-color: #334155; }
 body.dark .task-mini-text { color: #e2e8f0; }
 body.dark .task-mini-time { background: #334155; color: #60a5fa; }
@@ -472,36 +766,74 @@ body.dark .mini-note-title { color: #f8fafc; }
 body.dark .budget-mini-bar { background: #334155; }
 body.dark .budget-mini-info { color: #cbd5e1; }
 body.dark .tools-title { color: #f8fafc; }
+body.dark .tools-title::after { background: linear-gradient(90deg, #334155, transparent); }
 body.dark .tool-title { color: #f8fafc; }
-body.dark .card-link { color: #60a5fa; }
+body.dark .card-link { color: #60a5fa; background: rgba(96,165,250,0.1); }
+body.dark .card-link:hover { background: #3b82f6; color: white; }
+
+/* حالت تاریک مودال جمله روز */
+body.dark .quote-modal-content {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+}
+body.dark .quote-modal-title { color: #60a5fa; }
+body.dark .quote-modal-text {
+    color: #cbd5e1;
+    background: rgba(96,165,250,0.1);
+    border-right-color: #60a5fa;
+}
+body.dark .quote-modal-btn {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+
+/* حالت تاریک هشدار پشتیبان */
+body.dark .backup-banner {
+    background: linear-gradient(135deg, #422006, #3a1d05);
+    border-color: #854d0e;
+}
+body.dark .backup-banner-text strong { color: #fcd34d; }
+body.dark .backup-banner-text span { color: #fbbf24; }
+body.dark .backup-btn { background: #d97706; color: white; }
+body.dark .backup-close-btn { color: #fbbf24; }
 
 /* ══════════════════════════════════════════ */
 /* ═══════ موبایل ═══════ */
 /* ══════════════════════════════════════════ */
 
 @media (max-width: 900px) {
-    .main-content {
-        padding: 20px 15px !important;
-    }
+    .main-content { padding: 20px 15px !important; }
 }
 
 @media (max-width: 600px) {
-    .two-col-grid {
-        grid-template-columns: 1fr;
-    }
-    .tools-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .progress-card {
-        flex-direction: column;
+    .two-col-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    
+    .progress-card { 
+        flex-direction: column; 
         text-align: center;
+        padding: 20px;
     }
-    .progress-stats-mini {
-        justify-content: center;
-    }
-    .hero-banner h1 { font-size: 22px; }
-    .hero-banner { padding: 22px 18px; }
+    .progress-stats-mini { justify-content: center; }
+    
+    .hero-banner { padding: 25px 18px; }
+    .hero-banner h1 { font-size: 24px; }
+    
     .progress-ring-wrap { width: 100px; height: 100px; }
-    .quote-modal-text { font-size: 14px; padding: 12px 14px; }
-    .quote-icon { font-size: 42px; }
+    
+    .tool-card { padding: 18px 10px; }
+    .tool-icon { font-size: 30px; }
+    .tool-title { font-size: 12px; }
+    
+    .backup-banner {
+        flex-wrap: wrap;
+        padding: 15px;
+    }
+    .backup-banner-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .quote-modal-content { padding: 30px 20px 20px; }
+    .quote-icon { font-size: 50px; }
+    .quote-modal-title { font-size: 19px; }
+    .quote-modal-text { font-size: 14px; padding: 15px; }
 }

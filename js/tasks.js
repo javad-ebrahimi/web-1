@@ -46,18 +46,15 @@ const specificDatesList = document.getElementById("specificDatesList");
 function updateDateLabel() {
     const today = getTodayString();
 
-    // ۱. تعیین کلمه بالای تاریخ
     if (activeDate === today) dayPrefixEl.textContent = "امروز";
     else if (activeDate === addDays(today, -1)) dayPrefixEl.textContent = "دیروز";
     else if (activeDate === addDays(today, 1)) dayPrefixEl.textContent = "فردا";
     else dayPrefixEl.textContent = "تاریخ";
 
-    // ۲. گرفتن تاریخ شمسی دقیق
     const persianDate = new Date(activeDate + "T00:00:00").toLocaleDateString("fa-IR", {
         weekday: "long", month: "long", day: "numeric"
     });
 
-    // ۳. گذاشتن تاریخ توی خط دوم
     dateLabelEl.textContent = persianDate;
 }
 
@@ -152,6 +149,11 @@ window.deleteTask = function(index) {
 
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    
+    // چک کردن دستاوردها (هشدار سراسری)
+    if (typeof checkAchievements === 'function') {
+        setTimeout(checkAchievements, 100);
+    }
 }
 
 // ===== گزارش ماهانه =====
@@ -286,12 +288,14 @@ function buildRecurringTasks() {
     alert(`${allDates.length} کار ساخته شد ✅`);
 }
 
-// ===== 🌟 شروع نهایی =====
+// ===== شروع نهایی =====
 document.addEventListener("DOMContentLoaded", function() {
     tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     activeDate = getTodayString();
 
-    if (typeof initCommon === 'function') initCommon();
+    if (typeof initThemeAndSidebar === 'function') initThemeAndSidebar();
+
+    
 
     updateDateLabel();
     showTasks();
@@ -319,22 +323,26 @@ document.addEventListener("DOMContentLoaded", function() {
         specificDates.push(date); specificDates.sort(); renderSpecificDates(); recSpecificDate.value = "";
     });
 
+    // کشوی آمار
     const statsToggle = document.getElementById("statsToggle");
     const statsBody = document.getElementById("statsBody");
     const statsArrow = document.getElementById("statsArrow");
     if (statsToggle && statsBody) {
         if (localStorage.getItem("statsOpen") === "true") {
-            statsBody.style.maxHeight = "200px"; statsBody.style.paddingBottom = "15px";
+            statsBody.style.maxHeight = "200px"; 
+            statsBody.style.paddingBottom = "15px";
             if (statsArrow) statsArrow.style.transform = "rotate(180deg)";
         }
         statsToggle.addEventListener("click", function() {
             const isOpen = statsBody.style.maxHeight && statsBody.style.maxHeight !== "0px";
             if (isOpen) {
-                statsBody.style.maxHeight = "0px"; statsBody.style.paddingBottom = "0px";
+                statsBody.style.maxHeight = "0px"; 
+                statsBody.style.paddingBottom = "0px";
                 if (statsArrow) statsArrow.style.transform = "rotate(0deg)";
                 localStorage.setItem("statsOpen", "false");
             } else {
-                statsBody.style.maxHeight = "200px"; statsBody.style.paddingBottom = "15px";
+                statsBody.style.maxHeight = "200px"; 
+                statsBody.style.paddingBottom = "15px";
                 if (statsArrow) statsArrow.style.transform = "rotate(180deg)";
                 localStorage.setItem("statsOpen", "true");
             }

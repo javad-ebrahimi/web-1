@@ -4,22 +4,21 @@ const importBtn = document.getElementById("importBtn");
 const importFile = document.getElementById("importFile");
 const clearAllBtn = document.getElementById("clearAllBtn");
 
-// ===== 🌟 شروع نهایی (بعد از لود کامل DOM) =====
+// ===== شروع نهایی =====
 document.addEventListener("DOMContentLoaded", function() {
-    if (typeof initCommon === 'function') initCommon();
+    if (typeof initThemeAndSidebar === 'function') initThemeAndSidebar();
 
     // ۱. دانلود پشتیبان (Export)
     if (exportBtn) {
         exportBtn.addEventListener("click", function() {
-            // خواندن تمام داده‌ها از حافظه مرورگر (شامل یادداشت‌ها)
             const data = {
                 tasks: JSON.parse(localStorage.getItem("tasks")) || [],
                 expenses: JSON.parse(localStorage.getItem("expenses")) || [],
-                notes: JSON.parse(localStorage.getItem("notes")) || [], // 👈 اضافه شد
+                notes: JSON.parse(localStorage.getItem("notes")) || [],
+                budget: localStorage.getItem("budget") || "0",
                 theme: localStorage.getItem("theme") || "light"
             };
 
-            // تبدیل به متن و ساخت فایل دانلود
             const jsonString = JSON.stringify(data, null, 2);
             const blob = new Blob([jsonString], { type: "application/json" });
             const url = URL.createObjectURL(blob);
@@ -31,7 +30,11 @@ document.addEventListener("DOMContentLoaded", function() {
             a.click();
 
             URL.revokeObjectURL(url);
-            alert("فایل پشتیبان (شامل کارها، هزینه‌ها و یادداشت‌ها) دانلود شد ✅");
+
+            // ثبت تاریخ آخرین پشتیبان‌گیری
+            localStorage.setItem("lastBackupDate", new Date().toISOString());
+
+            alert("فایل پشتیبان (شامل کارها، هزینه‌ها، یادداشت‌ها و بودجه) دانلود شد ✅");
         });
     }
 
@@ -51,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 try {
                     const data = JSON.parse(event.target.result);
 
-                    // بررسی معتبر بودن فایل
                     if (!data.tasks && !data.expenses && !data.notes) {
                         alert("فایل پشتیبان نامعتبر است!");
                         return;
@@ -61,10 +63,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         return;
                     }
 
-                    // بازیابی داده‌ها به حافظه
                     if (data.tasks) localStorage.setItem("tasks", JSON.stringify(data.tasks));
                     if (data.expenses) localStorage.setItem("expenses", JSON.stringify(data.expenses));
-                    if (data.notes) localStorage.setItem("notes", JSON.stringify(data.notes)); // 👈 اضافه شد
+                    if (data.notes) localStorage.setItem("notes", JSON.stringify(data.notes));
+                    if (data.budget) localStorage.setItem("budget", data.budget);
                     if (data.theme) localStorage.setItem("theme", data.theme);
 
                     alert("بازیابی با موفقیت انجام شد! ✅\nصفحه دوباره بارگذاری می‌شود.");
@@ -91,7 +93,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
             localStorage.removeItem("tasks");
             localStorage.removeItem("expenses");
-            localStorage.removeItem("notes"); // 👈 یادداشت‌ها هم پاک می‌شن
+            localStorage.removeItem("notes");
+            localStorage.removeItem("budget");
+            localStorage.removeItem("lastBackupDate");
 
             alert("تمام اطلاعات پاک شد.");
             location.reload();

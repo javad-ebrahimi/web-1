@@ -15,12 +15,12 @@
         <header class="page-header">
             <div>
                 <h1>💰 هزینه‌ها</h1>
-                <p>ثبت روزانه</p>
+                <p>مدیریت هوشمند مالی</p>
             </div>
             <button id="themeBtn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
         </header>
 
-        <!-- ═══════ ۱. نوار تاریخ فشرده ═══════ -->
+        <!-- نوار تاریخ (دیروز/فردا) -->
         <div class="date-bar">
             <button id="prevDayBtn" class="date-nav-btn">▶</button>
             <div class="date-center">
@@ -30,11 +30,11 @@
             <button id="nextDayBtn" class="date-nav-btn">◀</button>
         </div>
 
-        <!-- ═══════ ۲. خلاصه سریع (جمع + بودجه) ═══════ -->
+        <!-- کارت خلاصه (جمع + بودجه) -->
         <div class="summary-card">
             <div class="summary-row">
                 <div class="summary-item">
-                    <span class="summary-label">جمع امروز</span>
+                    <span class="summary-label">جمع این روز/ماه</span>
                     <strong id="expenseTotal" class="summary-value green">۰ ریال</strong>
                 </div>
                 <div class="summary-divider"></div>
@@ -50,56 +50,37 @@
             <div id="budgetStatus" class="budget-status">در حال بارگذاری...</div>
         </div>
 
-        <!-- ═══════ ۳. دکمه ثبت هزینه ═══════ -->
+        <!-- دکمه ثبت هزینه -->
         <button id="openAddExpense" class="add-expense-btn">
             <span style="font-size: 22px;">＋</span>
             <span>ثبت هزینه جدید</span>
         </button>
 
-        <!-- ═══════ ۴. لیست هزینه‌های امروز ═══════ -->
+        <!-- دکمه‌های ردیفی -->
+        <div class="button-row">
+            <button id="openFilterBtn" class="open-modal-btn-small">
+                <span>🔍 فیلتر و جستجو</span>
+            </button>
+            <button id="openStatsBtn" class="open-modal-btn-small">
+                <span>📊 آمار</span>
+            </button>
+            <button id="openCompareBtn" class="open-modal-btn-small">
+                <span>⚖️ مقایسه</span>
+            </button>
+        </div>
+
+        <!-- لیست هزینه‌ها -->
         <div class="app-card list-card">
-            <div class="app-card-title">📋 هزینه‌های این روز</div>
+            <div class="app-card-title">📋 هزینه‌ها</div>
+            <div id="activeFilterBadge" style="display: none; margin-bottom: 15px; text-align: center;">
+                <span style="font-size: 12px; color: #0071e3; background: #e8f0fe; padding: 5px 12px; border-radius: 10px; font-weight: bold;"></span>
+            </div>
             <ul id="expenseList" class="expense-list"></ul>
         </div>
 
-        <!-- ═══════ ۵. کشوی آمار (پنهان) ═══════ -->
-        <details class="collapsible-card">
-            <summary>
-                <span>📊 آمار و نمودار</span>
-                <span class="chevron">▼</span>
-            </summary>
-            <div class="collapsible-body">
-                <!-- آمار ماه -->
-                <div class="stat-row">
-                    <span>جمع این ماه:</span>
-                    <strong id="monthTotal" class="green">۰ ریال</strong>
-                </div>
-                <div class="stat-row">
-                    <span>تعداد هزینه:</span>
-                    <strong id="monthCount">۰</strong>
-                </div>
-
-                <!-- مقایسه ماه -->
-                <div id="compareResult" class="compare-badge">-</div>
-                <div class="compare-details">
-                    <span id="currentMonthLabel">این ماه:</span>
-                    <strong id="currentMonthTotal" class="green">۰ ریال</strong>
-                </div>
-                <div class="compare-details">
-                    <span id="prevMonthLabel">ماه قبل:</span>
-                    <strong id="prevMonthTotal" style="color:#86868b;">۰ ریال</strong>
-                </div>
-
-                <!-- نمودار -->
-                <div class="chart-container">
-                    <canvas id="expensesChart"></canvas>
-                </div>
-            </div>
-        </details>
-
     </main>
 
-    <!-- ═══════ مودال افزودن هزینه ═══════ -->
+    <!-- ═══════ مودال ثبت هزینه ═══════ -->
     <div class="modal" id="addExpenseModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -113,21 +94,87 @@
                 </div>
                 <div class="form-group">
                     <label>دسته‌بندی</label>
-                    <select id="expenseCategory">
-                        <option value="غذا">🍔 غذا</option>
-                        <option value="حمل و نقل">🚕 حمل و نقل</option>
-                        <option value="خرید">🛍️ خرید</option>
-                        <option value="قبوض">📄 قبوض</option>
-                        <option value="سلامت">💊 سلامت</option>
-                        <option value="سرگرمی">🎮 سرگرمی</option>
-                        <option value="سایر">📦 سایر</option>
-                    </select>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="expenseCategory" style="flex: 1;"></select>
+                        <button type="button" id="manageCategoriesBtn" class="btn-secondary" style="padding: 0 15px; font-size: 18px;" title="مدیریت دسته‌ها">⚙️</button>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>مبلغ (ریال)</label>
                     <input type="text" id="expenseAmount" placeholder="مثلاً: 150,000" inputmode="numeric">
                 </div>
+                <div class="form-group">
+                    <label>تاریخ</label>
+                    <button type="button" id="shamsiDateBtn" class="shamsi-date-btn">
+                        <span id="shamsiDateText">انتخاب تاریخ...</span>
+                        <span>📅</span>
+                    </button>
+                    <div id="shamsiCalendar" class="shamsi-calendar" style="display: none;"></div>
+                    <input type="hidden" id="expenseDate">
+                </div>
                 <button id="addExpenseBtn" class="btn-primary" style="width:100%; background:#34c759; margin-top:10px;">ثبت هزینه</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ مودال فیلتر و جستجو ═══════ -->
+    <div class="modal" id="filterModal">
+        <div class="modal-content" style="max-height: 85vh;">
+            <div class="modal-header">
+                <h2 style="font-size: 18px;">🔍 فیلتر و جستجو</h2>
+                <button class="modal-close-btn" id="closeFilterBtn">✕</button>
+            </div>
+            <div class="modal-body" style="max-height: calc(85vh - 70px); overflow-y: auto; padding-bottom: 0;">
+                
+                <!-- جستجو (چسبان بالای مودال) -->
+                <div class="form-group" style="position: sticky; top: 0; background: #ffffff; z-index: 10; padding-top: 5px; margin-top: -5px; padding-bottom: 10px;">
+                    <label>جستجو در توضیحات</label>
+                    <input type="text" id="searchExpense" placeholder="مثلاً: ناهار..." style="margin-bottom: 0;">
+                </div>
+                
+                <div class="form-group">
+                    <label>بازه زمانی</label>
+                    <div class="filter-chips" style="margin-top: 5px;">
+                        <button class="filter-chip active" data-filter="today">این روز</button>
+                        <button class="filter-chip" data-filter="week">این هفته</button>
+                        <button class="filter-chip" data-filter="month">این ماه</button>
+                        <button class="filter-chip" data-filter="all">همه</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>دسته‌بندی</label>
+                    <select id="filterCategory" style="margin-bottom: 0;">
+                        <option value="all">همه دسته‌ها</option>
+                    </select>
+                </div>
+
+                <!-- لیست نتایج زنده -->
+                <div style="margin-top: 20px; border-top: 1px solid #f0f0f0; padding-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin: 0; font-weight: 800; font-size: 13px; color: #1d1d1f;">نتایج (<span id="filterResultCount">۰</span>)</label>
+                        <span id="filterResultTotal" style="font-size: 12px; font-weight: bold; color: #34c759;">۰ ریال</span>
+                    </div>
+                    <ul id="filterResultList" style="list-style: none; padding: 0; margin: 0; max-height: 200px; overflow-y: auto;"></ul>
+                </div>
+                <div style="height: 15px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ مودال مدیریت دسته‌بندی‌ها ═══════ -->
+    <div class="modal" id="categoriesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="font-size: 18px;">🏷️ مدیریت دسته‌بندی‌ها</h2>
+                <button class="modal-close-btn" id="closeCategoriesBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <input type="text" id="newCategoryInput" placeholder="نام دسته جدید..." style="flex: 1; margin-bottom: 0; padding: 12px;">
+                    <button id="addCategoryBtn" class="btn-primary" style="padding: 0 20px;">+</button>
+                </div>
+                <ul id="categoryList" style="list-style: none; padding: 0; margin: 0; max-height: 250px; overflow-y: auto;"></ul>
             </div>
         </div>
     </div>
@@ -146,6 +193,66 @@
                     <button id="cancelBudgetBtn" class="btn-secondary" style="flex:1;">انصراف</button>
                     <button id="saveBudgetBtn" class="btn-primary" style="flex:2;">ذخیره</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ مودال آمار و نمودارها ═══════ -->
+    <div class="modal" id="statsModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2 style="font-size: 18px;">📊 آمار و نمودارها</h2>
+                <button class="modal-close-btn" id="closeStatsBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="stats-mini-grid">
+                    <div class="stats-mini-box">
+                        <div class="stats-mini-icon">💸</div>
+                        <div class="stats-mini-value" id="statAvgDaily">۰</div>
+                        <div class="stats-mini-label">میانگین روزانه</div>
+                    </div>
+                    <div class="stats-mini-box">
+                        <div class="stats-mini-icon">🔥</div>
+                        <div class="stats-mini-value" id="statBiggest">۰</div>
+                        <div class="stats-mini-label">بیشترین خرج</div>
+                    </div>
+                    <div class="stats-mini-box">
+                        <div class="stats-mini-icon">📊</div>
+                        <div class="stats-mini-value" id="statCount">۰</div>
+                        <div class="stats-mini-label">تعداد تراکنش</div>
+                    </div>
+                </div>
+
+                <h3 class="chart-title">🥧 هزینه‌ها بر اساس دسته</h3>
+                <div class="chart-container">
+                    <canvas id="expensesChart"></canvas>
+                </div>
+
+                <h3 class="chart-title">📈 روند هزینه‌های ۷ روز اخیر</h3>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ مودال مقایسه ماه ═══════ -->
+    <div class="modal" id="compareModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="font-size: 18px;">⚖️ مقایسه با ماه قبل</h2>
+                <button class="modal-close-btn" id="closeCompareBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="stat-row" style="margin-bottom: 10px;">
+                    <span id="currentMonthLabel">این ماه:</span>
+                    <strong id="currentMonthTotal" class="green">۰ ریال</strong>
+                </div>
+                <div class="stat-row" style="margin-bottom: 15px;">
+                    <span id="prevMonthLabel">ماه قبل:</span>
+                    <strong id="prevMonthTotal" style="color:#86868b;">۰ ریال</strong>
+                </div>
+                <div id="compareResult" class="compare-badge">-</div>
             </div>
         </div>
     </div>

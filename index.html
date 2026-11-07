@@ -12,7 +12,7 @@
 
     <main class="main-content">
 
-        <!-- ═══════ هدر ═══════ -->
+        <!-- هدر -->
         <header class="page-header" style="margin-bottom: 15px;">
             <div>
                 <h1>داشبورد</h1>
@@ -20,13 +20,26 @@
             <button id="themeBtn" class="theme-btn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
         </header>
 
-        <!-- ═══════ بنر خوش‌آمد ═══════ -->
+        <!-- ═══════ ۱. بنر خوش‌آمد ═══════ -->
         <header class="hero-banner">
             <h1 id="greetingText">سلام 👋</h1>
             <p id="currentDate">تاریخ امروز</p>
         </header>
 
-        <!-- ═══════ حلقه پیشرفت کارهای امروز ═══════ -->
+        <!-- هشدار پشتیبان‌گیری -->
+        <div class="backup-banner" id="backupBanner" style="display: none;">
+            <div class="backup-banner-icon">💾</div>
+            <div class="backup-banner-text">
+                <strong>از داده‌هات محافظت کن!</strong>
+                <span>چند وقت یه بار از اطلاعاتت پشتیبان بگیر تا خیالت راحت باشه.</span>
+            </div>
+            <div class="backup-banner-actions">
+                <a href="settings.html" class="backup-btn">پشتیبان‌گیری</a>
+                <button class="backup-close-btn" id="closeBackupBanner">✕</button>
+            </div>
+        </div>
+
+        <!-- ═══════ ۲. حلقه پیشرفت ═══════ -->
         <div class="progress-card">
             <div class="progress-ring-wrap">
                 <svg class="progress-ring" viewBox="0 0 120 120">
@@ -54,23 +67,7 @@
             </div>
         </div>
 
-        <!-- ═══════ نمودار روند هزینه (۷ روز) ═══════ -->
-        <div class="app-card">
-            <div class="app-card-title">📈 هزینه‌های ۷ روز اخیر</div>
-            <div class="chart-wrap">
-                <canvas id="expensesWeekChart"></canvas>
-            </div>
-        </div>
-
-        <!-- ═══════ نمودار کارهای هفته ═══════ -->
-        <div class="app-card">
-            <div class="app-card-title">✅ عملکرد هفته</div>
-            <div class="chart-wrap">
-                <canvas id="tasksWeekChart"></canvas>
-            </div>
-        </div>
-
-        <!-- ═══════ کارهای امروز + هزینه امروز ═══════ -->
+        <!-- ═══════ ۳. کارت‌های امروز و هزینه امروز ═══════ -->
         <div class="two-col-grid">
             <div class="app-card">
                 <div class="card-header-row">
@@ -89,23 +86,7 @@
             </div>
         </div>
 
-        <!-- ═══════ بودجه ماه ═══════ -->
-        <div class="app-card budget-mini-card">
-            <div class="card-header-row">
-                <div class="app-card-title" style="margin:0;">🎯 بودجه ماه</div>
-                <a href="expenses.html" class="card-link">مدیریت ←</a>
-            </div>
-            <div class="budget-mini-info">
-                <span>مصرف: <strong id="budgetSpent" style="color:#34c759;">۰ ریال</strong></span>
-                <span>بودجه: <strong id="budgetLimit" style="color:#0071e3;">۰ ریال</strong></span>
-            </div>
-            <div class="budget-mini-bar">
-                <div class="budget-mini-fill" id="budgetMiniFill"></div>
-            </div>
-            <div id="budgetMiniStatus" class="budget-mini-status">در حال بارگذاری...</div>
-        </div>
-
-        <!-- ═══════ یادداشت‌های اخیر ═══════ -->
+        <!-- ═══════ ۴. یادداشت‌های اخیر ═══════ -->
         <div class="app-card">
             <div class="card-header-row">
                 <div class="app-card-title" style="margin:0;">📝 یادداشت‌های اخیر</div>
@@ -114,11 +95,13 @@
             <div id="homeNotesList" class="mini-notes-list"></div>
         </div>
 
-        <!-- ═══════ ابزارها ═══════ -->
+        <!-- ═══════ ۵. ابزارها ═══════ -->
         <h2 class="tools-title">ابزارهای من</h2>
         <div class="tools-grid">
             <a href="tasks.html" class="tool-card"><div class="tool-icon">📋</div><div class="tool-title">کارها</div></a>
             <a href="expenses.html" class="tool-card"><div class="tool-icon">💰</div><div class="tool-title">هزینه‌ها</div></a>
+            <a href="goals.html" class="tool-card"><div class="tool-icon">🎯</div><div class="tool-title">اهداف</div></a>
+            <a href="stats.html" class="tool-card"><div class="tool-icon">📊</div><div class="tool-title">آمار</div></a>
             <a href="calculator.html" class="tool-card"><div class="tool-icon">🧮</div><div class="tool-title">ماشین‌حساب</div></a>
             <a href="calendar.html" class="tool-card"><div class="tool-icon">📅</div><div class="tool-title">تقویم</div></a>
             <a href="notes.html" class="tool-card"><div class="tool-icon">📝</div><div class="tool-title">یادداشت</div></a>
@@ -130,17 +113,16 @@
 
     </main>
 
-    <!-- ═══════ مودال جمله روز ═══════ -->
+    <!-- مودال جمله روز -->
     <div class="quote-modal" id="quoteModal">
         <div class="quote-modal-content">
             <div class="quote-icon">💬</div>
             <h2 class="quote-modal-title">جمله امروز</h2>
             <p class="quote-modal-text" id="quoteText">در حال بارگذاری...</p>
-            <button class="quote-modal-btn" id="closeQuoteBtn">بــــرررررو بـــــررررریم 🚀</button>
+            <button class="quote-modal-btn" id="closeQuoteBtn">برو بریم 🚀</button>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/common.js"></script>
     <script src="js/dashboard.js"></script>
 </body>

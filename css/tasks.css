@@ -1,4 +1,7 @@
-/* ===== استایل لیست کارها ===== */
+/* ══════════════════════════════════════════ */
+/* ═══════ استایل لیست کارها ═══════ */
+/* ══════════════════════════════════════════ */
+
 #taskList li {
     display: flex;
     align-items: center;
@@ -17,7 +20,10 @@
     box-shadow: 0 4px 12px rgba(0, 113, 227, 0.08);
 }
 
-/* ===== استایل مودال‌ها (مشترک برای کار تکراری و گزارش) ===== */
+/* ══════════════════════════════════════════ */
+/* ═══════ استایل مودال‌ها ═══════ */
+/* ══════════════════════════════════════════ */
+
 .modal {
     display: none;
     position: fixed;
@@ -45,3 +51,162 @@
 .form-group { margin-bottom: 15px; }
 .form-group label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 5px; }
 .rec-section { background: #f8f9fc; padding: 12px; border-radius: 12px; margin-bottom: 15px; }
+
+/* ══════════════════════════════════════════ */
+/* ═══════ بخش دستاوردها (داخل کشو) ═══════ */
+/* ══════════════════════════════════════════ */
+
+.achievements-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    background: #f8f9fc;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1px solid #e5e5ea;
+}
+
+body.dark .achievements-header {
+    background: #0f172a;
+    border-color: #334155;
+}
+body.dark .achievements-header div[style*="color: #1d1d1f"] {
+    color: #f8fafc !important;
+}
+
+.achievements-progress-bar {
+    background: #e5e5ea;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.achievements-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0071e3, #42a5f5);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.8s ease;
+}
+
+.next-achievements-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.next-achievement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e5e5ea;
+}
+
+body.dark .next-achievement {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+.next-ach-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.next-ach-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+}
+
+body.dark .next-ach-text {
+    color: #cbd5e1;
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ Toast (پیام تبریک سراسری) ═══════ */
+/* ══════════════════════════════════════════ */
+
+.achievement-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-200%);
+    background: linear-gradient(135deg, #1d1d1f, #333);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    z-index: 999999;
+    max-width: 90%;
+    width: 380px;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid #ffd700;
+}
+
+.achievement-toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-icon {
+    font-size: 40px;
+    flex-shrink: 0;
+    animation: toastFloat 2s ease-in-out infinite;
+}
+
+@keyframes toastFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-label {
+    font-size: 11px;
+    color: #ffd700;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.toast-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 2px;
+}
+
+.toast-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+}
+
+/* ══════════════════════════════════════════ */
+/* ═══════ حالت تاریک (مودال‌ها) ═══════ */
+/* ══════════════════════════════════════════ */
+
+body.dark .modal-content {
+    background: #1e293b;
+    border: 1px solid #334155;
+}
+body.dark .modal-header {
+    border-bottom-color: #334155;
+}
+body.dark .modal-header h2 {
+    color: #f8fafc;
+}
+body.dark .form-group label {
+    color: #cbd5e1;
+}
+body.dark .rec-section {
+    background: #0f172a;
+}   
