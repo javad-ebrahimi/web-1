@@ -147,8 +147,9 @@ document.addEventListener("DOMContentLoaded", function() {
 // ═══════ لود هوشمند سیستم آمار و دستاوردها ═══════
 // ═══════════════════════════════════════════════
 
-// این فایل فقط در صفحاتی لود می‌شود که به دستاوردها نیاز دارند
-const pagesNeedingStats = ["tasks.html", "expenses.html", "goals.html", "index.html", ""];
+// فقط در صفحاتی که واقعاً به دستاوردها نیاز دارند لود می‌شود
+// توجه: index.html رو از لیست حذف کردیم تا داشبورد سریع‌تر لود بشه
+const pagesNeedingStats = ["tasks.html", "expenses.html", "goals.html"];
 const currentPage = window.location.pathname.split("/").pop();
 
 if (pagesNeedingStats.includes(currentPage)) {
