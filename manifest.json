@@ -1,22 +1,23 @@
 {
-  "name": "برنامه‌ریزی من",
-  "short_name": "برنامه‌ریزی",
-  "description": "دستیار هوشمند مدیریت کارها، هزینه‌ها و اهداف",
+  "name": "مدیریت برنامه و هزینه",
+  "short_name": "مدیریت",
+  "description": "دستیار هوشمند مدیریت برنامه‌ها و هزینه‌ها",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f5f5f7",
-  "theme_color": "#0071e3",
+  "background_color": "#0f172a",
+  "theme_color": "#00d2ff",
   "lang": "fa",
   "dir": "rtl",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
