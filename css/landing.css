@@ -1,0 +1,511 @@
+/* ══════════════════════════════════════════ */
+/* ═══════ استایل صفحه فرود (Landing) ═══════ */
+/* ══════════════════════════════════════════ */
+
+.landing-body {
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* ═══════ نوار بالا ═══════ */
+.landing-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 0 0 20px 20px;
+}
+
+.landing-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.landing-cta-small {
+    background: linear-gradient(135deg, #0071e3, #42a5f5);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 13px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+.landing-cta-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 113, 227, 0.4);
+}
+
+/* ═══════ بخش قهرمان (Hero) ═══════ */
+.hero-section {
+    text-align: center;
+    padding: 60px 25px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #e8f0fe, #f3e8ff);
+    color: #0071e3;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.2;
+    color: #1d1d1f;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.hero-gradient-text {
+    background: linear-gradient(135deg, #0071e3, #af52de);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.9;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    font-weight: 500;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.btn-hero-primary {
+    background: linear-gradient(135deg, #0071e3, #42a5f5);
+    color: white;
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 14px;
+    font-weight: 900;
+    font-size: 15px;
+    transition: all 0.3s;
+    box-shadow: 0 8px 25px rgba(0, 113, 227, 0.3);
+    display: inline-block;
+}
+.btn-hero-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 113, 227, 0.4);
+}
+
+.btn-hero-secondary {
+    background: #ffffff;
+    color: #1d1d1f;
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 15px;
+    border: 2px solid #e5e5ea;
+    transition: all 0.2s;
+    display: inline-block;
+}
+.btn-hero-secondary:hover {
+    border-color: #0071e3;
+    color: #0071e3;
+}
+
+.hero-note {
+    font-size: 12px;
+    color: #86868b;
+    font-weight: 600;
+}
+
+/* ═══════ پیش‌نمایش (Mockup) ═══════ */
+.preview-section {
+    padding: 30px 20px 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.preview-mockup {
+    background: #1e293b;
+    border-radius: 24px;
+    padding: 15px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mockup-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 5px;
+    margin-bottom: 15px;
+}
+
+.mockup-dots {
+    display: flex;
+    gap: 6px;
+}
+.mockup-dots span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ff3b30;
+}
+.mockup-dots span:nth-child(2) { background: #ff9500; }
+.mockup-dots span:nth-child(3) { background: #34c759; }
+
+.mockup-url {
+    flex: 1;
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 6px 15px;
+    border-radius: 8px;
+    font-size: 11px;
+    text-align: center;
+    font-family: monospace;
+}
+
+.mockup-content {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    border-radius: 16px;
+    padding: 20px;
+    min-height: 250px;
+}
+
+.mockup-hero-mini {
+    margin-bottom: 20px;
+}
+
+.mockup-greeting {
+    font-size: 18px;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.mockup-stats {
+    display: flex;
+    gap: 15px;
+}
+
+.mockup-stat {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mockup-stat-icon {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.mockup-stat-value {
+    font-size: 15px;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+.mockup-stat-label {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 700;
+}
+
+.mockup-progress-ring {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 20px auto 0;
+}
+.mockup-progress-ring svg {
+    width: 100%;
+    height: 100%;
+}
+.mockup-progress-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+/* ═══════ بخش ویژگی‌ها ═══════ */
+.features-section {
+    padding: 60px 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-heading {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 900;
+    color: #1d1d1f;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+}
+
+.section-subheading {
+    text-align: center;
+    font-size: 15px;
+    color: #86868b;
+    margin-bottom: 50px;
+    font-weight: 600;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.feature-card {
+    background: #ffffff;
+    border: 1px solid #e5e5ea;
+    border-radius: 20px;
+    padding: 30px 25px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 113, 227, 0.3);
+}
+
+.feature-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.feature-title {
+    font-size: 17px;
+    font-weight: 900;
+    color: #1d1d1f;
+    margin-bottom: 10px;
+}
+
+.feature-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.9;
+    font-weight: 500;
+}
+
+/* ═══════ بخش چطور شروع کنم ═══════ */
+.how-section {
+    padding: 60px 25px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.steps-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.step {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+}
+
+.step-num {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0071e3, #42a5f5);
+    color: white;
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3);
+}
+
+.step-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #1d1d1f;
+    margin-bottom: 5px;
+}
+
+.step-desc {
+    font-size: 12px;
+    color: #86868b;
+    font-weight: 600;
+}
+
+.step-arrow {
+    font-size: 20px;
+    color: #c0c0c5;
+    font-weight: 900;
+}
+
+/* ═══════ بخش فراخوان نهایی ═══════ */
+.final-cta-section {
+    padding: 80px 25px;
+    background: linear-gradient(135deg, #0071e3, #af52de);
+    position: relative;
+    overflow: hidden;
+}
+
+.final-cta-section::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.final-cta-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.final-cta-title {
+    font-size: 40px;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.final-cta-subtitle {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.btn-large {
+    padding: 18px 45px;
+    font-size: 17px;
+    background: white;
+    color: #0071e3;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.btn-large:hover {
+    background: #f5f5f7;
+    color: #0071e3;
+}
+
+/* ═══════ فوتر ═══════ */
+.landing-footer {
+    background: #f8f9fc;
+    padding: 40px 25px;
+    text-align: center;
+    border-top: 1px solid #e5e5ea;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.footer-text {
+    font-size: 13px;
+    color: #86868b;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+.footer-links a {
+    color: #0071e3;
+    text-decoration: none;
+    font-weight: 700;
+}
+.footer-links a:hover {
+    text-decoration: underline;
+}
+.footer-links span {
+    color: #c0c0c5;
+}
+
+.footer-copy {
+    font-size: 11px;
+    color: #c0c0c5;
+    font-weight: 600;
+}
+
+/* ═══════ ریسپانسیو ═══════ */
+@media (max-width: 900px) {
+    .hero-title { font-size: 34px; }
+    .section-heading { font-size: 28px; }
+    .final-cta-title { font-size: 30px; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+}
+
+@media (max-width: 600px) {
+    .hero-title { font-size: 28px; }
+    .hero-subtitle { font-size: 14px; }
+    .hero-section { padding: 40px 20px 30px; }
+    .section-heading { font-size: 24px; }
+    .final-cta-title { font-size: 26px; }
+    .features-grid { grid-template-columns: 1fr; gap: 15px; }
+    .feature-card { padding: 20px 18px; }
+    .steps-row { flex-direction: column; }
+    .step-arrow { transform: rotate(90deg); }
+    .landing-header { padding: 12px 18px; }
+    .landing-cta-small { padding: 8px 14px; font-size: 12px; }
+    .btn-hero-primary, .btn-hero-secondary { padding: 14px 24px; font-size: 14px; width: 100%; }
+    .btn-large { padding: 16px 30px; font-size: 15px; }
+    .preview-mockup { padding: 10px; }
+}
