@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد من</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <main class="main-content">
+
+        <!-- هدر -->
+        <header class="page-header" style="margin-bottom: 15px;">
+            <div>
+                <h1>داشبورد</h1>
+            </div>
+            <button id="themeBtn" class="theme-btn" style="background:white; border:1px solid #e5e5ea; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px;">🌙</button>
+        </header>
+
+        <!-- ═══════ ۱. بنر خوش‌آمد ═══════ -->
+        <header class="hero-banner">
+            <h1 id="greetingText">سلام 👋</h1>
+            <p id="currentDate">تاریخ امروز</p>
+        </header>
+
+        <!-- هشدار پشتیبان‌گیری -->
+        <div class="backup-banner" id="backupBanner" style="display: none;">
+            <div class="backup-banner-icon">💾</div>
+            <div class="backup-banner-text">
+                <strong>از داده‌هات محافظت کن!</strong>
+                <span>چند وقت یه بار از اطلاعاتت پشتیبان بگیر تا خیالت راحت باشه.</span>
+            </div>
+            <div class="backup-banner-actions">
+                <a href="settings.html" class="backup-btn">پشتیبان‌گیری</a>
+                <button class="backup-close-btn" id="closeBackupBanner">✕</button>
+            </div>
+        </div>
+
+        <!-- ═══════ ۲. حلقه پیشرفت ═══════ -->
+        <div class="progress-card">
+            <div class="progress-ring-wrap">
+                <svg class="progress-ring" viewBox="0 0 120 120">
+                    <circle class="progress-ring-bg" cx="60" cy="60" r="52"></circle>
+                    <circle class="progress-ring-fill" id="progressRing" cx="60" cy="60" r="52"></circle>
+                </svg>
+                <div class="progress-ring-text">
+                    <span id="progressPercent">۰٪</span>
+                    <small>امروز</small>
+                </div>
+            </div>
+            <div class="progress-info">
+                <h3 id="progressTitle">کارهای امروز</h3>
+                <p id="progressDetail">۰ از ۰ انجام شده</p>
+                <div class="progress-stats-mini">
+                    <div>
+                        <span class="mini-label">استریک</span>
+                        <strong id="statStreak" style="color:#ff9500;">۰</strong>
+                    </div>
+                    <div>
+                        <span class="mini-label">کل کارها</span>
+                        <strong id="statTotalTasks" style="color:#0071e3;">۰</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ ۳. کارت‌های امروز و هزینه امروز ═══════ -->
+        <div class="two-col-grid">
+            <div class="app-card">
+                <div class="card-header-row">
+                    <div class="app-card-title" style="margin:0;">📋 امروز</div>
+                    <a href="tasks.html" class="card-link">مشاهده ←</a>
+                </div>
+                <ul id="homeTaskList" class="mini-task-list"></ul>
+            </div>
+
+            <div class="app-card">
+                <div class="card-header-row">
+                    <div class="app-card-title" style="margin:0;">💰 هزینه امروز</div>
+                    <a href="expenses.html" class="card-link">مشاهده ←</a>
+                </div>
+                <div id="homeExpensesList" class="mini-expense-list"></div>
+            </div>
+        </div>
+
+        <!-- ═══════ ۴. یادداشت‌های اخیر ═══════ -->
+        <div class="app-card">
+            <div class="card-header-row">
+                <div class="app-card-title" style="margin:0;">📝 یادداشت‌های اخیر</div>
+                <a href="notes.html" class="card-link">مشاهده ←</a>
+            </div>
+            <div id="homeNotesList" class="mini-notes-list"></div>
+        </div>
+
+        <!-- ═══════ ۵. ابزارها ═══════ -->
+        <h2 class="tools-title">ابزارهای من</h2>
+        <div class="tools-grid">
+            <a href="tasks.html" class="tool-card"><div class="tool-icon">📋</div><div class="tool-title">کارها</div></a>
+            <a href="expenses.html" class="tool-card"><div class="tool-icon">💰</div><div class="tool-title">هزینه‌ها</div></a>
+            <a href="goals.html" class="tool-card"><div class="tool-icon">🎯</div><div class="tool-title">اهداف</div></a>
+            <a href="stats.html" class="tool-card"><div class="tool-icon">📊</div><div class="tool-title">آمار</div></a>
+            <a href="calculator.html" class="tool-card"><div class="tool-icon">🧮</div><div class="tool-title">ماشین‌حساب</div></a>
+            <a href="calendar.html" class="tool-card"><div class="tool-icon">📅</div><div class="tool-title">تقویم</div></a>
+            <a href="notes.html" class="tool-card"><div class="tool-icon">📝</div><div class="tool-title">یادداشت</div></a>
+            <a href="password.html" class="tool-card"><div class="tool-icon">🔐</div><div class="tool-title">تولید رمز</div></a>
+            <a href="memory.html" class="tool-card"><div class="tool-icon">🧠</div><div class="tool-title">بازی حافظه</div></a>
+            <a href="qrcode.html" class="tool-card"><div class="tool-icon">📱</div><div class="tool-title">QR Code</div></a>
+            <a href="settings.html" class="tool-card"><div class="tool-icon">⚙️</div><div class="tool-title">تنظیمات</div></a>
+        </div>
+
+    </main>
+
+    <!-- مودال جمله روز -->
+    <div class="quote-modal" id="quoteModal">
+        <div class="quote-modal-content">
+            <div class="quote-icon">💬</div>
+            <h2 class="quote-modal-title">جمله امروز</h2>
+            <p class="quote-modal-text" id="quoteText">در حال بارگذاری...</p>
+            <button class="quote-modal-btn" id="closeQuoteBtn">برو بریم 🚀</button>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
